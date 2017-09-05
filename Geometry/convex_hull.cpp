@@ -1,91 +1,16 @@
 struct Point{
-	int x, y;
+	long long x, y;
 
-	// Empty constructor.
 	Point(){
 		this->x = 0;
 		this->y = 0;
 	}
 
-	// Constructor.
-	Point(int x, int y){
+	Point(long long x, long long y){
 		this->x = x;
 		this->y = y;
 	}
 
-	// Vector sum.
-	Point operator + (const Point& b) const{
-		return Point(this->x + b.x, this->y + b.y);
-	}
-
-	// Vector sum (cumulative).
-	Point& operator += (const Point& b){
-		this->x += b.x;
-		this->y += b.y;
-
-		return *this;
-	}
-
-	// Vector subtraction.
-	Point operator - (const Point& b) const{
-		return Point(this->x - b.x, this->y - b.y);
-	}
-
-	// Negative vector.
-	Point operator - () const{
-		return Point(-this->x, -this->y);
-	}
-
-	// Vector subtraction (cumulative).
-	Point& operator -= (const Point& b){
-		this->x -= b.x;
-		this->y -= b.y;
-
-		return *this;
-	}
-
-	// Vector product by scalar.
-	Point operator * (int a){
-		return Point(this->x * a, this->y * a);
-	}
-
-	// Vector product by scalar (cumulative).
-	Point& operator *= (int a){
-		this->x *= a;
-		this->y *= a;
-
-		return *this;
-	}
-
-	// Vector division by scalar.
-	Point operator / (int a){
-		return Point(this->x / a, this->y / a);
-	}
-
-	// Vector division by scalar (cumulative).
-	Point& operator /= (int a){
-		this->x /= a;
-		this->y /= a;
-
-		return *this;
-	}
-
-	// Dot product.
-	int operator * (const Point& b) const{
-		return this->x * b.x + this->y * b.y;
-	}
-
-	// Cross product.
-	int operator ^ (const Point& b) const{
-		return this->x * b.y - this->y * b.x;
-	}
-
-	// Squared norm.
-	int operator ! () const{
-		return this->x * this->x + this->y * this->y;
-	}
-
-	// Compare function.
 	bool operator < (const Point& b) const{
 		if (this->x == b.x){
 			return this->y < b.y;
@@ -93,75 +18,57 @@ struct Point{
 
 		return this->x < b.x;
 	}
-
-	// Compare function.
-	bool operator > (const Point& b) const{
-		return b < *this;
-	}
-
-	// Compare function.
-	bool operator == (const Point& b) const{
-		return this->x == b.x and this->y == b.y;
-	}
-
-	// Compare function.
-	bool operator != (const Point& b) const{
-		return !(*this == b);
-	}
 };
 
-// Overloading stream operator in order to print a point.
-ostream& operator << (ostream& out, const Point& p){
-    out << "(" << p.x << ", " << p.y << ")";
- 
-    return out;
-}
- 
-// Overloading stream operator in order to read a point.
-istream& operator >> (istream& in, Point& p){
-    in >> p.x >> p.y;
- 
-    return in;
+long long cross(Point a, Point b){
+	return a.x * b.y - a.y * b.x;
 }
 
-deque <Point> ch;
+Point sub(Point a, Point b){
+	return Point(a.x - b.x, a.y - b.y);
+}
+
+stack<Point> ch;
+vector<Point> v;
 Point p;
 
-bool angle_compare(const Point& a, const Point& b){
-	if (((a - p) ^ (b - p)) == 0){
-		return a > b;
+bool comp(Point &a, Point &b){
+	// Same angle. Furthest point first.
+	if (cross(sub(a, p), sub(b, p)) == 0){
+		return b < a;
 	}
 
-	return ((a - p) ^ (b - p)) > 0;
+	return cross(sub(a, p), sub(b, p)) > 0;
 }
 
 void convex_hull(){
 	Point a, b, c;
 	int i;
 
+	// First point belonging to the Convex Hull
 	p = *min_element(v.begin(), v.end());
+	sort(v.begin(), v.end(), comp);
 
-	sort(v.begin(), v.end(), angle_compare);
-
-	ch.push_back(p);
-	ch.push_back(v[0]);
-	ch.push_back(v[1]);
+	ch.push(p);
+	ch.push(v[0]);
+	ch.push(v[1]);
 
 	for (i = 2; i < (int)v.size(); i++){
 		c = v[i];
-		b = ch.back();
-		ch.pop_back();
-		a = ch.back();
+		b = ch.top();
+		ch.pop();
+		a = ch.top();
 
-		while (((b - a) ^ (c - a)) < 0){
+		// While not a left turn
+		while (cross(sub(b, a), sub(c, a)) <= 0){
 			b = a;
-			ch.pop_back();
-			a = ch.back();
+			ch.pop();
+			a = ch.top();
 		}
 
-		ch.push_back(b);
-		ch.push_back(c);
+		ch.push(b);
+		ch.push(c);
 	}
 
-	ch.pop_back();
+	ch.pop();
 }
