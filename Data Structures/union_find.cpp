@@ -4,6 +4,10 @@ private:
 	vector<int> p, rank, size;
 	int n;
 public:
+	UnionFind(){
+		
+	}
+
 	UnionFind(int n){
 		int i;
 
