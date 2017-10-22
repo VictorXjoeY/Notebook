@@ -122,6 +122,8 @@ private:
 	}
 
 public:
+	SegmentTree(){}
+
 	SegmentTree(int *v, int n){
 		int i;
 

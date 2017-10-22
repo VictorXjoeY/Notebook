@@ -1,9 +1,7 @@
 struct State{
 	int u, d;
 
-	State(){
-
-	}
+	State(){}
 
 	State(int u, int d){
 		this->u = u;

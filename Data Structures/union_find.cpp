@@ -1,12 +1,10 @@
-// 0-based Union Find with Path Compression
+// 0-based Union Find
 class UnionFind{
 private:
 	vector<int> p, rank, size;
 	int n;
 public:
-	UnionFind(){
-		
-	}
+	UnionFind(){}
 
 	UnionFind(int n){
 		int i;

@@ -22,6 +22,8 @@ private:
 	}
 
 public:
+	FenwickTree(){}
+
 	FenwickTree(int m){
 		this->m = m;
 		ft.assign(m + 1, 0);
