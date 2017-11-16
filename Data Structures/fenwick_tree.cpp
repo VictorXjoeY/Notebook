@@ -1,10 +1,11 @@
-// n == number of elements
-// m == max element
+// n = number of elements
+// m = max element
 class FenwickTree{
 private:
 	vector<int> ft;
 	int m;
 
+	// Least Significant One.
 	inline int LSOne(int x){
 		return (x & (-x));
 	}
