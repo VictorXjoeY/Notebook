@@ -1,3 +1,6 @@
+#define N 100000
+#define INF 0x3f3f3f3f
+
 struct State{
 	int u, d;
 
@@ -9,17 +12,20 @@ struct State{
 	}
 
 	bool operator < (const State &b) const{
-		return d < b.d;
+		return d > b.d;
 	}
 };
 
 int dist[N + 1];
+bool in_spt[N + 1];
 priority_queue<State> pq;
+vector<pair<int, int> > g[N + 1];
 
 void dijkstra(int u){
 	int i, v, w;
 	State cur;
 
+	memset(in_spt, false, sizeof(in_spt));
 	memset(dist, 0x3f, sizeof(dist));
 
 	dist[u] = 0;
@@ -31,13 +37,17 @@ void dijkstra(int u){
 
 		u = cur.u;
 
-		for (i = 0; i < (int)g[u].size(); i++){
-			v = g[u][i].first;
-			w = g[u][i].second;
+		if (!in_spt[u]){
+			in_spt[u] = true;
 
-			if (dist[u] + w < dist[v]){
-				dist[v] = dist[u] + w;
-				pq.push(State(v, dist[v]));
+			for (i = 0; i < (int)g[u].size(); i++){
+				v = g[u][i].first;
+				w = g[u][i].second;
+
+				if (dist[u] + w < dist[v]){
+					dist[v] = dist[u] + w;
+					pq.push(State(v, dist[v]));
+				}
 			}
 		}
 	}
