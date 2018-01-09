@@ -1,13 +1,14 @@
-#define N 1000000
+#define N 100000
 
 int a[N + 1];
 int dp[N + 1];
 int n;
 
+/* O(N). */
 int kadane(){
 	int i;
 
-	// Init.
+	// Initializing.
 	dp[1] = a[1];
 
 	// Calculating maximum sum ending in a[i].

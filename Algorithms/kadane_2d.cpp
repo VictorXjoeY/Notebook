@@ -9,6 +9,7 @@ int query(int y, int xi, int xf){
 	return sum[y][xf] - sum[y][xi - 1];
 }
 
+/* O(N^3). */
 int kadane_2d(){
 	int ans, xi, xf, i, j;
 
@@ -19,13 +20,13 @@ int kadane_2d(){
 		}
 	}
 
-	// Init final answer.
+	// Initializing final answer.
 	ans = mat[1][1];
 
-	// For each pair xi xf, run kadane on columns.
+	// For each pair (xi, xf), run kadane on columns.
 	for (xi = 1; xi <= n; xi++){
 		for (xf = xi; xf <= n; xf++){
-			// Init.
+			// Initializing.
 			dp[1] = query(1, xi, xf);
 
 			// Calculating maximum sum ending in column j between lines xi and xf.

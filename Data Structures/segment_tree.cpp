@@ -1,4 +1,5 @@
-// 1-based Segment Tree with Lazy Propagation on a 0-based array
+#define INF 0x3f3f3f3f
+
 class SegmentTree{
 private:
 	vector<int> v, st, lazy;
@@ -101,7 +102,7 @@ private:
 		// [l..r] is outside query range [i..j].
 		if (l > j or r < i){
 			// Returning a value that will not affect the result.
-			return -0x3f3f3f3f;
+			return -INF;
 		}
 
 		// [l..r] is fully inside the query range [i..j].
@@ -128,21 +129,21 @@ public:
 
 		lazy.assign(4 * (n + 1) + 1, 0);
 		st.resize(4 * (n + 1) + 1);
-		this->v.resize(n);
+		this->v.resize(n + 1);
 		this->n = n;
 
-		for (i = 0; i < n; i++){
+		for (i = 1; i <= n; i++){
 			this->v[i] = v[i];
 		}
 
-		build(1, 0, n - 1);
+		build(1, 1, n);
 	}
 
 	void update(int i, int j, int x){
-		update(1, 0, n - 1, i, j, x);
+		update(1, 1, n, i, j, x);
 	}
 
 	int query(int i, int j){
-		return query(1, 0, n - 1, i, j);
+		return query(1, 1, n, i, j);
 	}
 };

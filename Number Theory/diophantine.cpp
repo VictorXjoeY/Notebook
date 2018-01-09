@@ -1,4 +1,5 @@
-// a * x + b * y = gcd(a, b)
+/* O(log(max(a, b))). */
+/* a * x + b * y = gcd(a, b) */
 int extended_gcd(int a, int b, int &x, int &y){
     int x1, y1, gcd;
 
@@ -15,9 +16,10 @@ int extended_gcd(int a, int b, int &x, int &y){
     return gcd;
 }
 
-// a * x1 + b * y1 = c
-// x = x1 - t * (b / gcd(a, b))
-// y = y1 + t * (a / gcd(a, b))
+/* O(log(max(a, b))). */
+/* a * x1 + b * y1 = c */
+/* x = x1 - t * (b / gcd(a, b)) */
+/* y = y1 + t * (a / gcd(a, b)) */
 int diophantine(int a, int b, int c, int &x1, int &y1){
     int gcd, k, t;
 

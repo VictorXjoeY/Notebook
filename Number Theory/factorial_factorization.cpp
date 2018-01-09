@@ -1,18 +1,16 @@
+/* O(logp(n)) Returns the number of factors p in n!. */
 long long factorial_factorization(long long n, long long p){
 	long long ans, k;
 
+	// Initializing.
 	ans = 0;
 	k = p;
 
-	while (true){
-		if (n / k){
-			ans += n / k;
-			k *= p;
-		}
-		else{
-			return ans;
-		}
+	// While n / k still adds to the answer.
+	while (k < n){
+		ans += n / k;
+		k *= p;
 	}
 
-	return 0;
+	return ans;
 }

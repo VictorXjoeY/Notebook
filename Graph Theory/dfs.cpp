@@ -2,27 +2,21 @@
 
 vector<int> g[N + 1];
 bool seen[N + 1];
-int d[N + 1];
-int f[N + 1];
-int p[N + 1];
-int timer;
 
+/* O(V + E). */
 void dfs(int u){
 	int v, i;
 
+	// Marking u as visited.
 	seen[u] = true;
-	d[u] = timer;
-	timer++;
 
+	// For every vertex v adjacent to u.
 	for (i = 0; i < (int)g[u].size(); i++){
 		v = g[u][i];
 
+		// If vertex v wasn't already visited.
 		if (!seen[v]){
-			p[v] = u;
 			dfs(v);
 		}
 	}
-
-	f[u] = timer;
-	timer++;
 }

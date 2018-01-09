@@ -41,6 +41,7 @@ int bfs(int s, int t){
 	return 0;
 }
 
+// O
 int edmonds_karp(int s, int t){
 	int f, m, u, v;
 
