@@ -24,7 +24,7 @@ vector<pair<int, int> > g[N + 1];
 
 /* O(V + E * log(V)). */
 void prim(int u){
-	int i, v, w;
+	int v, w, i;
 	State cur;
 
 	// Initializing.
