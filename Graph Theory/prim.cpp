@@ -35,6 +35,7 @@ void prim(int u){
 	cost[u] = 0;
 	pq.push(State(-1, u, 0));
 
+	// While there are vertices to visit.
 	while (!pq.empty()){
 		cur = pq.top();
 		pq.pop();
