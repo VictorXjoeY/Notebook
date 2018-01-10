@@ -9,7 +9,7 @@ bool seen[N + 1];
 int parent[N + 1];
 int disc[N + 1];
 int low[N + 1];
-int timer;
+int timer, n;
 
 /* O(V + E). */
 void dfs(int u){
@@ -52,13 +52,20 @@ void dfs(int u){
 	}
 }
 
+/* O(V + E). */
 void tarjan(){
+	int u;
+
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(ap, false, sizeof(ap));
 	parent[1] = 0;
 	timer = 0;
 
-	// Running a DFS from vertex 1.
-	dfs(1);
+	// Running the DFS.
+	for (u = 1; u <= n; u++){
+		if (!seen[u]){
+			dfs(1);
+		}
+	}
 }
