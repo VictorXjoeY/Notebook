@@ -7,7 +7,7 @@ long long factorial_factorization(long long n, long long p){
 	k = p;
 
 	// While n / k still adds to the answer.
-	while (k < n){
+	while (k <= n){
 		ans += n / k;
 		k *= p;
 	}
