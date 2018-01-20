@@ -64,7 +64,7 @@ void tarjan(){
 	// Running the DFS.
 	for (u = 1; u <= n; u++){
 		if (!seen[u]){
-			dfs(1);
+			dfs(u);
 		}
 	}
 }
