@@ -1,5 +1,4 @@
 #define N 100000
-#define INF 0x3f3f3f3f
 
 vector<pair<int, int> > bridge;
 bool ap[N + 1];
