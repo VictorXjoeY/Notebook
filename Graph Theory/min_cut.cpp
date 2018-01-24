@@ -9,6 +9,7 @@ int P[N + 1];
 int M[N + 1];
 int n;
 
+/* O(V + E). */
 int bfs(int s, int t){
 	queue<int> q;
 	int u, v;
@@ -42,21 +43,27 @@ int bfs(int s, int t){
 	return 0;
 }
 
+/* O(V * E^2). */
 int edmonds_karp(int s, int t){
 	int f, m, u, v;
 
+	// Copying the capacities.
 	for (u = 1; u <= n; u++){
 		for (v = 1; v <= n; v++){
 			T[u][v] = C[u][v];
 		}
 	}
 
+	// Initializing the flow with 0.
 	memset(F, 0, sizeof(F));
 	f = 0;
 
+	// While I can improve the flow.
 	while (true){
+		// Finding an augmenting path.
 		m = bfs(s, t);
 
+		// Cannot improve the flow.
 		if (!m){
 			break;
 		}
@@ -64,6 +71,7 @@ int edmonds_karp(int s, int t){
 		f += m;
 		v = t;
 
+		// Updating the flow throughout the path found by BFS.
 		while (v != s){
 			u = P[v];
 

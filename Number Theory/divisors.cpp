@@ -1,6 +1,7 @@
 /* O(sqrt(N)). */
-void divisors(int n){
-	vector<int> d;
+vector<long long> divisors(long long n){
+	vector<long long> d;
+	long long p;
 
 	// For every i up to sqrt(n).
 	for (i = 1; i * i <= n; i++){

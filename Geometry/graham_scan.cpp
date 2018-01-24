@@ -1,10 +1,7 @@
 struct Point{
 	long long x, y;
 
-	Point(){
-		this->x = 0;
-		this->y = 0;
-	}
+	Point(){}
 
 	Point(long long x, long long y){
 		this->x = x;
