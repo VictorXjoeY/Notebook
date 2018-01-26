@@ -31,7 +31,7 @@ bool dfs(int u){
    Vertices from Set A and from Set B must all have different indexes. Vertices
    should be marked as "in_a" or not "in_a" beforehand.
    This works on ANY Bipartite Graph. */
-int bipartite_matching(){
+int kuhn(){
 	int ans, cur, u;
 
 	// Initializing every vertex as unmatched.
