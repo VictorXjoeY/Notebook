@@ -1,25 +1,25 @@
-#define N 100000
-
-int prefix[2 * N + 2];
-string s;
-
-/* O(N). t#s.
- prefix[i] = the length of the longest match between the suffix ending at s[i] and the prefix of s.*/
-void kmp(){
+/* O(N). Use pattern#string. prefix[i] = the length of the longest match between
+the suffix ending at s[i] and the prefix of s. */
+vector<int> kmp(string &s){
+	vector<int> ans;
 	int n, i;
 
-	prefix[0] = 0;
+	// Initialization.
 	n = s.size();
+	ans.resize(n);
+	ans[0] = 0;
 
 	for (i = 1; i < n; i++){
-		prefix[i] = prefix[i - 1];
+		ans[i] = ans[i - 1];
 
-		while (prefix[i] > 0 and s[i] != s[prefix[i]]){
-			prefix[i] = prefix[prefix[i] - 1];
+		while (ans[i] > 0 and s[i] != s[ans[i]]){
+			ans[i] = ans[ans[i] - 1];
 		}
 
-		if (s[i] == s[prefix[i]]){
-			prefix[i] += 1;
+		if (s[i] == s[ans[i]]){
+			ans[i] += 1;
 		}
 	}
+
+	return ans;
 }
