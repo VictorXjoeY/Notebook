@@ -49,7 +49,7 @@ public:
 				size[y] += size[x];
 				p[x] = y;
 			}
-			else{ // Can attach either one. Attaching x's tree to the root y. Rank increases by one.
+			else{ // Can attach either one. Attaching y's tree to the root x. Rank increases by one.
 				size[x] += size[y];
 				p[y] = x;
 				rank[x]++;
