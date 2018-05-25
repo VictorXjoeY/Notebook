@@ -53,7 +53,7 @@ void dijkstra(int u){
 				w = g[u][i].second;
 
 				// If a better path was found to add the vertex v to the Shortest Path Tree.
-				if (dist[u] + w < dist[v]){
+				if (!in_spt[v] and dist[u] + w < dist[v]){
 					dist[v] = dist[u] + w;
 					pq.push(State(v, dist[v]));
 				}
