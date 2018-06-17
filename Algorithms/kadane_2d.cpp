@@ -31,7 +31,7 @@ int kadane_2d(){
 
 			// Calculating maximum sum ending in column j between lines xi and xf.
 			for (j = 2; j <= m; j++){
-				dp[i] = max(dp[i - 1] + query(j, xi, xf), query(j, xi, xf));
+				dp[j] = max(dp[j - 1] + query(j, xi, xf), query(j, xi, xf));
 			}
 
 			// Updating answer.
