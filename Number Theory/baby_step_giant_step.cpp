@@ -19,11 +19,11 @@ long long fast_exp(long long x, long long y, long long mod){
 /* O(sqrt(N)). Solves a^x = b (mod n) for a, b < n. */
 /* Basic idea is to rewrite: x = m * q + r with m = sqrt(n) */
 long long baby_step_giant_step(long long a, long long b, long long n){
-	map<long long, long long> table;
+	unordered_map<long long, long long> table;
 	long long a_inv_m, m, r, q, cur;
 
-	// Defining m.
-	m = sqrt(n);
+	// Defining m as ceil(sqrt(n)).
+	m = sqrt(n - 1) + 1;
 
 	// Computing a^(-m).
 	a_inv_m = fast_exp(fast_exp(a, n - 2, n), m, n);
@@ -34,7 +34,7 @@ long long baby_step_giant_step(long long a, long long b, long long n){
 	}
 
 	// Giant-step.
-	for (q = 0, cur = 1; q <= m; q++, cur = (cur * a_inv_m) % n){
+	for (q = 0, cur = 1; q < m; q++, cur = (cur * a_inv_m) % n){
 		if (table.count((cur * b) % n)){
 			return m * q + table[(cur * b) % n];
 		}
