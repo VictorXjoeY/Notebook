@@ -3,6 +3,7 @@
 
 long long nck[N + 2][N + 2];
 
+/* O(N^2). */
 void pascal(){
 	int i, j;
 

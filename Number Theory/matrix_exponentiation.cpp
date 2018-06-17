@@ -86,26 +86,3 @@ long long solve(vector<vector<long long> > mat, vector<vector<long long> > base,
 	// Returning the last element (either F(n) or C(n)).
 	return f[mat.size() - 1][0];
 }
-
-/* O(log(N)). */
-long long fibonacci(long long n){
-	vector<vector<long long> > mat, base;
-
-	// Filling Fibonacci matrix.
-	mat.resize(2);
-	mat[0].resize(2);
-	mat[1].resize(2);
-	mat[0][0] = 1;
-	mat[0][1] = 1;
-	mat[1][0] = 1;
-	mat[1][1] = 0;
-
-	// Filling base case.
-	base.resize(2);
-	base[0].resize(1);
-	base[1].resize(1);
-	base[0][0] = 1;
-	base[1][0] = 0;
-
-	return solve(mat, base, n);
-}
