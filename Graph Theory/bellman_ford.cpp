@@ -13,8 +13,8 @@ bool bellman_ford(int u){
 	memset(dist, 0x3f, sizeof(dist));
 	dist[u] = 0;
 
-	// Takes at most n - 1 iterations to converge.
-	while (!converged){
+	// It takes at most n - 1 iterations to converge if there is no negative cycle reachable from u.
+	for (i = 1, converged = false; converged and i <= n; i++){
 		converged = true;
 
 		// For every vertex u.
@@ -33,20 +33,6 @@ bool bellman_ford(int u){
 		}
 	}
 
-	// For every vertex u.
-	for (u = 1; u <= n; u++){
-		// For every edge (u, v).
-		for (i = 0; i < (int)g[u].size(); i++){
-			v = g[u][i].first;
-			w = g[u][i].second;
-
-			// If I can still relax an edge after n - 1 iterations, I've found a negative cycle.
-			if (dist[u] + w < dist[v]){
-				return true;
-			}
-		}
-	}
-
-	// No negative cycle reachable from u.
-	return false;
+	// Returns true if it didn't converge after n - 1 iterations.
+	return !converged;
 }
