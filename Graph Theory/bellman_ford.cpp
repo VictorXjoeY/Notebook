@@ -7,13 +7,16 @@ int n;
 /* O(V * E) Returns true if there is a negative cycle reachable from u. */
 bool bellman_ford(int u){
 	int v, w, i, j;
+	bool converged;
 
 	// Initializing.
 	memset(dist, 0x3f, sizeof(dist));
 	dist[u] = 0;
 
-	// Takes n - 1 iterations to converge.
-	for (i = 1; i <= n - 1; i++){
+	// Takes at most n - 1 iterations to converge.
+	while (!converged){
+		converged = true;
+
 		// For every vertex u.
 		for (u = 1; u <= n; u++){
 			// For every edge (u, v).
@@ -24,6 +27,7 @@ bool bellman_ford(int u){
 				// Trying to relax this edge.
 				if (dist[u] + w < dist[v]){
 					dist[v] = dist[u] + w;
+					converged = false;
 				}
 			}
 		}
