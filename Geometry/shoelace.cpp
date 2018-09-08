@@ -14,6 +14,7 @@ struct Point{
 Point p[N + 1];
 int n;
 
+/* O(N). Computes the area of a simple (convex or concave) polygon. */
 double shoelace(){
 	long long ans;
 	int i;
@@ -21,10 +22,10 @@ double shoelace(){
 	ans = 0;
 
 	for (i = 1; i < n; i++){
-		ans += x[i] * y[i + 1] - x[i + 1] * y[i];
+		ans += p[i].x * p[i + 1].y - p[i + 1].x * p[i].y;
 	}
 
-	ans += x[n] * y[1] - x[1] * y[n];
+	ans += p[n].x * p[1].y - p[1].x * p[n].y;
 
 	return abs(ans) / 2.0;
 }

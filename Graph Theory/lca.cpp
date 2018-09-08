@@ -2,13 +2,36 @@
 #define L 20
 
 int ancestor[N + 1][L + 1];
+vector<int> g[N + 1];
 int parent[N + 1];
 int depth[N + 1];
+bool seen[N + 1];
+
+/* O(V). Depth-First Search to compute depths. */
+void dfs(int u, int d){
+	int v, i;
+
+	seen[u] = true;
+	depth[u] = d;
+
+	for (i = 0; i < (int)g[u].size(); i++){
+		v = g[u][i];
+
+		if (!seen[v]){
+			dfs(v, d + 1);
+			parent[v] = u;
+		}
+	}
+}
 
 /* O(V * log(V)). */
 void lca_init(){
 	int i, j;
 
+	// Computing the depth and the parent arrays.
+	parent[1] = -1;
+	dfs(1, 0);
+	
 	// Initializing.
 	memset(ancestor, -1, sizeof(ancestor));
 

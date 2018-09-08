@@ -12,7 +12,7 @@ struct Trie{
 vector<Trie> vt = {Trie()};
 
 /* O(|S|). */
-void trie_insert(int cur, string &s, int p){
+void trie_insert(int cur, const string &s, int p){
 	// String was completely inserted.
 	if (p == (int)s.size()){
 		vt[cur].terminal++;
@@ -33,7 +33,7 @@ void trie_insert(int cur, string &s, int p){
 }
 
 /* O(|S|). */
-int trie_count(int cur, string &s, int p){
+int trie_count(int cur, const string &s, int p){
 	// String completely processed, returning number of terminals in this position.
 	if (p == (int)s.size()){
 		return vt[cur].terminal;

@@ -18,6 +18,8 @@ Point p[N + 1]; // Points.
 Point px[N + 1]; // Points sorted by x.
 vector<int> seg_x[4 * N + 1]; // Segments sorted by y.
 vector<int> seg_y[4 * N + 1]; // Segment Trees on y.
+int dp[N + 1];
+int n;
 
 /* O(1) - Merge for seg_y[][]. */
 int merge_y(int nl, int nr){
@@ -159,4 +161,29 @@ void update_x(int cur, int l, int r, int x, int y, int val){
 
 	// Merging by updating the new best value.
 	update_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, y, merge_y(nl, nr));
+}
+
+/* O(N * Log^2(N)). */
+int lis_2d(){
+	int i;
+
+	// Copying points into px.
+	for (i = 0; i < n; i++){
+		px[i] = p[i];
+	}
+
+	// Sorting by x.
+	sort(px, px + n);
+
+	// Building.
+	build_x(1, 0, n - 1);
+
+	// Filling dp.
+	for (i = 0; i < n; i++){
+		dp[i] = 1 + query_x(1, 0, n - 1, 1, p[i].x, 1, p[i].y);
+		update_x(1, 0, n - 1, p[i].x, p[i].y, dp[i]);
+	}
+
+	// Returning LIS.
+	return *max_element(dp, dp + n);
 }

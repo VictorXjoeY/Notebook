@@ -1,6 +1,6 @@
 /* O(N). Use pattern#string. z[i] = the length of the longest match between
 the prefix starting at s[i] and the prefix of s. */
-vector<int> z(string &s){
+vector<int> z(const string &s){
 	vector<int> ans;
 	int n, l, r, i;
 

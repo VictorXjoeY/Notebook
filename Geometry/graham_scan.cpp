@@ -8,7 +8,7 @@ struct Point{
 		this->y = y;
 	}
 
-	bool operator < (const Point& b) const{
+	bool operator < (const Point &b) const{
 		if (this->x == b.x){
 			return this->y < b.y;
 		}
@@ -17,19 +17,17 @@ struct Point{
 	}
 };
 
-long long cross(Point a, Point b){
+long long cross(const Point &a, const Point &b){
 	return a.x * b.y - a.y * b.x;
 }
 
-Point sub(Point a, Point b){
+Point sub(const Point &a, const Point &b){
 	return Point(a.x - b.x, a.y - b.y);
 }
 
-stack<Point> ch;
-vector<Point> v;
 Point p;
 
-bool comp(Point &a, Point &b){
+bool comp(const Point &a, const Point &b){
 	// Same angle. Closest point first.
 	if (cross(sub(a, p), sub(b, p)) == 0){
 		return a < b;
@@ -40,7 +38,8 @@ bool comp(Point &a, Point &b){
 }
 
 /* O(N * log(N)). */
-void graham_scan(){
+stack<Point> graham_scan(vector<Point> v){
+	stack<Point> ch;
 	Point a, b, c;
 	int i;
 
@@ -81,4 +80,6 @@ void graham_scan(){
 		// Appending C.
 		ch.push(c);
 	}
+
+	return ch;
 }

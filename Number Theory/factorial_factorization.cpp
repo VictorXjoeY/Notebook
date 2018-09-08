@@ -1,4 +1,4 @@
-/* O(logp(n)) Returns the number of factors p in n!. */
+/* O(logp(n)) Returns the number of prime factors p in n!. */
 long long factorial_factorization(long long n, long long p){
 	long long ans, k;
 

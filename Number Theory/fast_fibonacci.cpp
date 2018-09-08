@@ -3,7 +3,7 @@
 vector<vector<long long> > identity;
 
 /* O(N^3). */
-vector<vector<long long> > matrix_mul(vector<vector<long long> > &A, vector<vector<long long> > &B){
+vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const vector<vector<long long> > &B){
 	vector<vector<long long> > C;
 	int i, j, k;
 

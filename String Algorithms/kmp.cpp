@@ -1,6 +1,6 @@
 /* O(N). Use pattern#string. prefix[i] = the length of the longest match between
 the suffix ending at s[i] and the prefix of s. */
-vector<int> kmp(string &s){
+vector<int> kmp(const string &s){
 	vector<int> ans;
 	int n, i;
 

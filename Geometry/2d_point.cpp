@@ -14,12 +14,12 @@ struct Point{
 	}
 
 	// Vector sum.
-	Point operator + (const Point& b) const{
+	Point operator + (const Point &b) const{
 		return Point(this->x + b.x, this->y + b.y);
 	}
 
 	// Vector sum (cumulative).
-	Point& operator += (const Point& b){
+	Point &operator += (const Point &b){
 		this->x += b.x;
 		this->y += b.y;
 
@@ -27,7 +27,7 @@ struct Point{
 	}
 
 	// Vector subtraction.
-	Point operator - (const Point& b) const{
+	Point operator - (const Point &b) const{
 		return Point(this->x - b.x, this->y - b.y);
 	}
 
@@ -37,7 +37,7 @@ struct Point{
 	}
 
 	// Vector subtraction (cumulative).
-	Point& operator -= (const Point& b){
+	Point &operator -= (const Point &b){
 		this->x -= b.x;
 		this->y -= b.y;
 
@@ -50,7 +50,7 @@ struct Point{
 	}
 
 	// Vector product by scalar (cumulative).
-	Point& operator *= (int a){
+	Point &operator *= (int a){
 		this->x *= a;
 		this->y *= a;
 
@@ -63,7 +63,7 @@ struct Point{
 	}
 
 	// Vector division by scalar (cumulative).
-	Point& operator /= (int a){
+	Point &operator /= (int a){
 		this->x /= a;
 		this->y /= a;
 
@@ -71,12 +71,12 @@ struct Point{
 	}
 
 	// Dot product.
-	int operator * (const Point& b) const{
+	int operator * (const Point &b) const{
 		return this->x * b.x + this->y * b.y;
 	}
 
 	// Cross product.
-	int operator ^ (const Point& b) const{
+	int operator ^ (const Point &b) const{
 		return this->x * b.y - this->y * b.x;
 	}
 
@@ -86,7 +86,7 @@ struct Point{
 	}
 
 	// Compare function.
-	bool operator < (const Point& b) const{
+	bool operator < (const Point &b) const{
 		if (this->x == b.x){
 			return this->y < b.y;
 		}
@@ -95,30 +95,30 @@ struct Point{
 	}
 
 	// Compare function.
-	bool operator > (const Point& b) const{
+	bool operator > (const Point &b) const{
 		return b < *this;
 	}
 
 	// Compare function.
-	bool operator == (const Point& b) const{
+	bool operator == (const Point &b) const{
 		return this->x == b.x and this->y == b.y;
 	}
 
 	// Compare function.
-	bool operator != (const Point& b) const{
+	bool operator != (const Point &b) const{
 		return !(*this == b);
 	}
 };
 
 // Overloading stream operator in order to print a point.
-ostream& operator << (ostream& out, const Point& p){
+ostream& operator << (ostream& out, const Point &p){
     out << "(" << p.x << ", " << p.y << ")";
  
     return out;
 }
  
 // Overloading stream operator in order to read a point.
-istream& operator >> (istream& in, Point& p){
+istream& operator >> (istream& in, Point &p){
     in >> p.x >> p.y;
  
     return in;
