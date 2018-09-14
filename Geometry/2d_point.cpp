@@ -1,14 +1,13 @@
 struct Point{
-	int x, y;
+	long long x, y;
 
 	// Empty constructor.
 	Point(){
-		this->x = 0;
-		this->y = 0;
+		this->x = this->y = 0;
 	}
 
 	// Constructor.
-	Point(int x, int y){
+	Point(long long x, long long y){
 		this->x = x;
 		this->y = y;
 	}
@@ -45,12 +44,12 @@ struct Point{
 	}
 
 	// Vector product by scalar.
-	Point operator * (int a){
+	Point operator * (long long a){
 		return Point(this->x * a, this->y * a);
 	}
 
 	// Vector product by scalar (cumulative).
-	Point &operator *= (int a){
+	Point &operator *= (long long a){
 		this->x *= a;
 		this->y *= a;
 
@@ -58,12 +57,12 @@ struct Point{
 	}
 
 	// Vector division by scalar.
-	Point operator / (int a){
+	Point operator / (long long a){
 		return Point(this->x / a, this->y / a);
 	}
 
 	// Vector division by scalar (cumulative).
-	Point &operator /= (int a){
+	Point &operator /= (long long a){
 		this->x /= a;
 		this->y /= a;
 
@@ -71,17 +70,17 @@ struct Point{
 	}
 
 	// Dot product.
-	int operator * (const Point &b) const{
+	long long operator * (const Point &b) const{
 		return this->x * b.x + this->y * b.y;
 	}
 
 	// Cross product.
-	int operator ^ (const Point &b) const{
+	long long operator ^ (const Point &b) const{
 		return this->x * b.y - this->y * b.x;
 	}
 
 	// Squared norm.
-	int operator ! () const{
+	long long operator ! () const{
 		return this->x * this->x + this->y * this->y;
 	}
 
@@ -101,7 +100,7 @@ struct Point{
 
 	// Compare function.
 	bool operator == (const Point &b) const{
-		return this->x == b.x and this->y == b.y;
+		return !(*this < b) and !(*this > b);
 	}
 
 	// Compare function.
