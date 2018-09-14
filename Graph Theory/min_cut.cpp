@@ -76,11 +76,11 @@ int edmonds_karp(int s, int t){
 			u = P[v];
 
 			F[u][v] += m;
-            F[v][u] -= m;
-            T[u][v] -= m;
-            T[v][u] += m;
+			F[v][u] -= m;
+			T[u][v] -= m;
+			T[v][u] += m;
 
-            v = u;
+			v = u;
 		}
 	}
 
