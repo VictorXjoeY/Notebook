@@ -1,3 +1,12 @@
+/* 
+Minimum Vertex Cover:
+	- Make matching edges from right to left (B to A).
+	- Make non-matching edges from left to right (A to B).
+	- Run a DFS from vertices that don't belong to the matching.
+	- The Minimum Vertex Cover will be the vertices from the left (A) that WERE NOT visited
+	and the vertices from the right (B) that WERE visited.
+*/
+
 #define N 1000
 
 vector<int> g[N + 1];
