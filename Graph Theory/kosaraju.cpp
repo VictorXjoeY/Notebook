@@ -2,7 +2,7 @@
 
 vector<int> g[N + 1];
 vector<int> gt[N + 1];
-vector<int> gs[N + 1];
+vector<int> gs[N + 1]; // This graph will be topologically sorted after running Kosaraju's Algorithm.
 vector<int> component[N + 1];
 bool seen[N + 1];
 int color[N + 1];
