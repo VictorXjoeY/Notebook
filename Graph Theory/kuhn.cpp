@@ -1,10 +1,16 @@
 /* 
-Minimum Vertex Cover:
+Konig's Theorem states that: "In any bipartite graph, the number of edges
+in a maximum matching equals the number of vertices in a minimum vertex cover."
+
+Building the Minimum Vertex Cover:
 	- Make matching edges from right to left (B to A).
 	- Make non-matching edges from left to right (A to B).
 	- Run a DFS from vertices that don't belong to the matching.
 	- The Minimum Vertex Cover will be the vertices from the left (A) that WERE NOT visited
 	and the vertices from the right (B) that WERE visited.
+
+The complement of a Vertex Cover is an Independent Set, therefore a
+Maximum Independent Set is the complement of a Minimum Vertex Cover.
 */
 
 #define N 1000
@@ -36,12 +42,40 @@ bool dfs(int u){
 	return false;
 }
 
+/* O(V + E). Partitions the vertices in 2 sets by bicoloring. */
+void bicolor(int u, bool color){
+	int v, i;
+
+	seen[u] = true;
+	in_a[u] = color;
+
+	for (i = 0; i < (int)g[u].size(); i++){
+		v = g[u][i];
+
+		if (!seen[v]){
+			bicolor(v, !color);
+		}
+		else if (in_a[u] == in_a[v]){
+			// Graph is not Bipartite.
+			assert(false);
+		}
+	}
+}
+
 /* O(V * E). The graph can be either directed (from Set A to Set B) or undirected.
-   Vertices from Set A and from Set B must all have different indexes. Vertices
-   should be marked as "in_a" or not "in_a" beforehand.
+   Vertices from Set A and from Set B must all have different indexes.
    This works on ANY Bipartite Graph. */
 int kuhn(){
 	int ans, cur, u;
+
+	memset(seen, false, sizeof(seen));
+
+	// Filling the "in_a" array.
+	for (u = 1; u <= n; u++){
+		if (!seen[u]){
+			bicolor(u, true);
+		}
+	}
 
 	// Initializing every vertex as unmatched.
 	memset(match, -1, sizeof(match));
