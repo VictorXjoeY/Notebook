@@ -4,22 +4,14 @@
 
 struct Point{
 	int x, y;
-
-	bool operator < (const Point &b) const{
-		if (this->x == b.x){
-			return this->y < b.y;
-		}
-
-		return this->x < b.x;
-	}
 };
 
-Point p[N + 1]; // Points.
-Point px[N + 1]; // Points sorted by x.
-vector<int> seg_x[4 * N + 1]; // Segments sorted by y.
+vector<Point> p; // Points.
+vector<int> vx; // X coordinates (sorted and unique).
+vector<int> seg_x[4 * N + 1]; // Segments of y coordinates (sorted and unique).
 vector<int> seg_y[4 * N + 1]; // Segment Trees on y.
-int dp[N + 1];
-int n;
+vector<vector<int> > mx; // Unique y values for every x value.
+vector<int> dp;
 
 /* O(1) - Merge for seg_y[][]. */
 int merge_y(int nl, int nr){
@@ -32,6 +24,7 @@ vector<int> merge_x(const vector<int> &nl, const vector<int> &nr){
 
 	ans.resize(nl.size() + nr.size());
 	merge(nl.begin(), nl.end(), nr.begin(), nr.end(), ans.begin());
+	ans.resize(unique(ans.begin(), ans.end()) - ans.begin());
 
 	return ans;
 }
@@ -54,16 +47,18 @@ void build_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r){
 	seg[cur] = merge_y(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-/* O(N * Log(N)) - Builds a segment tree over a 0-based array of points. Use build_x(1, 0, n - 1) to build. */
+/* O(N) - Builds a segment tree over a 0-based array of points. Use build_x(1, 0, vx.size() - 1) to build. */
 void build_x(int cur, int l, int r){
-	int m = (l + r) / 2;
+	int i, m = (l + r) / 2;
 
-	// Allocating memory for the segment tree stored in this node.
-	seg_y[cur].resize(4 * (r - l + 1) + 1);
-	
-	if (l == r){
-		// Creating leaf and building segment tree on y coordinate.
-		seg_x[cur].push_back(px[l].y);
+	if (l == r){ // Creating leaf and building segment tree on y coordinate.
+		// Inserting every unique sorted y coordinate that has vx[l] as x coordinate.
+		for (i = 0; i < (int)mx[l].size(); i++){
+			seg_x[cur].push_back(mx[l][i]);
+		}
+
+		// Allocating memory for the segment tree stored in this leaf.
+		seg_y[cur].resize(4 * (int)seg_x[cur].size() + 1);
 		build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 		return;
 	}
@@ -74,6 +69,7 @@ void build_x(int cur, int l, int r){
 
 	// Merging and building segment tree on y coordinates.
 	seg_x[cur] = merge_x(seg_x[LEFT(cur)], seg_x[RIGHT(cur)]);
+	seg_y[cur].resize(4 * (int)seg_x[cur].size() + 1);
 	build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 }
 
@@ -99,11 +95,11 @@ int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int 
 int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf){
 	int nl, nr, m = (l + r) / 2;
 
-	if (px[l].x > xf or px[r].x < xi){
+	if (vx[l] > xf or vx[r] < xi){
 		return 0;
 	}
 
-	if (px[l].x >= xi and px[r].x <= xf){
+	if (vx[l] >= xi and vx[r] <= xf){
 		return query_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, yi, yf);
 	}
 
@@ -141,12 +137,12 @@ void update_x(int cur, int l, int r, int x, int y, int val){
 	int nl, nr, m = (l + r) / 2;
 
 	// Outside of update range.
-	if (px[l].x > x or px[r].x < x){
+	if (vx[l] > x or vx[r] < x){
 		return;
 	}
 	
 	// Found node with the correct x value. Not necessarily a leaf node.
-	if (px[l].x == px[r].x){
+	if (vx[l] == vx[r]){
 		update_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, y, val);
 		return;
 	}
@@ -163,27 +159,50 @@ void update_x(int cur, int l, int r, int x, int y, int val){
 	update_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, y, merge_y(nl, nr));
 }
 
+/* O(N * Log(N)) */
+void init(){
+	int pos, i;
+
+	// Retrieving x coordinates.
+	for (i = 0; i < (int)p.size(); i++){
+		vx.push_back(p[i].x);
+	}
+
+	// Making x coordinates unique.
+	sort(vx.begin(), vx.end());
+	vx.resize(unique(vx.begin(), vx.end()) - vx.begin());
+
+	// Retrieving y coordinates for every x coordinate.
+	mx.resize(vx.size());
+
+	for (i = 0; i < (int)p.size(); i++){
+		pos = lower_bound(vx.begin(), vx.end(), p[i].x) - vx.begin();
+		mx[pos].push_back(p[i].y);
+	}
+
+	// Making y coordinates unique for every x coordinate.
+	for (i = 0; i < (int)mx.size(); i++){
+		sort(mx[i].begin(), mx[i].end());
+		mx[i].resize(unique(mx[i].begin(), mx[i].end()) - mx[i].begin());
+	}
+
+	// Building.
+	build_x(1, 0, (int)vx.size() - 1);
+}
+
 /* O(N * Log^2(N)). */
 int lis_2d(){
 	int i;
 
-	// Copying points into px.
-	for (i = 0; i < n; i++){
-		px[i] = p[i];
-	}
-
-	// Sorting by x.
-	sort(px, px + n);
-
-	// Building.
-	build_x(1, 0, n - 1);
+	init();
+	dp.resize(p.size());
 
 	// Filling dp.
-	for (i = 0; i < n; i++){
-		dp[i] = 1 + query_x(1, 0, n - 1, 1, p[i].x, 1, p[i].y);
-		update_x(1, 0, n - 1, p[i].x, p[i].y, dp[i]);
+	for (i = 0; i < (int)p.size(); i++){
+		dp[i] = 1 + query_x(1, 0, (int)vx.size() - 1, 1, p[i].x, 1, p[i].y);
+		update_x(1, 0, (int)vx.size() - 1, p[i].x, p[i].y, dp[i]);
 	}
 
 	// Returning LIS.
-	return *max_element(dp, dp + n);
+	return *max_element(dp.begin(), dp.end());
 }
