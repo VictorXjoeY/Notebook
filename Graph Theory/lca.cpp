@@ -25,15 +25,15 @@ void dfs(int u, int d){
 }
 
 /* O(V * log(V)). */
-void lca_init(){
+void lca_init(int u){
 	int i, j;
 
-	// Computing the depth and the parent arrays.
-	parent[1] = -1;
-	dfs(1, 0);
-	
 	// Initializing.
+	memset(parent, -1, sizeof(parent));
 	memset(ancestor, -1, sizeof(ancestor));
+
+	// Computing the depth and the parent arrays.
+	dfs(u, 0);
 
 	// Base case for Dynamic Programming.
 	for (i = 1; i <= N; i++){
