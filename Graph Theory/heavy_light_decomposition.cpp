@@ -71,6 +71,47 @@ void build(int cur, int l, int r){
 	seg[cur] = merge(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
+/* O(V + E) - Builds the Heavy-Light structure. */
+void init(int root){
+	int u, i;
+
+	// Initialize.
+	memset(seen, false, sizeof(seen));
+	memset(size, 0, sizeof(size));
+	parent[root] = 0;
+	timer = 0;
+
+	dfs_init(root, 0);
+
+	// Clears graph.
+	for (u = 1; u <= n; u++){
+		g[u].clear();
+	}
+
+	// Transforms the undirected tree into a directed tree.
+	for (u = 1; u <= n; u++){
+		if (u != root){
+			g[parent[u]].push_back(make_pair(u, weight[u]));
+		}
+	}
+
+	// Place the child v with the greatest subtree first in the adjacency list of u.
+	for (u = 1; u <= n; u++){
+		for (i = 1; i < (int)g[u].size(); i++){
+			if (size[g[u][i].first] > size[g[u][0].first]){
+				swap(g[u][i], g[u][0]);
+			}
+		}
+	}
+
+	// Building chains.
+	chain[root] = root;
+	dfs_hld(root);
+
+	// Building Segment Tree.
+	build(1, 1, n);
+}
+
 /* O(Log(N)). Use update(1, 1, n, d[u], w) to update u with the value w. */
 void update(int cur, int l, int r, int pos, int w){
 	int m = (l + r) / 2;
@@ -106,46 +147,6 @@ int query(int cur, int l, int r, int i, int j){
 	nr = query(RIGHT(cur), m + 1, r, i, j);
 
 	return merge(nl, nr);
-}
-
-/* O(V + E) - Builds the Heavy-Light structure. */
-void init(int root){
-	int u, i;
-
-	// Fill parent and size.
-	memset(seen, false, sizeof(seen));
-	memset(size, 0, sizeof(size));
-	parent[root] = 0;
-
-	dfs_init(root, 0);
-
-	// Clears graph.
-	for (u = 1; u <= n; u++){
-		g[u].clear();
-	}
-
-	// Transforms the undirected tree into a directed tree.
-	for (u = 1; u <= n; u++){
-		if (u != root){
-			g[parent[u]].push_back(make_pair(u, weight[u]));
-		}
-	}
-
-	// Place the child v with the greatest subtree first in the adjacency list of u.
-	for (u = 1; u <= n; u++){
-		for (i = 1; i < (int)g[u].size(); i++){
-			if (size[g[u][i].first] > size[g[u][0].first]){
-				swap(g[u][i], g[u][0]);
-			}
-		}
-	}
-
-	// Building chains.
-	chain[root] = root;
-	dfs_hld(root);
-
-	// Building Segment Tree.
-	build(1, 1, n);
 }
 
 /* O(Log^2(N)) - Queries the path between u and v. */
