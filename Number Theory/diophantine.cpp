@@ -1,7 +1,7 @@
 /* O(log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-int extended_gcd(int a, int b, int &x, int &y){
-    int x1, y1, gcd;
+long long extended_gcd(long long a, long long b, long long &x, long long &y){
+    long long x1, y1, gcd;
 
     if (a == 0){
         x = 0;
@@ -16,12 +16,26 @@ int extended_gcd(int a, int b, int &x, int &y){
     return gcd;
 }
 
-/* O(log(max(a, b))). */
-/* a * x1 + b * y1 = c */
-/* x = x1 - t * (b / gcd(a, b)) */
-/* y = y1 + t * (a / gcd(a, b)) */
-int diophantine(int a, int b, int c, int &x1, int &y1){
-    int gcd, k, t;
+/* O(log(max(a, b))).
+a * x + b * y = c
+    x = x1 + k * (b / gcd(a, b))
+    y = y1 - k * (a / gcd(a, b))
+
+a * x - b * y = c ---> a * x + b * (-y) = c
+    x = x1 + k * (b / gcd(a, b))
+    -y = y1 - k * (a / gcd(a, b)) ---> y = -y1 + k * (a / gcd(a, b))
+
+-a * x + b * y = c ---> a * (-x) + b * y = c
+    -x = x1 + k * (b / gcd(a, b)) ---> x = -x1 - k * (b / gcd(a, b))
+    y = y1 - k * (a / gcd(a, b))
+
+-a * x - b * y = c ---> a * (-x) + b * (-y) = c
+    -x = x1 + k * (b / gcd(a, b)) ---> x = -x1 - k * (b / gcd(a, b))
+    -y = y1 - k * (a / gcd(a, b)) ---> y = -y1 + k * (a / gcd(a, b))
+    
+Has a solution if and only if gcd(a, b) divides c. GCD will be positive if a and b are positive. */
+long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1){
+    long long gcd, k, t;
 
     // Obtaining a * x1 + b * y1 = gcd(a, b)
     gcd = extended_gcd(a, b, x1, y1);
