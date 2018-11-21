@@ -90,7 +90,7 @@ int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int 
 	return merge_y(nl, nr);
 }
 
-/* O(Log^2(N)) - Query. */
+/* O(Log^2(N)) - Query. query_x(1, 0, (int)vx.size() - 1, xi, xf, yi, yf) */
 int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf){
 	int nl, nr, m = (l + r) / 2;
 
@@ -131,7 +131,7 @@ void update_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, in
 	seg[cur] = merge_y(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-/* O(Log^2(N)) - Update. */
+/* O(Log^2(N)) - Update. update_x(1, 0, (int)vx.size() - 1, x, y, val) */
 void update_x(int cur, int l, int r, int x, int y, int val){
 	int nl, nr, m = (l + r) / 2;
 
