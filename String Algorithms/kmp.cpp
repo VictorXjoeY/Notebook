@@ -2,14 +2,13 @@
 the suffix ending at s[i] and the prefix of s. */
 vector<int> kmp(const string &s){
 	vector<int> ans;
-	int n, i;
+	int i;
 
 	// Initialization.
-	n = s.size();
-	ans.resize(n);
+	ans.resize(s.size());
 	ans[0] = 0;
 
-	for (i = 1; i < n; i++){
+	for (i = 1; i < (int)s.size(); i++){
 		ans[i] = ans[i - 1];
 
 		while (ans[i] > 0 and s[i] != s[ans[i]]){
@@ -17,7 +16,7 @@ vector<int> kmp(const string &s){
 		}
 
 		if (s[i] == s[ans[i]]){
-			ans[i] += 1;
+			ans[i]++;
 		}
 	}
 
