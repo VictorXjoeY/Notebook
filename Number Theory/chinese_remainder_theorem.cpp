@@ -4,7 +4,7 @@ long long a[N + 1];
 long long m[N + 1];
 int n;
 
-/* O(log(max(a, b))). */
+/* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y){
 	long long x1, y1, gcd;
@@ -22,7 +22,7 @@ long long extended_gcd(long long a, long long b, long long &x, long long &y){
 	return gcd;
 }
 
-/* O(log(max(a, b))).
+/* O(Log(max(a, b))).
 a * x + b * y = c
 	x = x1 + k * (b / gcd(a, b))
 	y = y1 - k * (a / gcd(a, b))
@@ -64,7 +64,7 @@ long long diophantine(long long a, long long b, long long c, long long &x1, long
 	return gcd;
 }
 
-/* O(N * log(lcm(m1, m2, ..., mn))) - General Chinese Remainder Theorem.
+/* O(N * Log(lcm(m1, m2, ..., mn))) - General Chinese Remainder Theorem.
 
 Considering the following family of linear congruences:
 

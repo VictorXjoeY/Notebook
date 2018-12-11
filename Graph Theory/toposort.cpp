@@ -7,7 +7,7 @@ int ans[N + 1];
 stack<int> s;
 int n;
 
-/* O(V + E). Returns true if a cycle is found from u. */
+/* O(V + E) - Returns true if a cycle is found from u. */
 bool dfs(int u){
 	int v, i;
 
@@ -35,7 +35,7 @@ bool dfs(int u){
 	return false;
 }
 
-/* O(V + E). Returns true if a topological sorting exists. */
+/* O(V + E) - Returns true if a topological sorting exists. */
 bool toposort(){
 	int u, i;
 

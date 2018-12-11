@@ -14,7 +14,7 @@ int seg[4 * N + 1];
 int chain[N + 1]; // chain[u] stores the chain index of the vertex u. chain[u] = u if u is the representative of his chain.
 int timer, n;
 
-/* O(V + E) - Fills parent[], weight[], size[] and depth[]. */
+/* O(V) - Fills parent[], weight[], size[] and depth[]. */
 void dfs_init(int u, int cur_depth){
 	int v, w, i;
 
@@ -35,7 +35,7 @@ void dfs_init(int u, int cur_depth){
 	}
 }
 
-/* O(V + E) - Fills d[], d_inv[] and chain[]. */
+/* O(V) - Fills d[], d_inv[] and chain[]. */
 void dfs_hld(int u){
 	int v, i;
 
@@ -54,7 +54,7 @@ int merge(int nl, int nr){
 	return max(nl, nr);
 }
 
-/* O(N). */
+/* O(V). */
 void build(int cur, int l, int r){
 	int u, m = (l + r) / 2;
 
@@ -71,48 +71,7 @@ void build(int cur, int l, int r){
 	seg[cur] = merge(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-/* O(V + E) - Builds the Heavy-Light structure. */
-void init(int root){
-	int u, i;
-
-	// Initialize.
-	memset(seen, false, sizeof(seen));
-	memset(size, 0, sizeof(size));
-	parent[root] = 0;
-	timer = 0;
-
-	dfs_init(root, 0);
-
-	// Clears graph.
-	for (u = 1; u <= n; u++){
-		g[u].clear();
-	}
-
-	// Transforms the undirected tree into a directed tree.
-	for (u = 1; u <= n; u++){
-		if (u != root){
-			g[parent[u]].push_back(make_pair(u, weight[u]));
-		}
-	}
-
-	// Place the child v with the greatest subtree first in the adjacency list of u.
-	for (u = 1; u <= n; u++){
-		for (i = 1; i < (int)g[u].size(); i++){
-			if (size[g[u][i].first] > size[g[u][0].first]){
-				swap(g[u][i], g[u][0]);
-			}
-		}
-	}
-
-	// Building chains.
-	chain[root] = root;
-	dfs_hld(root);
-
-	// Building Segment Tree.
-	build(1, 1, n);
-}
-
-/* O(Log(N)). Use update(1, 1, n, d[u], w) to update u with the value w. */
+/* O(Log(N)) - Use update(1, 1, n, d[u], w) to update u with the value w. */
 void update(int cur, int l, int r, int pos, int w){
 	int m = (l + r) / 2;
 
@@ -150,7 +109,7 @@ int query(int cur, int l, int r, int i, int j){
 }
 
 /* O(Log^2(N)) - Queries the path between u and v. */
-int solve(int u, int v){
+int hld_query(int u, int v){
 	int ans = 0;
 
 	// While u and v don't belong to the same chain.
@@ -169,4 +128,45 @@ int solve(int u, int v){
 	ans = merge(ans, query(1, 1, n, min(d[u], d[v]) + 1, max(d[u], d[v])));
 
 	return ans;
+}
+
+/* O(V) - Builds the Heavy-Light structure. */
+void hld_init(int root){
+	int u, i;
+
+	// Initialize.
+	memset(seen, false, sizeof(seen));
+	memset(size, 0, sizeof(size));
+	parent[root] = 0;
+	timer = 0;
+
+	dfs_init(root, 0);
+
+	// Clears graph.
+	for (u = 1; u <= n; u++){
+		g[u].clear();
+	}
+
+	// Transforms the undirected tree into a directed tree.
+	for (u = 1; u <= n; u++){
+		if (u != root){
+			g[parent[u]].push_back(make_pair(u, weight[u]));
+		}
+	}
+
+	// Place the child v with the greatest subtree first in the adjacency list of u.
+	for (u = 1; u <= n; u++){
+		for (i = 1; i < (int)g[u].size(); i++){
+			if (size[g[u][i].first] > size[g[u][0].first]){
+				swap(g[u][i], g[u][0]);
+			}
+		}
+	}
+
+	// Building chains.
+	chain[root] = root;
+	dfs_hld(root);
+
+	// Building Segment Tree.
+	build(1, 1, n);
 }

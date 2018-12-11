@@ -3,7 +3,7 @@
 
 long long f[N + 1];
 
-/* O(log(y)). */
+/* O(Log(Y)). */
 long long fast_exp(long long x, long long y){
 	long long ans = 1; // Base case.
 
@@ -21,7 +21,7 @@ long long fast_exp(long long x, long long y){
 	return ans;
 }
 
-/* O(log(MOD)). */
+/* O(Log(MOD)). */
 long long nck(long long n, long long k){
 	long long num, den;
 

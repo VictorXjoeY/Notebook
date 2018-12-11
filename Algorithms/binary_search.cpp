@@ -4,6 +4,7 @@ bool check(double m){
 	return true;
 }
 
+/* O(Log(N)). */
 void binary_search_double(){
 	double l, r, m;
 
@@ -36,6 +37,7 @@ bool check(int m){
 	return true;
 }
 
+/* O(Log(N)). */
 void binary_search_int(){
 	int l, r, m;
 

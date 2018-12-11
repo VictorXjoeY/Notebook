@@ -4,6 +4,7 @@ double f(double x){
 	return 0.0;
 }
 
+/* O(Log(N)). */
 void ternary_search_double(){
 	double l, r, m1, m2;
 
@@ -38,7 +39,7 @@ int f(int x){
 	return 0;
 }
 
-/* Must be strictly increasing or strictly decreasing where it is not Maximum/Minimum. */
+/* O(Log(N)) - Must be strictly increasing or strictly decreasing where it is not Maximum/Minimum. */
 void ternary_search_int(){
 	int l, r, m;
 

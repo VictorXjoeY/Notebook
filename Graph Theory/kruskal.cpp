@@ -22,22 +22,24 @@ public:
 		}
 	}
 
-	int findSet(int u){
+	/* O(1). */
+	int find_set(int u){
 		// Found representative.
 		if (u == p[u]){
 			return u;
 		}
 
 		// Compressing the path as we search for the set's representative.
-		return p[u] = findSet(p[u]);
+		return p[u] = find_set(p[u]);
 	}
 
-	void unionSet(int u, int v){
+	/* O(1). */
+	void union_set(int u, int v){
 		int x, y;
 
 		// Finding representatives of u and v.
-		x = findSet(u);
-		y = findSet(v);
+		x = find_set(u);
+		y = find_set(v);
 
 		// If u and v belong to different sets.
 		if (x != y){
@@ -60,12 +62,14 @@ public:
 		}
 	}
 
-	int numSets(){
+	/* O(1). */
+	int num_sets(){
 		return n;
 	}
 
-	int setSize(int u){
-		return size[findSet(u)];
+	/* O(1). */
+	int set_size(int u){
+		return size[find_set(u)];
 	}
 };
 
@@ -88,7 +92,7 @@ struct Edge{
 Edge e[M + 1];
 int n, m;
 
-/* O(E * log(E)). */
+/* O(E * Log(E)). */
 int kruskal(){
 	UnionFind uf;
 	int ans, i;

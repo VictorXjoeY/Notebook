@@ -9,7 +9,7 @@ int men_match[N + 1]; // men_match[i] stores the index of the man matched with t
 queue<int> available_men; // Stores the men which are still available (with men_match value 0). Could be any data structure.
 int n;
 
-/* O(N^2). Gale Shapley algorithm to produce a Stable Matching between n men and n women. */
+/* O(N^2) - Gale Shapley algorithm to produce a Stable Matching between n men and n women. */
 void gale_shapley(){
 	int i, j, k, x, y;
 

@@ -1,10 +1,9 @@
 struct Trie{
-	int child[26];
-	int terminal;
+	int child[26], terminal;
 
 	Trie(){
-		memset(child, -1, sizeof(child));
-		terminal = 0;
+		memset(this->child, -1, sizeof(this->child));
+		this->terminal = 0;
 	}
 };
 

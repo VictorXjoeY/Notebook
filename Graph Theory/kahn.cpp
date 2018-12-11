@@ -6,7 +6,7 @@ int ans[N + 1];
 queue<int> q; // Could be any data structure.
 int n;
 
-/* O(V + E). Returns true if a topological sorting exists. */
+/* O(V + E) - Returns true if a topological sorting exists. */
 bool kahn(){
 	int u, v, i, k;
 

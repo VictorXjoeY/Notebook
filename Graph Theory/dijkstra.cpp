@@ -21,7 +21,7 @@ bool in_spt[N + 1];
 priority_queue<State> pq;
 vector<pair<int, int> > g[N + 1];
 
-/* O(V + E * log(V)). */
+/* O(V + E * Log(V)). */
 void dijkstra(int u){
 	int v, w, i;
 	State cur;

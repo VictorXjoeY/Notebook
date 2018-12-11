@@ -1,4 +1,4 @@
-/* O(N^3). Performs row reduction on an Augmented Matrix A. A has N rows and M + 1 columns. */
+/* O(N^3) - Performs row reduction on an Augmented Matrix A. A has N rows and M + 1 columns. */
 /* The Augmented Matrix of a system of linear equations Ax = b is obtained by concatenating A with b (A|b). */
 void gauss_jordan_elimination(double **A, int n, int m){
 	int i, j, k, l;

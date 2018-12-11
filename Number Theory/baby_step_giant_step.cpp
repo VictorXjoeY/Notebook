@@ -1,4 +1,4 @@
-/* O(log(y)). */
+/* O(Log(y)). */
 long long fast_exp(long long x, long long y, long long mod){
 	long long ans = 1; // Base case.
 

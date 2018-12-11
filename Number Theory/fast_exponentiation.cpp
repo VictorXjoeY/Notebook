@@ -1,6 +1,6 @@
 #define MOD 1000000007
 
-/* O(log(y)). */
+/* O(Log(Y)). */
 long long fast_exp(long long x, long long y){
 	long long ans = 1; // Base case.
 

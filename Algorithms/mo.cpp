@@ -39,7 +39,7 @@ void add(int p){
 
 /* O(Q * log(Q) + Q * sqrt(N)). */
 void mo(){
-	int i;
+	int l, r, i;
 
 	// Sorting queries.
 	sort(q + 1, q + 1 + m);

@@ -1,4 +1,3 @@
-#define INF 0x3f3f3f3f
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 #define N 100000
@@ -7,7 +6,7 @@ int v[N + 1];
 int seg[4 * N + 1];
 int lazy[4 * N + 1];
 
-// Updates the current node with lazy and flusshes down the lazyness.
+/* O(1) - Updates the current node with lazy and flusshes down the lazyness. */
 void lazy_update(int cur, int l, int r){
 	// Updating it.
 	seg[cur] += lazy[cur];
@@ -23,12 +22,12 @@ void lazy_update(int cur, int l, int r){
 	lazy[cur] = 0;
 }
 
-// Merges the children's values.
+/* O(1) - Merges the children's values. */
 int merge(int nl, int nr){
 	return max(nl, nr);
 }
 
-// Builds a Segment Tree "seg" out of the vector "v".
+/* O(N) - Builds a Segment Tree "seg" out of the vector "v". */
 void build(int cur, int l, int r){
 	int m = (l + r) / 2;
 
@@ -46,7 +45,7 @@ void build(int cur, int l, int r){
 	seg[cur] = merge(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-// Updates the range [i..j].
+/* O(Log(N)) - Updates the range [i..j]. */
 void update(int cur, int l, int r, int i, int j, int x){
 	int m = (l + r) / 2;
 
@@ -76,7 +75,7 @@ void update(int cur, int l, int r, int i, int j, int x){
 	seg[cur] = merge(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-// Returns the content of the range [i, j] of the Segment Tree.
+/* O(Log(N)) - Returns the content of the range [i, j] of the Segment Tree. */
 int query(int cur, int l, int r, int i, int j){
 	int nl, nr, m = (l + r) / 2;
 
@@ -88,7 +87,7 @@ int query(int cur, int l, int r, int i, int j){
 	// [l..r] is outside query range [i..j].
 	if (l > j or r < i){
 		// Returning a value that will not affect the result.
-		return -INF;
+		return 0;
 	}
 
 	// [l..r] is fully inside the query range [i..j].

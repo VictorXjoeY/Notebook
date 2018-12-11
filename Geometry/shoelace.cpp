@@ -14,7 +14,7 @@ struct Point{
 Point p[N + 1];
 int n;
 
-/* O(N). Computes the area of a simple (convex or concave) polygon. */
+/* O(N) - Computes the area of a simple (convex or concave) polygon. */
 double shoelace(){
 	long long ans;
 	int i;

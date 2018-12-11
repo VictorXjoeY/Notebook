@@ -27,7 +27,7 @@ vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const
 	return C;
 }
 
-/* O(N^3 * log(y)). */
+/* O(N^3 * Log(Y)). */
 vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y){
 	vector<vector<long long> > ans = identity; // Base case.
 
@@ -45,8 +45,8 @@ vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y)
 	return ans;
 }
 
-/* O(N^2). Fills up the Identity matrix. */
-void initialize(int n){
+/* O(N^2) - Fills up the Identity matrix. */
+void init(int n){
 	int i, j;
 
 	identity.resize(n);
@@ -60,7 +60,7 @@ void initialize(int n){
 	}
 }
 
-/* O(D^3 * log(N)). Calculates f = mat^n * base - Assuming mat is DxD */
+/* O(D^3 * Log(N)) - Calculates f = mat^n * base - Assuming mat is DxD */
 /*                                                                    */
 /* F(n) = a * F(n - 1) + b * F(n - 2) + c * F(n - 3)                  */
 /* | F(n + 2) |   | a b c |   | F(n + 1) |                            */
@@ -77,7 +77,7 @@ long long solve(vector<vector<long long> > mat, vector<vector<long long> > base,
 	vector<vector<long long> > f;
 
 	// Initializing Identity matrix.
-	initialize(mat.size());
+	init(mat.size());
 
 	// Matrix Exponentiation.
 	mat = matrix_exp(mat, n);
@@ -87,7 +87,7 @@ long long solve(vector<vector<long long> > mat, vector<vector<long long> > base,
 	return f[mat.size() - 1][0];
 }
 
-/* O(log(N)). */
+/* O(Log(N)). */
 long long fibonacci(long long n){
 	vector<vector<long long> > mat, base;
 

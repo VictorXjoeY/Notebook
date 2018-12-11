@@ -24,7 +24,7 @@ void dfs(int u, int d){
 	}
 }
 
-/* O(V * log(V)). */
+/* O(V * Log(V)). */
 void lca_init(int u){
 	int i, j;
 
@@ -53,7 +53,7 @@ void lca_init(int u){
 	}
 }
 
-/* O(log(V)). */
+/* O(Log(V)). */
 int lca(int u, int v){
 	int i;
 

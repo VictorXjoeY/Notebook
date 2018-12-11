@@ -3,7 +3,7 @@
 bool prime[N + 1];
 vector<int> p;
 
-/* O(N * log(log(N))). */
+/* O(N * Log(Log(N))). */
 void sieve(){
 	int i, j;
 
