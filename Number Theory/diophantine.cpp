@@ -1,3 +1,19 @@
+long long ceil(long long, long long);
+
+/* O(1). Integer division num / den that behaves like Python so that you can properly deal with inequations. */
+long long floor(long long num, long long den){
+	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)){
+		return abs(num) / abs(den);
+	}
+
+	return -ceil(abs(num), abs(den));
+}
+
+/* O(1). */
+long long ceil(long long num, long long den){
+	return floor(num + den - 1, den);
+}
+
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y){
@@ -46,12 +62,11 @@ long long diophantine(long long a, long long b, long long c, long long &x1, long
 	}
 
 	// Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
-	k = c / gcd;
-	x1 *= k;
-	y1 *= k;
+	x1 *= c / gcd;
+	y1 *= c / gcd;
 
 	// Simplifying the solution so that x1 is minimum and positive. Use positive values for a and b for this to work as intended!
-	k = (-x1 * gcd + b - 1) / b;
+	k = ceil(-x1 * gcd, b);
 	x1 += k * (b / gcd);
 	y1 -= k * (a / gcd);
 

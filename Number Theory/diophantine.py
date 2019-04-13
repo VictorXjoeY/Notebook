@@ -1,3 +1,7 @@
+# O(1).
+def ceil(num, den):
+	return (num + den - 1) // den
+
 # O(log(max(a, b))).
 # a * x + b * y = gcd(a, b)
 def extended_gcd(a, b):
@@ -35,13 +39,12 @@ def diophantine(a, b, c):
 		return (0, 0, 0)
 
 	# Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
-	k = c // gcd
-	x1 *= k
-	y1 *= k
+	x1 *= c // gcd
+	y1 *= c // gcd
 
 	# Simplifying the solution so that x1 is minimum and positive. Use positive values for a and b for this to work as intended!
-	k = (-x1 * gcd + b - 1) // b;
-	x1 += k * (b // gcd);
-	y1 -= k * (a // gcd);
+	k = ceil(-x1 * gcd, b)
+	x1 += k * (b // gcd)
+	y1 -= k * (a // gcd)
 
 	return (gcd, x1, y1)
