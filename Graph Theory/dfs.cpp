@@ -1,6 +1,6 @@
 #define N 100000
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 bool seen[N + 1];
 
 /* O(V + E). */

@@ -4,8 +4,8 @@ long long mod[2] = {1000000007, 1000000009};
 long long prime[2] = {31, 37};
 long long pot[2][N + 1];
 long long s[2][N + 1];
-char str[N + 2];
-int n;
+char str[N + 2]; // (Input)
+int n; // (Input)
 
 /* O(1) - Retrieves a pair of hashes representing the range [l, r]. */
 pair<long long, long long> range_hash(int l, int r){

@@ -89,8 +89,8 @@ struct Edge{
 	}
 };
 
-Edge e[M + 1];
-int n, m;
+Edge e[M + 1]; // (Input)
+int n, m; // (Input)
 
 /* O(E * Log(E)). */
 int kruskal(){

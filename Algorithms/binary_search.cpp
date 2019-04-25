@@ -1,7 +1,7 @@
 #define eps 1e-9
 
 bool check(double m){
-	return true;
+	// Define this function.
 }
 
 /* O(Log(N)). */
@@ -34,7 +34,7 @@ void binary_search_double(){
 }
 
 bool check(int m){
-	return true;
+	// Define this function.
 }
 
 /* O(Log(N)). */

@@ -1,12 +1,6 @@
-#define N 100000
-
-long long a[N + 1];
-long long m[N + 1];
-int n;
-
 long long ceil(long long, long long);
 
-/* O(1). Integer division num / den that behaves like Python so that you can properly deal with inequations. */
+/* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
 long long floor(long long num, long long den){
 	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)){
 		return abs(num) / abs(den);
@@ -110,19 +104,19 @@ t - (a1 + m1 * x1) = lcm(m1, m2) * k ---> t = a1 + m1 * x1 (mod lcm(m1, m2))
 t - a2 = m2 * (-y1 + k * m1 / gcd(m1, m2))
 t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
-void chinese_remainder_theorem(long long &a1, long long &m1){
+void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
 	long long a2, m2, x1, y1, gcd, lcm;
 	int i;
 
 	// Making 0 <= ai < mi.
-	for (i = 1; i <= n; i++){
+	for (i = 0; i < (int)a.size(); i++){
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
-	a1 = a[1];
-	m1 = m[1];
+	a1 = a[0];
+	m1 = m[0];
 
-	for (i = 2; i <= n; i++){
+	for (i = 1; i < (int)a.size(); i++){
 		a2 = a[i];
 		m2 = m[i];
 

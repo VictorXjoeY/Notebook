@@ -13,7 +13,7 @@ struct Point{
 	}
 };
 
-vector<Point> p; // Points.
+vector<Point> p; // (Input) Points.
 vector<int> vx; // X coordinates (sorted and unique).
 vector<int> seg_x[4 * N + 1]; // Segments of y coordinates (sorted and unique).
 vector<int> seg_y[4 * N + 1]; // Segment Trees on y.

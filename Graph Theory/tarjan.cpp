@@ -3,12 +3,13 @@
 vector<pair<int, int> > bridge;
 bool ap[N + 1];
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 bool seen[N + 1];
 int parent[N + 1];
 int disc[N + 1];
 int low[N + 1];
-int timer, n;
+int timer;
+int n; // (Input)
 
 /* O(V + E). */
 void dfs(int u){

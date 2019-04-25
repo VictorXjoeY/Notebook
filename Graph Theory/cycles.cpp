@@ -2,11 +2,12 @@
 
 vector<int> cycle[N + 1]; // cycle[c] contains the vertices in the cycle c.
 int color[N + 1]; // color[u] contains the index of the cycle that u belongs to.
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 bool in_stack[N + 1];
 int parent[N + 1];
 bool seen[N + 1];
 int cycle_count;
+int n; // (Input)
 
 /* O(V + E) - Finds all the cycles of a graph that doesn't have any composite cycles. */
 void dfs(int u){
@@ -39,4 +40,14 @@ void dfs(int u){
 	}
 
 	in_stack[u] = false;
+}
+
+void cycles(){
+	int u;
+
+	for (u = 1; u <= n; u++){
+		if (!seen[u]){
+			dfs(u);
+		}
+	}
 }

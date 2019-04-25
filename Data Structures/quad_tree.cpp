@@ -6,7 +6,7 @@
 #define BOTTOM_RIGHT(x) (4 * x + 4)
 
 int quad[4 * N * N + 1];
-int mat[N + 1][N + 1];
+int mat[N + 1][N + 1]; // (Input)
 
 int merge(int ntl, int ntr, int nbl, int nbr){
 	return max(max(ntl, ntr), max(nbl, nbr));

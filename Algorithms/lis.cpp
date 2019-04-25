@@ -1,9 +1,9 @@
 #define INF 0x3f3f3f3f
 #define N 100000
 
-int a[N + 1];
+int a[N + 1]; // (Input)
 int l[N + 1];
-int n;
+int n; // (Input)
 
 /* O(N * log(N)). */
 int lis(){

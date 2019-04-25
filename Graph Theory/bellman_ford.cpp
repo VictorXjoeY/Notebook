@@ -1,8 +1,8 @@
 #define N 1000
 
-vector<pair<int, int> > g[N + 1];
+vector<pair<int, int> > g[N + 1]; // (Input)
 int dist[N + 1];
-int n;
+int n; // (Input)
 
 /* O(V * E) - Returns true if there is a negative cycle reachable from u. */
 bool bellman_ford(int u){

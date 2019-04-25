@@ -2,7 +2,7 @@
 #define L 20
 
 int ancestor[N + 1][L + 1];
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 int parent[N + 1];
 int depth[N + 1];
 bool seen[N + 1];

@@ -1,13 +1,13 @@
 #define N 1000
 
-int men_pref[N + 1][N + 1]; // men_pref[i][1...n] stores the preference list of the i'th man.
-int women_pref[N + 1][N + 1]; // women_pref[i][1...n] stores the preference list of the i'th woman.
+int men_pref[N + 1][N + 1]; // (Input) men_pref[i][1...n] stores the preference list of the i'th man.
+int women_pref[N + 1][N + 1]; // (Input) women_pref[i][1...n] stores the preference list of the i'th woman.
 int women_pref_pos[N + 1][N + 1]; // women_pref_pos[i][x] stores the position of the x'th man in the preference list of the i'th woman.
 int last_proposal[N + 1]; // last_proposal[i] stores the index j such that men_pref[i][j] was the last woman proposed by the i'th man.
 int women_match[N + 1]; // women_match[i] stores the index of the man matched with the i'th woman.
 int men_match[N + 1]; // men_match[i] stores the index of the man matched with the i'th woman.
 queue<int> available_men; // Stores the men which are still available (with men_match value 0). Could be any data structure.
-int n;
+int n; // (Input)
 
 /* O(N^2) - Gale Shapley algorithm to produce a Stable Matching between n men and n women. */
 void gale_shapley(){

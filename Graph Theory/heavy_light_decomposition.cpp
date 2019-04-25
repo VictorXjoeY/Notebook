@@ -2,7 +2,7 @@
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
-vector<pair<int, int> > g[N + 1];
+vector<pair<int, int> > g[N + 1]; // (Input)
 bool seen[N + 1];
 int parent[N + 1];
 int weight[N + 1];
@@ -12,7 +12,8 @@ int d[N + 1]; // Discovery time, which represents the position in the Segment Tr
 int d_inv[N + 1];
 int seg[4 * N + 1];
 int chain[N + 1]; // chain[u] stores the chain index of the vertex u. chain[u] = u if u is the representative of his chain.
-int timer, n;
+int timer;
+int n; // (Input)
 
 /* O(V) - Fills parent[], weight[], size[] and depth[]. */
 void dfs_init(int u, int cur_depth){

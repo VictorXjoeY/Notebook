@@ -19,7 +19,7 @@ struct State{
 int dist[N + 1];
 bool in_spt[N + 1];
 priority_queue<State> pq;
-vector<pair<int, int> > g[N + 1];
+vector<pair<int, int> > g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void dijkstra(int u){

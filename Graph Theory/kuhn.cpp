@@ -15,11 +15,11 @@ Maximum Independent Set is the complement of a Minimum Vertex Cover.
 
 #define N 1000
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 bool in_a[N + 1];
 bool seen[N + 1];
 int match[N + 1];
-int n;
+int n; // (Input)
 
 /* O(V + E). Returns true if it finds an augmenting path starting from vertex u. */
 bool dfs(int u){

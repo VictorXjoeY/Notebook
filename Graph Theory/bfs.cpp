@@ -1,7 +1,8 @@
 #define N 100000
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 int dist[N + 1];
+bool seen[N + 1];
 
 /* O(V + E). */
 void bfs(int u){
@@ -9,7 +10,8 @@ void bfs(int u){
 	int v, i;
 
 	// Initializing.
-	memset(dist, -1, sizeof(dist));
+	memset(seen, false, sizeof(seen));
+	seen[u] = true;
 	dist[u] = 0;
 	q.push(u);
 
@@ -23,7 +25,8 @@ void bfs(int u){
 			v = g[u][i];
 
 			// If vertex v wasn't already visited.
-			if (dist[v] == -1){
+			if (!seen[v]){
+				seen[v] = true;
 				dist[v] = dist[u] + 1;
 				q.push(v);
 			}

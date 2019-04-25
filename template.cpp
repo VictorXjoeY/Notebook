@@ -2,6 +2,11 @@
 
 using namespace std;
 
+// Be careful when using INF as sentinel in Graph Theory and Dynamic Programming problems. After you run your algorithm having
+// a value lesser than INF doesn't always mean that a state is unreachable or invalid because we may have negative weights.
+
+// Be careful when solving an inequation such as x >= a / b. To get ceil(a / b) use the code floor_ceil.cpp under "Number Theory" folder.
+
 #define PI 3.14159265358979323846
 #define MOD 1000000007
 #define INF 0x3f3f3f3f

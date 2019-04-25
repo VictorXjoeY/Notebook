@@ -1,7 +1,7 @@
 #define eps 1e-9
 
 double f(double x){
-	return 0.0;
+	// Define this function.
 }
 
 /* O(Log(N)). */
@@ -36,7 +36,7 @@ void ternary_search_double(){
 }
 
 int f(int x){
-	return 0;
+	// Define this function.
 }
 
 /* O(Log(N)) - Must be strictly increasing or strictly decreasing where it is not Maximum/Minimum. */

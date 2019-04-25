@@ -1,11 +1,11 @@
 #define N 100000
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 bool in_stack[N + 1];
 bool seen[N + 1];
 int ans[N + 1];
 stack<int> s;
-int n;
+int n; // (Input)
 
 /* O(V + E) - Returns true if a cycle is found from u. */
 bool dfs(int u){

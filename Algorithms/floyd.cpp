@@ -1,11 +1,9 @@
-int mu, lambda;
-
 int f(int x){
-	return 0;
+	// Define this function.
 }
 
 /* O(mu + lamda). */
-void floyd(int x0){
+void floyd(int x0, int &mu, int &lamda){
 	int tortoise, hare;
 
 	tortoise = hare = x0;

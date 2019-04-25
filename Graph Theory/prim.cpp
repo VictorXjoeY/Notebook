@@ -20,7 +20,7 @@ struct State{
 int cost[N + 1];
 bool in_mst[N + 1];
 priority_queue<State> pq;
-vector<pair<int, int> > g[N + 1];
+vector<pair<int, int> > g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void prim(int u){

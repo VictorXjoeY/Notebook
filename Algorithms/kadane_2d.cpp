@@ -1,9 +1,9 @@
 #define N 300
 
-int mat[N + 1][N + 1];
+int mat[N + 1][N + 1]; // (Input)
 int sum[N + 1][N + 1];
 int dp[N + 1];
-int n, m;
+int n, m; // (Input)
 
 int query(int y, int xi, int xf){
 	return sum[y][xf] - sum[y][xi - 1];

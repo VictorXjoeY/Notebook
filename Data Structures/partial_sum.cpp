@@ -1,13 +1,14 @@
 int p[N + 2];
 int a[N + 2];
+int n;
 
-/* O(1) - Sums "value" to every element in the range [left, right]. */
+/* O(1) - Sums "value" to every element in the range [left, right] in a lazy way. */
 void update(int left, int right, int value){
 	p[left] += value;
 	p[right + 1] -= value;
 }
 
-/* O(N) - Calculates the resulting array. */
+/* O(N) - Flushes all updates into array a. */
 void query(){
 	int i;
 
@@ -15,4 +16,6 @@ void query(){
 		p[i] += p[i - 1];
 		a[i] += p[i];
 	}
+
+	memset(p, 0, sizeof(p));
 }

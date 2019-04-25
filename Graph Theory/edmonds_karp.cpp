@@ -1,12 +1,12 @@
 #define INF 0x3f3f3f3f
 #define N 100
 
-int C[N + 1][N + 1];
+int C[N + 1][N + 1]; // (Input)
 int T[N + 1][N + 1];
 int F[N + 1][N + 1];
 int P[N + 1];
 int M[N + 1];
-int n;
+int n; // (Input)
 
 /* O(V + E). */
 int bfs(int s, int t){

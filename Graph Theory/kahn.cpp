@@ -1,10 +1,10 @@
 #define N 100000
 
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 int in_degree[N + 1];
 int ans[N + 1];
 queue<int> q; // Could be any data structure.
-int n;
+int n; // (Input)
 
 /* O(V + E) - Returns true if a topological sorting exists. */
 bool kahn(){

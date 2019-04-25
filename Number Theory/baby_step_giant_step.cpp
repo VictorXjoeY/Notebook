@@ -1,22 +1,22 @@
 /* O(Log(y)). */
-long long fast_exp(long long x, long long y, long long mod){
+long long fast_exp(long long x, long long y, long long m){
 	long long ans = 1; // Base case.
 
 	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
 	while (y > 0){
 		// If current bit is set.
 		if (y & 1ll){
-			ans = (ans * x) % mod;
+			ans = (ans * x) % m;
 		}
 
 		y >>= 1ll; // Next bit.
-		x = (x * x) % mod; // Next power of x.
+		x = (x * x) % m; // Next power of x.
 	}
 
 	return ans;
 }
 
-/* O(sqrt(N)). Solves a^x = b (mod n) for a, b < n. */
+/* O(sqrt(N)) - Solves a^x = b (mod n) for a, b < n. */
 /* Basic idea is to rewrite: x = m * q + r with m = sqrt(n) */
 long long baby_step_giant_step(long long a, long long b, long long n){
 	unordered_map<long long, long long> table;

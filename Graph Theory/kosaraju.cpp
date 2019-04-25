@@ -1,13 +1,14 @@
 #define N 100000
 
-vector<int> g[N + 1];
-vector<int> gt[N + 1];
+vector<int> g[N + 1]; // (Input)
+vector<int> gt[N + 1]; // (Input)
 vector<int> gs[N + 1]; // This graph will be topologically sorted after running Kosaraju's Algorithm.
-vector<int> component[N + 1];
+vector<int> component[N + 1]; // component[c] stores which vertices belong to the component c.
 bool seen[N + 1];
-int color[N + 1];
+int color[N + 1]; // color[u] stores which component u belongs to.
 stack<int> s;
-int n, m, cur;
+int nc; // Stores the number of components.
+int n; // (Input)
 
 /* O(V + E). */
 void dfs1(int u){
@@ -35,8 +36,8 @@ void dfs2(int u){
 	int v, i;
 
 	// Vertex u belongs to current component.
-	color[u] = cur;
-	component[cur].push_back(u);
+	color[u] = nc;
+	component[nc].push_back(u);
 
 	// For every vertex v adjacent to u.
 	for (i = 0; i < (int)gt[u].size(); i++){
@@ -60,7 +61,7 @@ void kosaraju(){
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(color, 0, sizeof(color));
-	cur = 0;
+	nc = 0;
 
 	// Running first DFS to fill the Stack s.
 	for (u = 1; u <= n; u++){
@@ -77,7 +78,7 @@ void kosaraju(){
 
 		// If vertex u wasn't already visited.
 		if (!color[u]){
-			cur++;
+			nc++;
 			dfs2(u);
 		}
 	}

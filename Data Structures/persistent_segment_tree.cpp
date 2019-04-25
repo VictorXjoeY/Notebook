@@ -6,8 +6,8 @@ int root[T + 1];
 int seg[4 * L * N + 1];
 int lchild[4 * L * N + 1];
 int rchild[4 * L * N + 1];
-int a[N + 1];
-int n, last;
+int a[N + 1]; // (Input)
+int last;
 
 int merge(int nl, int nr){
 	return nl + nr;

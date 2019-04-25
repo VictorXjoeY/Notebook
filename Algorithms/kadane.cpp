@@ -1,8 +1,8 @@
 #define N 100000
 
-int a[N + 1];
 int dp[N + 1];
-int n;
+int a[N + 1]; // (Input)
+int n; // (Input)
 
 /* O(N). */
 int kadane(){

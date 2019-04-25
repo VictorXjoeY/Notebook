@@ -1,9 +1,7 @@
-#define MOD 1000000007
-
 vector<vector<long long> > identity;
 
 /* O(N^3). */
-vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const vector<vector<long long> > &B){
+vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const vector<vector<long long> > &B, long long m){
 	vector<vector<long long> > C;
 	int i, j, k;
 
@@ -19,7 +17,7 @@ vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const
 		for (j = 0; j < (int)C[i].size(); j++){
 			// For each column of A or row of B.
 			for (k = 0; k < (int)A[0].size(); k++){
-				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD;
+				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % m;
 			}
 		}
 	}
@@ -28,18 +26,18 @@ vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const
 }
 
 /* O(N^3 * Log(Y)). */
-vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y){
+vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y, long long m){
 	vector<vector<long long> > ans = identity; // Base case.
 
 	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
 	while (y > 0){
 		// If current bit is set.
 		if (y & 1ll){
-			ans = matrix_mul(ans, x);
+			ans = matrix_mul(ans, x, m);
 		}
 
 		y >>= 1ll; // Next bit.
-		x = matrix_mul(x, x); // Next power of x.
+		x = matrix_mul(x, x, m); // Next power of x.
 	}
 
 	return ans;
@@ -60,28 +58,28 @@ void init(int n){
 	}
 }
 
-/* O(D^3 * Log(N)) - Calculates f = mat^n * base - Assuming mat is DxD */
-/*                                                                    */
-/* F(n) = a * F(n - 1) + b * F(n - 2) + c * F(n - 3)                  */
-/* | F(n + 2) |   | a b c |   | F(n + 1) |                            */
-/* | F(n + 1) | = | 1 0 0 | * | F(  n  ) |                            */
-/* | F(  n  ) |   | 0 1 0 |   | F(n - 1) |                            */
-/*                                                                    */
-/* A(n) = aa * A(n - 1) + ab * B(n - 1) + ac * C(n - 1)               */
-/* B(n) = ba * A(n - 1) + bb * B(n - 1) + bc * C(n - 1)               */
-/* C(n) = ca * A(n - 1) + cb * B(n - 1) + cc * C(n - 1)               */
-/* | A(n) |   | aa ab ac |   | A(n - 1) |                             */
-/* | B(n) | = | ba bb bc | * | B(n - 1) |                             */
-/* | C(n) |   | ca cb cc |   | C(n - 1) |                             */
-long long solve(vector<vector<long long> > mat, vector<vector<long long> > base, long long n){
+/* O(D^3 * Log(N)) - Calculates f = mat^n * base (mod m) - Assuming mat is DxD */
+/*                                                                             */
+/* F(n) = a * F(n - 1) + b * F(n - 2) + c * F(n - 3)                           */
+/* | F(n + 2) |   | a b c |   | F(n + 1) |                                     */
+/* | F(n + 1) | = | 1 0 0 | * | F(  n  ) |                                     */
+/* | F(  n  ) |   | 0 1 0 |   | F(n - 1) |                                     */
+/*                                                                             */
+/* A(n) = aa * A(n - 1) + ab * B(n - 1) + ac * C(n - 1)                        */
+/* B(n) = ba * A(n - 1) + bb * B(n - 1) + bc * C(n - 1)                        */
+/* C(n) = ca * A(n - 1) + cb * B(n - 1) + cc * C(n - 1)                        */
+/* | A(n) |   | aa ab ac |   | A(n - 1) |                                      */
+/* | B(n) | = | ba bb bc | * | B(n - 1) |                                      */
+/* | C(n) |   | ca cb cc |   | C(n - 1) |                                      */
+long long solve(vector<vector<long long> > mat, vector<vector<long long> > base, long long n, long long m){
 	vector<vector<long long> > f;
 
 	// Initializing Identity matrix.
 	init(mat.size());
 
 	// Matrix Exponentiation.
-	mat = matrix_exp(mat, n);
-	f = matrix_mul(mat, base);
+	mat = matrix_exp(mat, n, m);
+	f = matrix_mul(mat, base, m);
 
 	// Returning the last element (either F(n) or C(n)).
 	return f[mat.size() - 1][0];

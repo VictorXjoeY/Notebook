@@ -2,8 +2,8 @@
 #define L 20
 
 int table[N + 1][L + 1];
-int a[N + 1];
-int n;
+int a[N + 1]; // (Input)
+int n; // (Input)
 
 /* O(1) - Idempotent operation. */
 int merge(int x, int y){

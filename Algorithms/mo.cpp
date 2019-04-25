@@ -24,17 +24,17 @@ struct Query{
 	}
 };
 
-Query q[M + 1];
+Query q[M + 1]; // (Input)
 int ans[M + 1];
-int a[N + 1];
-int n, m;
+int a[N + 1]; // (Input)
+int n, m; // (Input)
 
 void remove(int p){
-
+	// Define this function.
 }
 
 void add(int p){
-
+	// Define this function.
 }
 
 /* O(Q * log(Q) + Q * sqrt(N)). */

@@ -1,47 +1,47 @@
-#define MOD 1000000007
 #define N 1000000
 
 long long f[N + 1];
 
 /* O(Log(Y)). */
-long long fast_exp(long long x, long long y){
+long long fast_exp(long long x, long long y, long long m){
 	long long ans = 1; // Base case.
 
 	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
 	while (y > 0){
 		// If current bit is set.
 		if (y & 1ll){
-			ans = (ans * x) % MOD;
+			ans = (ans * x) % m;
 		}
 
 		y >>= 1ll; // Next bit.
-		x = (x * x) % MOD; // Next power of x.
+		x = (x * x) % m; // Next power of x.
 	}
 
 	return ans;
 }
 
-/* O(Log(MOD)). */
-long long nck(long long n, long long k){
+/* O(Log(M)) - This only works if k! * (n - k)! is coprime with m. */
+long long nck(long long n, long long k, long long m){
 	long long num, den;
 
+	// Trivial case.
 	if (k < 0 or k > n){
 		return 0;
 	}
 
 	num = f[n];
-	den = (f[k] * f[n - k]) % MOD;
+	den = (f[k] * f[n - k]) % m;
 
-	return (num * fast_exp(den, MOD - 2)) % MOD;
+	return (num * fast_exp(den, m - 2, m)) % m;
 }
 
 /* O(N). */
-void nck_init(){
+void nck_init(long long m){
 	long long i;
 
 	f[0] = 1;
 
 	for (i = 1; i <= N; i++){
-		f[i] = (f[i - 1] * i) % MOD;
+		f[i] = (f[i - 1] * i) % m;
 	}
 }

@@ -1,8 +1,8 @@
 #define N 300
 
-vector<pair<int, int> > g[N + 1];
+vector<pair<int, int> > g[N + 1]; // (Input)
 int dist[N + 1][N + 1];
-int n;
+int n; // (Input)
 
 /* O(V^3). */
 void floyd_warshall(){

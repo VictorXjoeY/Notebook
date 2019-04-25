@@ -2,7 +2,7 @@
 #define RIGHT(x) ((x << 1) | 1)
 #define N 100000
 
-int v[N + 1];
+int a[N + 1]; // (Input)
 int seg[4 * N + 1];
 int lazy[4 * N + 1];
 
@@ -27,13 +27,13 @@ int merge(int nl, int nr){
 	return max(nl, nr);
 }
 
-/* O(N) - Builds a Segment Tree "seg" out of the vector "v". */
+/* O(N) - Builds a Segment Tree "seg" out of the array "a". */
 void build(int cur, int l, int r){
 	int m = (l + r) / 2;
 
 	// Leaf node.
 	if (l == r){
-		seg[cur] = v[l];
+		seg[cur] = a[l];
 		return;
 	}
 
