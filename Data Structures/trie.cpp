@@ -1,9 +1,13 @@
+#define OFFSET 'a'
+#define ALPHABET_SIZE 26
+
 struct Trie{
-	int child[26], terminal;
+	int child[ALPHABET_SIZE];
+	int size, terminal;
 
 	Trie(){
 		memset(this->child, -1, sizeof(this->child));
-		this->terminal = 0;
+		this->size = this->terminal = 0;
 	}
 };
 
@@ -11,38 +15,41 @@ struct Trie{
 vector<Trie> vt = {Trie()};
 
 /* O(|S|). */
-void trie_insert(int cur, const string &s, int p){
-	// String was completely inserted.
-	if (p == (int)s.size()){
-		vt[cur].terminal++;
-		return;
+void trie_insert(const string &s){
+	int cur, i;
+
+	for (i = 0, cur = 0; i < (int)s.size(); i++){
+		vt[cur].size++;
+
+		// If this child has not been created yet.
+		if (vt[cur].child[s[i] - OFFSET] == -1){
+			vt[cur].child[s[i] - OFFSET] = vt.size(); // Adding pointer.
+			vt.push_back(Trie()); // Creating child.
+		}
+
+		// Moving to its child.
+		cur = vt[cur].child[s[i] - OFFSET];
 	}
 
-	// If this child has not been created yet.
-	if (vt[cur].child[s[p] - 'a'] == -1){
-		// Adding pointer.
-		vt[cur].child[s[p] - 'a'] = vt.size();
-
-		// Creating child.
-		vt.push_back(Trie());
-	}
-
-	// Recursive call to its child.
-	trie_insert(vt[cur].child[s[p] - 'a'], s, p + 1);
+	// At terminal node. String was completely inserted.
+	vt[cur].size++;
+	vt[cur].terminal++;
 }
 
 /* O(|S|). */
-int trie_count(int cur, const string &s, int p){
-	// String completely processed, returning number of terminals in this position.
-	if (p == (int)s.size()){
-		return vt[cur].terminal;
+int trie_count(const string &s){
+	int cur, i;
+
+	for (i = 0, cur = 0; i < (int)s.size(); i++){
+		// If there's no child with this character.
+		if (vt[cur].child[s[i] - OFFSET] == -1){
+			return 0;
+		}
+
+		// Moving to its child.
+		cur = vt[cur].child[s[i] - OFFSET];
 	}
 
-	// If this child has not been created, the answer is 0.
-	if (vt[cur].child[s[p] - 'a'] == -1){
-		return 0;
-	}
-
-	// Recursive call to its child.
-	return trie_count(vt[cur].child[s[p] - 'a'], s, p + 1);
+	// At terminal node.
+	return vt[cur].terminal;
 }

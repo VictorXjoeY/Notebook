@@ -1,7 +1,8 @@
+#define OFFSET 'a'
 #define N 100000
 
 long long mod[2] = {1000000007, 1000000009};
-long long prime[2] = {31, 37};
+long long prime[2] = {31, 37}; // Choose primes greater than the size of the alphabet.
 long long pot[2][N + 1];
 long long s[2][N + 1];
 char str[N + 2]; // (Input)
@@ -19,11 +20,11 @@ pair<long long, long long> range_hash(int l, int r){
 	return make_pair(h[0], h[1]);
 }
 
-/* O(N) - Calculates the prime powers and the accumulated hash function. */
+/* O(|S|) - Calculates the prime powers and the accumulated hash function. */
 void initialize(){
 	int i, k;
 
-	// O(N) - Calculating powers.
+	// O(|S|) - Calculating powers.
 	for (k = 0; k < 2; k++){
 		pot[k][0] = 1;
 
@@ -32,12 +33,12 @@ void initialize(){
 		}
 	}
 
-	// O(N) - Remapping the string to the range [0, 26].
+	// O(|S|) - Remapping the string to the range [0, 26].
 	for (i = 1; i <= n; i++){
-		str[i] -= 'a';
+		str[i] -= OFFSET;
 	}
 
-	// O(N) - Calculating the accumulated hash function.
+	// O(|S|) - Calculating the accumulated hash function.
 	for (k = 0; k < 2; k++){
 		for (i = 1; i <= n; i++){
 			s[k][i] = (s[k][i - 1] + str[i] * pot[k][i]) % mod[k];
