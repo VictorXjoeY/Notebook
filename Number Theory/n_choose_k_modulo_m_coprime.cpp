@@ -6,6 +6,9 @@ long long f[N + 1];
 long long fast_exp(long long x, long long y, long long m){
 	long long ans = 1; // Base case.
 
+	// In case x >= m.
+	x %= m;
+
 	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
 	while (y > 0){
 		// If current bit is set.
@@ -37,11 +40,9 @@ long long nck(long long n, long long k, long long m){
 
 /* O(N). */
 void nck_init(long long m){
-	long long i;
-
 	f[0] = 1;
 
-	for (i = 1; i <= N; i++){
+	for (long long i = 1; i <= N; i++){
 		f[i] = (f[i - 1] * i) % m;
 	}
 }

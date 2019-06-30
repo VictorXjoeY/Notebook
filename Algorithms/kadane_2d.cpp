@@ -11,26 +11,24 @@ int query(int y, int xi, int xf){
 
 /* O(N^3). */
 int kadane_2d(){
-	int ans, xi, xf, i, j;
-
 	// Cumulative sum of each column j.
-	for (j = 1; j <= m; j++){
-		for (i = 1; i <= n; i++){
+	for (int j = 1; j <= m; j++){
+		for (int i = 1; i <= n; i++){
 			sum[j][i] = sum[j][i - 1] + mat[i][j];
 		}
 	}
 
 	// Initializing final answer.
-	ans = mat[1][1];
+	int ans = mat[1][1];
 
 	// For each pair (xi, xf), run kadane on columns.
-	for (xi = 1; xi <= n; xi++){
-		for (xf = xi; xf <= n; xf++){
+	for (int xi = 1; xi <= n; xi++){
+		for (int xf = xi; xf <= n; xf++){
 			// Initializing.
 			dp[1] = query(1, xi, xf);
 
 			// Calculating maximum sum ending in column j between lines xi and xf.
-			for (j = 2; j <= m; j++){
+			for (int j = 2; j <= m; j++){
 				dp[j] = max(dp[j - 1] + query(j, xi, xf), query(j, xi, xf));
 			}
 

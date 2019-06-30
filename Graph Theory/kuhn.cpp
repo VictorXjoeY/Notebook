@@ -23,13 +23,11 @@ int n; // (Input)
 
 /* O(V + E). Returns true if it finds an augmenting path starting from vertex u. */
 bool dfs(int u){
-	int v, i;
-
 	seen[u] = true;
 
 	// Here the vertex u always belongs to Set A and the vertices v always belongs to Set B.
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i];
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i];
 
 		// If vertex v from Set B is unmatched or I can find an augmenting path starting from v's match.
 		if (match[v] == -1 or (!seen[match[v]] and dfs(match[v]))){
@@ -44,13 +42,11 @@ bool dfs(int u){
 
 /* O(V + E). Partitions the vertices in 2 sets by bicoloring. */
 void bicolor(int u, bool color){
-	int v, i;
-
 	seen[u] = true;
 	in_a[u] = color;
 
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i];
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i];
 
 		if (!seen[v]){
 			bicolor(v, !color);
@@ -66,12 +62,12 @@ void bicolor(int u, bool color){
    Vertices from Set A and from Set B must all have different indexes.
    This works on ANY Bipartite Graph. */
 int kuhn(){
-	int ans, cur, u;
+	int ans, cur;
 
 	memset(seen, false, sizeof(seen));
 
 	// Filling the "in_a" array.
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		if (!seen[u]){
 			bicolor(u, true);
 		}
@@ -87,7 +83,7 @@ int kuhn(){
 		cur = 0;
 
 		// Running a DFS starting from unmatched vertices from Set A.
-		for (u = 1; u <= n; u++){
+		for (int u = 1; u <= n; u++){
 			if (in_a[u] and match[u] == -1 and !seen[u]){
 				cur += dfs(u);
 			}

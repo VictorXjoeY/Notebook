@@ -12,17 +12,15 @@ int merge(int x, int y){
 
 /* O(N * Log(N)). */
 void build(){
-	int i, j;
-
 	// Base.
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		table[i][0] = a[i];
 	}
 
 	// Building for each 2^j <= n
-	for (j = 1; (1 << j) <= n; j++){
+	for (int j = 1; (1 << j) <= n; j++){
 		// Building for each [i, i + 2^j - 1]
-		for (i = 1; i + (1 << j) - 1 <= n; i++){
+		for (int i = 1; i + (1 << j) - 1 <= n; i++){
 			table[i][j] = merge(table[i][j - 1], table[i + (1 << (j - 1))][j - 1]);
 		}
 	}
@@ -30,10 +28,8 @@ void build(){
 
 /* O(1). */
 int query(int l, int r){
-	int k;
-
 	// Finding greatest k such that 2^k <= r - l + 1
-	k = 32 - __builtin_clz(r - l + 1) - 1;
+	int k = 32 - __builtin_clz(r - l + 1) - 1;
 
 	return merge(table[l][k], table[r - ((1 << k) - 1)][k]);
 }

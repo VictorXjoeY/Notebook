@@ -24,7 +24,6 @@ vector<pair<int, int> > g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void prim(int u){
-	int v, w, i;
 	State cur;
 
 	// Initializing.
@@ -49,9 +48,9 @@ void prim(int u){
 			in_mst[u] = true;
 
 			// For every vertex v adjacent to u.
-			for (i = 0; i < (int)g[u].size(); i++){
-				v = g[u][i].first;
-				w = g[u][i].second;
+			for (int i = 0; i < (int)g[u].size(); i++){
+				int v = g[u][i].first;
+				int w = g[u][i].second;
 
 				// If I've found a lower cost to add the vertex v to the Minimum Spanning Tree.
 				if (!in_mst[v] and w < cost[v]){

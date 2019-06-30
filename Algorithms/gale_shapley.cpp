@@ -11,7 +11,7 @@ int n; // (Input)
 
 /* O(N^2) - Gale Shapley algorithm to produce a Stable Matching between n men and n women. */
 void gale_shapley(){
-	int i, j, k, x, y;
+	int k, x, y;
 
 	// Initializing.
 	memset(last_proposal, 0, sizeof(last_proposal));
@@ -19,16 +19,16 @@ void gale_shapley(){
 	memset(men_match, 0, sizeof(men_match));
 
 	// For each woman i.
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		// Pre-calculating the position of each man x in the preference list of the woman i.
-		for (j = 1; j <= n; j++){
+		for (int j = 1; j <= n; j++){
 			x = women_pref[i][j];
 			women_pref_pos[i][x] = j;
 		}
 	}
 
 	// Marking all men as available.
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		available_men.push(i);
 	}
 

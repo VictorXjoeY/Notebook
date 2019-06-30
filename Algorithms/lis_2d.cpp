@@ -161,10 +161,10 @@ void update_x(int cur, int l, int r, int x, int y, int val){
 
 /* O(N * Log(N)) */
 void init(){
-	int pos, i;
+	int pos;
 
 	// Retrieving x coordinates.
-	for (i = 0; i < (int)p.size(); i++){
+	for (int i = 0; i < (int)p.size(); i++){
 		vx.push_back(p[i].x);
 	}
 
@@ -175,13 +175,13 @@ void init(){
 	// Retrieving y coordinates for every x coordinate.
 	mx.resize(vx.size());
 
-	for (i = 0; i < (int)p.size(); i++){
+	for (int i = 0; i < (int)p.size(); i++){
 		pos = lower_bound(vx.begin(), vx.end(), p[i].x) - vx.begin();
 		mx[pos].push_back(p[i].y);
 	}
 
 	// Making y coordinates unique for every x coordinate.
-	for (i = 0; i < (int)mx.size(); i++){
+	for (int i = 0; i < (int)mx.size(); i++){
 		sort(mx[i].begin(), mx[i].end());
 		mx[i].resize(unique(mx[i].begin(), mx[i].end()) - mx[i].begin());
 	}
@@ -192,13 +192,11 @@ void init(){
 
 /* O(N * Log^2(N)). */
 int lis_2d(){
-	int i;
-
 	init();
 	dp.resize(p.size());
 
 	// Filling dp.
-	for (i = 0; i < (int)p.size(); i++){
+	for (int i = 0; i < (int)p.size(); i++){
 		dp[i] = 1 + query_x(1, 0, (int)vx.size() - 1, 1, p[i].x, 1, p[i].y);
 		update_x(1, 0, (int)vx.size() - 1, p[i].x, p[i].y, dp[i]);
 	}

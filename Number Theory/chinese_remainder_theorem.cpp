@@ -106,7 +106,6 @@ t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
 void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
 	long long a2, m2, x1, y1, gcd, lcm;
-	int i;
 
 	// Making 0 <= ai < mi.
 	for (i = 0; i < (int)a.size(); i++){
@@ -116,7 +115,7 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 	a1 = a[0];
 	m1 = m[0];
 
-	for (i = 1; i < (int)a.size(); i++){
+	for (int i = 1; i < (int)a.size(); i++){
 		a2 = a[i];
 		m2 = m[i];
 

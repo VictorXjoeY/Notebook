@@ -23,7 +23,6 @@ vector<pair<int, int> > g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void dijkstra(int u){
-	int v, w, i;
 	State cur;
 
 	// Initializing.
@@ -48,9 +47,9 @@ void dijkstra(int u){
 			in_spt[u] = true;
 
 			// For every vertex v adjacent to u.
-			for (i = 0; i < (int)g[u].size(); i++){
-				v = g[u][i].first;
-				w = g[u][i].second;
+			for (int i = 0; i < (int)g[u].size(); i++){
+				int v = g[u][i].first;
+				int w = g[u][i].second;
 
 				// If a better path was found to add the vertex v to the Shortest Path Tree.
 				if (!in_spt[v] and dist[u] + w < dist[v]){

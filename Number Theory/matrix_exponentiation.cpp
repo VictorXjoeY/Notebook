@@ -3,20 +3,19 @@ vector<vector<long long> > identity;
 /* O(N^3). */
 vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const vector<vector<long long> > &B, long long m){
 	vector<vector<long long> > C;
-	int i, j, k;
 
 	// C will have the same number of rows as A.
 	C.resize(A.size());
 
 	// For each row of C.
-	for (i = 0; i < (int)C.size(); i++){
+	for (int i = 0; i < (int)C.size(); i++){
 		// C will have the same number of columns as B.
 		C[i].assign(B[0].size(), 0);
 
 		// For each column of C.
-		for (j = 0; j < (int)C[i].size(); j++){
+		for (int j = 0; j < (int)C[i].size(); j++){
 			// For each column of A or row of B.
-			for (k = 0; k < (int)A[0].size(); k++){
+			for (int k = 0; k < (int)A[0].size(); k++){
 				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % m;
 			}
 		}
@@ -45,14 +44,12 @@ vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y,
 
 /* O(N^2) - Fills up the Identity matrix. */
 void init(int n){
-	int i, j;
-
 	identity.resize(n);
 
-	for (i = 0; i < (int)identity.size(); i++){
+	for (int i = 0; i < (int)identity.size(); i++){
 		identity[i].resize(n);
 
-		for (j = 0; j < (int)identity[i].size(); j++){
+		for (int j = 0; j < (int)identity[i].size(); j++){
 			identity[i][j] = (i == j);
 		}
 	}

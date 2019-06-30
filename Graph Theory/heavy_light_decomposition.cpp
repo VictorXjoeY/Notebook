@@ -17,15 +17,13 @@ int n; // (Input)
 
 /* O(V) - Fills parent[], weight[], size[] and depth[]. */
 void dfs_init(int u, int cur_depth){
-	int v, w, i;
-
 	seen[u] = true;
 	size[u] = 1;
 	depth[u] = cur_depth;
 
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i].first;
-		w = g[u][i].second;
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i].first;
+		int w = g[u][i].second;
 
 		if (!seen[v]){
 			dfs_init(v, cur_depth + 1);
@@ -38,13 +36,11 @@ void dfs_init(int u, int cur_depth){
 
 /* O(V) - Fills d[], d_inv[] and chain[]. */
 void dfs_hld(int u){
-	int v, i;
-
 	d[u] = ++timer;
 	d_inv[d[u]] = u;
 
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i].first;
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i].first;
 		chain[v] = (i == 0 ? chain[u] : v); // Creates a new chain for every i != 0.
 		dfs_hld(v);
 	}
@@ -133,8 +129,6 @@ int hld_query(int u, int v){
 
 /* O(V) - Builds the Heavy-Light structure. */
 void hld_init(int root){
-	int u, i;
-
 	// Initialize.
 	memset(seen, false, sizeof(seen));
 	memset(size, 0, sizeof(size));
@@ -144,20 +138,20 @@ void hld_init(int root){
 	dfs_init(root, 0);
 
 	// Clears graph.
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		g[u].clear();
 	}
 
 	// Transforms the undirected tree into a directed tree.
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		if (u != root){
 			g[parent[u]].push_back(make_pair(u, weight[u]));
 		}
 	}
 
 	// Place the child v with the greatest subtree first in the adjacency list of u.
-	for (u = 1; u <= n; u++){
-		for (i = 1; i < (int)g[u].size(); i++){
+	for (int u = 1; u <= n; u++){
+		for (int i = 1; i < (int)g[u].size(); i++){
 			if (size[g[u][i].first] > size[g[u][0].first]){
 				swap(g[u][i], g[u][0]);
 			}

@@ -17,11 +17,10 @@ int n; // (Input)
 /* O(N) - Computes the area of a simple (convex or concave) polygon. */
 double shoelace(){
 	long long ans;
-	int i;
 
 	ans = 0;
 
-	for (i = 1; i < n; i++){
+	for (int i = 1; i < n; i++){
 		ans += p[i].x * p[i + 1].y - p[i + 1].x * p[i].y;
 	}
 

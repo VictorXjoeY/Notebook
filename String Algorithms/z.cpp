@@ -2,14 +2,13 @@
 the prefix starting at s[i] and the prefix of s. */
 vector<int> z_function(const string &s){
 	vector<int> z;
-	int l, r, i;
 
 	// Initialization.
 	z.resize(s.size());
 	z[0] = (int)s.size(); // We can ignore this value.
-	l = r = 0; // Range is [L, R)
+	int l = 0, r = 0; // Range is [L, R)
 
-	for (i = 1; i < (int)s.size(); i++){
+	for (int i = 1; i < (int)s.size(); i++){
 		if (i > r){
 			l = r = i;
 		}

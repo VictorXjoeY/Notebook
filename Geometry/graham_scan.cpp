@@ -41,7 +41,6 @@ bool comp(const Point &a, const Point &b){
 stack<Point> graham_scan(vector<Point> v){
 	stack<Point> ch;
 	Point a, b, c;
-	int i;
 
 	// Retrieving the pivot P, the first point belonging to the Convex Hull.
 	p = *min_element(v.begin(), v.end());
@@ -54,7 +53,7 @@ stack<Point> graham_scan(vector<Point> v){
 	ch.push(v[1]);
 
 	// Appending points to the Convex Hull one by one.
-	for (i = 2; i < (int)v.size(); i++){
+	for (int i = 2; i < (int)v.size(); i++){
 		c = v[i];
 
 		// There are always at least 2 points in the stack in this point.

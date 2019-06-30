@@ -1,11 +1,9 @@
 /* O(sqrt(N)). */
 long long euler_phi(long long n){
-	long long ans, p;
-
-	ans = n;
+	long long ans = n;
 
 	// For every prime p up to sqrt(n).
-	for (p = 2; p * p <= n; p++){
+	for (long long p = 2; p * p <= n; p++){
 		// If prime p divides n.
 		if (n % p == 0){
 			ans /= p;

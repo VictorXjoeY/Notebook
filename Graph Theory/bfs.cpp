@@ -7,7 +7,6 @@ bool seen[N + 1];
 /* O(V + E). */
 void bfs(int u){
 	queue<int> q;
-	int v, i;
 
 	// Initializing.
 	memset(seen, false, sizeof(seen));
@@ -21,8 +20,8 @@ void bfs(int u){
 		q.pop();
 
 		// For every vertex v adjacent to u.
-		for (i = 0; i < (int)g[u].size(); i++){
-			v = g[u][i];
+		for (int i = 0; i < (int)g[u].size(); i++){
+			int v = g[u][i];
 
 			// If vertex v wasn't already visited.
 			if (!seen[v]){

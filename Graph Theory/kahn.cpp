@@ -8,32 +8,30 @@ int n; // (Input)
 
 /* O(V + E) - Returns true if a topological sorting exists. */
 bool kahn(){
-	int u, v, i, k;
-
 	memset(in_degree, 0, sizeof(in_degree));
 
 	// Counting the in degree of every vertex.
-	for (u = 1; u <= n; u++){
-		for (i = 0; i < (int)g[u].size(); i++){
-			v = g[u][i];
+	for (int u = 1; u <= n; u++){
+		for (int i = 0; i < (int)g[u].size(); i++){
+			int v = g[u][i];
 			in_degree[v]++;
 		}
 	}
 
 	// Pushing initial vertices.
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		if (!in_degree[u]){
 			q.push(u);
 		}
 	}
 
 	// Initializing the number of vertices appended to the answer.
-	k = 0;
+	int k = 0;
 
 	// While there are still vertices with in degree equals to 0.
 	while (!q.empty()){
 		// Retrieving next vertex u with in degree equals to 0.
-		u = q.front();
+		int u = q.front();
 		q.pop();
 		k++;
 
@@ -41,8 +39,8 @@ bool kahn(){
 		ans[k] = u;
 
 		// Updating the in degree of every adjacent vertex v.
-		for (i = 0; i < (int)g[u].size(); i++){
-			v = g[u][i];
+		for (int i = 0; i < (int)g[u].size(); i++){
+			int v = g[u][i];
 			in_degree[v]--;
 
 			if (!in_degree[v]){

@@ -25,9 +25,8 @@ Assumes it is a correct Infix expression with no spaces. */
 vector<string> infix_to_postfix(const string &infix){
 	vector<string> postfix;
 	stack<string> s;
-	int i, j;
 
-	for (i = 0; i < (int)infix.size();){
+	for (int i = 0; i < (int)infix.size();){
 		if (is_operator(infix[i])){
 			if (infix[i] == '('){
 				// Just push opening parenthesis.
@@ -57,7 +56,7 @@ vector<string> infix_to_postfix(const string &infix){
 		}
 		else{
 			// Retrieving the entire operand.
-			for (j = i + 1; j < (int)infix.size(); j++){
+			for (int j = i + 1; j < (int)infix.size(); j++){
 				if (is_operator(infix[j])){
 					break;
 				}

@@ -39,7 +39,7 @@ void add(int p){
 
 /* O(Q * log(Q) + Q * sqrt(N)). */
 void mo(){
-	int l, r, i;
+	int l, r;
 
 	// Sorting queries.
 	sort(q + 1, q + 1 + m);
@@ -49,7 +49,7 @@ void mo(){
 	r = 0;
 
 	// For every query.
-	for (i = 1; i <= m; i++){
+	for (int i = 1; i <= m; i++){
 		// Adjusting up r.
 		while (r < q[i].r){
 			r++;

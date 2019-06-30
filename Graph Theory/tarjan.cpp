@@ -13,16 +13,14 @@ int n; // (Input)
 
 /* O(V + E). */
 void dfs(int u){
-	int child, v, i;
-
 	// Marking u as visited.
 	seen[u] = true;
 	low[u] = disc[u] = ++timer;
-	child = 0;
+	int child = 0;
 
 	// For every vertex v adjacent to u.
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i];
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i];
 
 		// If vertex v wasn't already visited.
 		if (!seen[v]){
@@ -54,8 +52,6 @@ void dfs(int u){
 
 /* O(V + E). */
 void tarjan(){
-	int u;
-
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(ap, false, sizeof(ap));
@@ -63,7 +59,7 @@ void tarjan(){
 	timer = 0;
 
 	// Running the DFS.
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		if (!seen[u]){
 			dfs(u);
 		}

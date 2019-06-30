@@ -6,7 +6,6 @@ int n; // (Input)
 
 /* O(V * E) - Returns true if there is a negative cycle reachable from u. */
 bool bellman_ford(int u){
-	int v, w, i, j;
 	bool converged;
 
 	// Initializing.
@@ -14,15 +13,15 @@ bool bellman_ford(int u){
 	dist[u] = 0;
 
 	// It takes at most n - 1 iterations to converge if there is no negative cycle reachable from u.
-	for (i = 1, converged = false; converged and i <= n; i++){
+	for (int i = 1, converged = false; converged and i <= n; i++){
 		converged = true;
 
 		// For every vertex u.
-		for (u = 1; u <= n; u++){
+		for (int u = 1; u <= n; u++){
 			// For every edge (u, v).
-			for (j = 0; j < (int)g[u].size(); j++){
-				v = g[u][j].first;
-				w = g[u][j].second;
+			for (int j = 0; j < (int)g[u].size(); j++){
+				int v = g[u][j].first;
+				int w = g[u][j].second;
 
 				// Trying to relax this edge.
 				if (dist[u] + w < dist[v]){

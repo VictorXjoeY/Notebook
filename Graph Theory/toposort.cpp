@@ -9,14 +9,12 @@ int n; // (Input)
 
 /* O(V + E) - Returns true if a cycle is found from u. */
 bool dfs(int u){
-	int v, i;
-
 	// Visiting current vertex u.
 	seen[u] = true;
 	in_stack[u] = true;
 
-	for (i = 0; i < (int)g[u].size(); i++){
-		v = g[u][i];
+	for (int i = 0; i < (int)g[u].size(); i++){
+		int v = g[u][i];
 
 		if (!seen[v]){
 			if (dfs(v)){
@@ -37,11 +35,9 @@ bool dfs(int u){
 
 /* O(V + E) - Returns true if a topological sorting exists. */
 bool toposort(){
-	int u, i;
-
 	memset(seen, false, sizeof(seen));
 
-	for (u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++){
 		if (!seen[u]){
 			if (dfs(u)){
 				// If a cycle is found, there is no topological sorting.
@@ -51,7 +47,7 @@ bool toposort(){
 	}
 
 	// Filling up the answer.
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		ans[i] = s.top();
 		s.pop();
 	}

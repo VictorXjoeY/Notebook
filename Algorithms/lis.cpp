@@ -7,7 +7,7 @@ int n; // (Input)
 
 /* O(N * log(N)). */
 int lis(){
-	int ans, p, i;
+	int ans, p;
 
 	// Initializing everyone as INF.
 	memset(l, 0x3f, sizeof(l));
@@ -17,7 +17,7 @@ int lis(){
 	ans = 0;
 
 	// Longest Increasing Subsequence.
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		// Find position to place.
 		p = lower_bound(l, l + N + 1, a[i]) - l;
 

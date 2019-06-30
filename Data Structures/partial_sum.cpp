@@ -10,9 +10,7 @@ void update(int left, int right, int value){
 
 /* O(N) - Flushes all updates into array a. */
 void query(){
-	int i;
-
-	for (i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++){
 		p[i] += p[i - 1];
 		a[i] += p[i];
 	}

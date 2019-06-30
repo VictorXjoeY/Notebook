@@ -23,6 +23,9 @@ long long ceil(long long num, long long den){
 long long fast_exp(long long x, long long y, long long m){
 	long long ans = 1; // Base case.
 
+	// In case x >= m.
+	x %= m;
+
 	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
 	while (y > 0){
 		// If current bit is set.
@@ -40,10 +43,9 @@ long long fast_exp(long long x, long long y, long long m){
 /* O(sqrt(N)). */
 vector<pair<long long, long long> > factorization(long long n){
 	vector<pair<long long, long long> > f; // Vector of pairs (prime, exponent)
-	long long p;
 
 	// For every prime p up to sqrt(n).
-	for (p = 2; p * p <= n; p++){
+	for (long long p = 2; p * p <= n; p++){
 		if (n % p == 0){
 			f.push_back(make_pair(p, 0ll));
 			
@@ -173,17 +175,16 @@ t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
 void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
 	long long a2, m2, x1, y1, gcd, lcm;
-	int i;
 
 	// Making 0 <= ai < mi.
-	for (i = 0; i < (int)a.size(); i++){
+	for (int i = 0; i < (int)a.size(); i++){
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
 	a1 = a[0];
 	m1 = m[0];
 
-	for (i = 1; i < (int)a.size(); i++){
+	for (int i = 1; i < (int)a.size(); i++){
 		a2 = a[i];
 		m2 = m[i];
 
@@ -249,7 +250,6 @@ long long nck_mod_prime_power(long long n, long long k, long long p, long long e
 long long nck(long long n, long long k, long long m){
 	long long p, e, pe, a1, r1;
 	vector<long long> a, r;
-	int i;
 
 	// Trivial case.
 	if (k < 0 or k > n){
@@ -257,7 +257,7 @@ long long nck(long long n, long long k, long long m){
 	}
 
 	// O(Log(N) * Log(M)) - Calculating n choose k modulo each prime power that composes m.
-	for (i = 0; i < (int)factor.size(); i++){
+	for (int i = 0; i < (int)factor.size(); i++){
 		p = factor[i].first;
 		e = factor[i].second;
 		pe = fast_exp(p, e, m + 1);
@@ -274,12 +274,11 @@ long long nck(long long n, long long k, long long m){
 /* O(P^E) - Pre-calculates the value of f(n) for n from 1 to p^e. */
 vector<long long> f_init(long long p, long long pe){
 	vector<long long> dp;
-	int i;
 
 	dp.resize(pe + 1);
 	dp[0] = 1;
 
-	for (i = 1; i <= pe; i++){
+	for (int i = 1; i <= pe; i++){
 		dp[i] = (dp[i - 1] * g(i, p)) % pe;
 	}
 
@@ -289,14 +288,13 @@ vector<long long> f_init(long long p, long long pe){
 /* O(M) - Pre-calculates factors and function f(n) for a given modulo m. */
 void nck_init(long long m){
 	long long p, e, pe;
-	int i;
 
 	// O(sqrt(M)) - Returns the pairs (p, p^e) from the factorization of m.
 	factor = factorization(m);
 	dp_f.resize(factor.size());
 
 	// O(M) - For each prime power that composes m.
-	for (i = 0; i < (int)factor.size(); i++){
+	for (int i = 0; i < (int)factor.size(); i++){
 		p = factor[i].first;
 		e = factor[i].second;
 		pe = fast_exp(p, e, m + 1);
