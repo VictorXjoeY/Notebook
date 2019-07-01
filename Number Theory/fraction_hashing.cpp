@@ -1,4 +1,5 @@
-/* We just have to guarantee that the denominator will not be a multiple of these mods at any moment. */
+/* Every individual fraction has to have a numerator and a denominator lesser than these mods.
+   The time complexity of the division and construction can be exchanged by the time complexity of the equal operator.*/
 long long m[2] = {1000000007, 1000000009};
  
 /* O(Log(Y)). */
@@ -21,23 +22,19 @@ long long fast_exp(long long x, long long y, long long m){
  
 	return ans;
 }
- 
+
 struct Fraction{
-	long long p[2], q[2];
+	long long x[2]; // Stores x = p * q^(-1) (mod m) with x >= 0
  
  	/* O(1). */
 	Fraction(){
-		for (int k = 0; k < 2; k++){
-			this->p[k] = 0;
-			this->q[k] = 1;
-		}
+		memset(this->x, 0, sizeof(this->x));
 	}
  
- 	/* O(1). */
+ 	/* O(Log(M)). */
 	Fraction(long long p, long long q){
 		for (int k = 0; k < 2; k++){
-			this->p[k] = p % m[k];
-			this->q[k] = q % m[k];
+			this->x[k] = ((p * fast_exp(q, m[k] - 2, m[k])) % m[k] + m[k]) % m[k];
 		}
 	}
  
@@ -46,8 +43,7 @@ struct Fraction{
 		Fraction ans;
  
 		for (int k = 0; k < 2; k++){
-			ans.p[k] = (this->p[k] * f.q[k] + f.p[k] * this->q[k]) % m[k];
-			ans.q[k] = (this->q[k] * f.q[k]) % m[k];
+			ans.x[k] = (this->x[k] + f.x[k]) % m[k];
 		}
  
 		return ans;
@@ -58,8 +54,7 @@ struct Fraction{
 		Fraction ans;
  
 		for (int k = 0; k < 2; k++){
-			ans.p[k] = (this->p[k] * f.q[k] - f.p[k] * this->q[k]) % m[k];
-			ans.q[k] = (this->q[k] * f.q[k]) % m[k];
+			ans.x[k] = ((this->x[k] - f.x[k]) % m[k] + m[k]) % m[k];
 		}
  
 		return ans;
@@ -70,34 +65,27 @@ struct Fraction{
 		Fraction ans;
  
 		for (int k = 0; k < 2; k++){
-			ans.p[k] = (this->p[k] * f.p[k]) % m[k];
-			ans.q[k] = (this->q[k] * f.q[k]) % m[k];
+			ans.x[k] = (this->x[k] * f.x[k]) % m[k];
 		}
  
 		return ans;
 	}
  
- 	/* O(1) - Fraction division. */
+ 	/* O(Log(M)) - Fraction division. */
 	Fraction operator / (const Fraction &f) const{
 		Fraction ans;
  
 		for (int k = 0; k < 2; k++){
-			ans.p[k] = (this->p[k] * f.q[k]) % m[k];
-			ans.q[k] = (this->q[k] * f.p[k]) % m[k];
+			ans.x[k] = (this->x[k] * fast_exp(f.x[k], m[k] - 2, m[k])) % m[k];
 		}
  
 		return ans;
 	}
- 	
- 	/* O(Log(M)) - Returns x = p * q^-1 (mod m). */
-	long long x(int k) const{
-		return ((this->p[k] * fast_exp(this->q[k], m[k] - 2, m[k])) % m[k] + m[k]) % m[k];
-	}
  
- 	/* O(Log(M)) - Checks if two fraction are equal based on their hash values. */
+ 	/* O(1) - Checks if two fraction are equal based on their hash values. */
 	bool operator == (const Fraction &f) const{
 		for (int k = 0; k < 2; k++){
-			if (this->x(k) != f.x(k)){
+			if (this->x[k] != f.x[k]){
 				return false;
 			}
 		}
@@ -105,7 +93,7 @@ struct Fraction{
 		return true;
 	}
 
- 	/* O(Log(M)) - Checks if two fraction are not equal based on their hash values. */
+ 	/* O(1) - Checks if two fraction are not equal based on their hash values. */
  	bool operator != (const Fraction &f) const{
  		return !((*this) == f);
  	}
