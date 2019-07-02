@@ -1,5 +1,5 @@
 /* Every individual fraction has to have a numerator and a denominator lesser than these mods.
-   The time complexity of the division and construction can be exchanged by the time complexity of the equal operator.*/
+   The time complexity of the division and construction can be exchanged by the time complexity of the == comparison operator. */
 long long m[2] = {1000000007, 1000000009};
  
 /* O(Log(Y)). */
