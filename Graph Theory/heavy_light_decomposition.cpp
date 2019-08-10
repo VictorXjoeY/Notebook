@@ -2,7 +2,7 @@
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
-vector<pair<int, int> > g[N + 1]; // (Input)
+vector<pair<int, int>> g[N + 1]; // (Input)
 bool seen[N + 1];
 int parent[N + 1];
 int weight[N + 1];

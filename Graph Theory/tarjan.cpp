@@ -1,6 +1,6 @@
 #define N 100000
 
-vector<pair<int, int> > bridge;
+vector<pair<int, int>> bridge;
 bool ap[N + 1];
 
 vector<int> g[N + 1]; // (Input)

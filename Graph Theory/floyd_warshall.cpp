@@ -1,6 +1,6 @@
 #define N 300
 
-vector<pair<int, int> > g[N + 1]; // (Input)
+vector<pair<int, int>> g[N + 1]; // (Input)
 int dist[N + 1][N + 1];
 int n; // (Input)
 
