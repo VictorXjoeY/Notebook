@@ -131,7 +131,7 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 	long long a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
-	for (i = 0; i < (int)a.size(); i++){
+	for (int i = 0; i < (int)a.size(); i++){
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
@@ -201,6 +201,10 @@ long long power_tower(long long a, long long n){
 		cf *= g;
 		n /= g;
 		g = __gcd(a, n);
+	}
+	
+	if (n == 1){
+		return 0;
 	}
 
 	// crt([0, a^f(phi(n))], [cf, n]).
