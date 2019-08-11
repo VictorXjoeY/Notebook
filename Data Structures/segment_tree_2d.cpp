@@ -17,7 +17,7 @@ vector<Point> p; // (Input) Points.
 vector<int> vx; // X coordinates (sorted and unique).
 vector<int> seg_x[4 * N + 1]; // Segments of y coordinates (sorted and unique).
 vector<int> seg_y[4 * N + 1]; // Segment Trees on y.
-vector<vector<int> > mx; // Unique y values for every x value.
+vector<vector<int>> mx; // Unique y values for every x value.
 
 /* O(1) - Merge for seg_y[][]. */
 int merge_y(int nl, int nr){

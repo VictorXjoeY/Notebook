@@ -29,8 +29,8 @@ vector<int> prefix_function(const string &s){
 
 /* O(|S| * |Alphabet|) - Given that you have a matching prefix of size i, kmp[i][c]
 stores the size of the matching prefix after appending the character c.*/
-vector<vector<int> > kmp_automaton(const string &s){
-	vector<vector<int> > kmp;
+vector<vector<int>> kmp_automaton(const string &s){
+	vector<vector<int>> kmp;
 	vector<int> p;
 
 	// Retrieving the prefix function of the string s.
