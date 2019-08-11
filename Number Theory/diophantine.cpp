@@ -49,7 +49,9 @@ a * x - b * y = c ---> a * x + b * (-y) = c
 	-x = x1 + k * (b / gcd(a, b)) ---> x = -x1 - k * (b / gcd(a, b))
 	-y = y1 - k * (a / gcd(a, b)) ---> y = -y1 + k * (a / gcd(a, b))
 
-Has a solution if and only if gcd(a, b) divides c. GCD will be positive if a and b are positive. */
+Use positive values for a and b for this function.
+Has infinite solutions if and only if gcd(a, b) divides c.
+If a and/or b are 0, treat those cases separately. */
 long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1){
 	long long gcd, k;
 
