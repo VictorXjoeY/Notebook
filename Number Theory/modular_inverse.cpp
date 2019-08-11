@@ -1,7 +1,3 @@
-#define N 1000000
-
-long long f[N + 1];
-
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y){
@@ -30,28 +26,4 @@ long long modular_inverse(long long a, long long m){
 	}
 
 	return (x % m + m) % m;
-}
-
-/* O(Log(M)) - This only works if k! * (n - k)! is coprime with m. */
-long long nck(long long n, long long k, long long m){
-	long long num, den;
-
-	// Trivial case.
-	if (k < 0 or k > n){
-		return 0;
-	}
-
-	num = f[n];
-	den = (f[k] * f[n - k]) % m;
-
-	return (num * modular_inverse(den, m)) % m;
-}
-
-/* O(N). */
-void nck_init(long long m){
-	f[0] = 1;
-
-	for (long long i = 1; i <= N; i++){
-		f[i] = (f[i - 1] * i) % m;
-	}
 }
