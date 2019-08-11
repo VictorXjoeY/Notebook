@@ -1,6 +1,6 @@
 /* O(sqrt(N)). */
-vector<pair<long long, long long> > factorization(long long n){
-	vector<pair<long long, long long> > f; // Vector of pairs (prime, exponent)
+vector<pair<long long, long long>> factorization(long long n){
+	vector<pair<long long, long long>> f; // Vector of pairs (prime, exponent)
 
 	// For every prime p up to sqrt(n).
 	for (long long p = 2; p * p <= n; p++){

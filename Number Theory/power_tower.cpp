@@ -14,6 +14,27 @@ long long ceil(long long num, long long den){
 	return floor(num + den - 1, den);
 }
 
+/* O(Log(Y)). */
+long long fast_exp(long long x, long long y, long long m){
+	long long ans = 1; // Base case.
+
+	// In case x >= m.
+	x %= m;
+
+	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
+	while (y > 0){
+		// If current bit is set.
+		if (y & 1ll){
+			ans = (ans * x) % m;
+		}
+
+		y >>= 1ll; // Next bit.
+		x = (x * x) % m; // Next power of x.
+	}
+
+	return ans;
+}
+
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y){
@@ -110,7 +131,7 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 	long long a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
-	for (int i = 0; i < (int)a.size(); i++){
+	for (i = 0; i < (int)a.size(); i++){
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
@@ -137,4 +158,56 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 		a1 = (a1 + m1 * x1) % lcm;
 		m1 = lcm;
 	}
+}
+
+/* O(sqrt(N)). */
+long long euler_phi(long long n){
+	long long ans = n;
+
+	// For every prime p up to sqrt(n).
+	for (long long p = 2; p * p <= n; p++){
+		// If prime p divides n.
+		if (n % p == 0){
+			ans /= p;
+			ans *= (p - 1);
+
+			// Removing every p factor.
+			while (n % p == 0){
+				n /= p;
+			}
+		}
+	}
+
+	// If n is not 1 by now, then it is a prime factor.
+	if (n > 1){
+		ans /= n;
+		ans *= (n - 1);
+	}
+
+	return ans;
+}
+
+/* O(sqrt(N)) - Returns the value of a^a^a^a^a... mod n */
+long long power_tower(long long a, long long n){
+	if (n == 1){
+		return 0;
+	}
+
+	long long cf = 1; // Common factors.
+	long long g = __gcd(a, n);
+
+	// O(Log^2(N)).
+	while (g > 1){
+		cf *= g;
+		n /= g;
+		g = __gcd(a, n);
+	}
+
+	// crt([0, a^f(phi(n))], [cf, n]).
+	long long a1, m1;
+	vector<long long> r = {0ll, fast_exp(a, power_tower(a, euler_phi(n)), n)};
+	vector<long long> m = {cf, n};
+	chinese_remainder_theorem(r, m, a1, m1);
+
+	return a1;
 }
