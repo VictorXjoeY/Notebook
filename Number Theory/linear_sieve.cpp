@@ -4,7 +4,7 @@ int mp[N + 1]; // mp[i] stores the minimum prime number which divides i. i is pr
 vector<int> p; // Stores prime numbers.
 
 /* O(N). */
-void sieve(){
+void linear_sieve(){
 	for (int i = 2; i <= N; i++){
 		if (!mp[i]){ // i is prime if we haven't found any smaller factors of it.
 			mp[i] = i;
