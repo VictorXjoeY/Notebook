@@ -1,8 +1,8 @@
-vector<vector<long long> > identity;
+vector<vector<long long>> identity;
 
 /* O(N^3). */
-vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const vector<vector<long long> > &B, long long m){
-	vector<vector<long long> > C;
+vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const vector<vector<long long>> &B, long long m){
+	vector<vector<long long>> C;
 
 	// C will have the same number of rows as A.
 	C.resize(A.size());
@@ -24,19 +24,19 @@ vector<vector<long long> > matrix_mul(const vector<vector<long long> > &A, const
 	return C;
 }
 
-/* O(N^3 * Log(Y)). */
-vector<vector<long long> > matrix_exp(vector<vector<long long> > x, long long y, long long m){
-	vector<vector<long long> > ans = identity; // Base case.
+/* O(N^3 * Log(B)). */
+vector<vector<long long>> matrix_exp(vector<vector<long long>> a, long long b, long long m){
+	vector<vector<long long>> ans = identity; // Base case.
 
-	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
-	while (y > 0){
+	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
+	while (b > 0){
 		// If current bit is set.
-		if (y & 1ll){
-			ans = matrix_mul(ans, x, m);
+		if (b & 1ll){
+			ans = matrix_mul(ans, a, m);
 		}
 
-		y >>= 1ll; // Next bit.
-		x = matrix_mul(x, x, m); // Next power of x.
+		b >>= 1ll; // Next bit.
+		a = matrix_mul(a, a, m); // Next power of a.
 	}
 
 	return ans;
@@ -68,8 +68,8 @@ void init(int n){
 /* | A(n) |   | aa ab ac |   | A(n - 1) |                                      */
 /* | B(n) | = | ba bb bc | * | B(n - 1) |                                      */
 /* | C(n) |   | ca cb cc |   | C(n - 1) |                                      */
-long long solve(vector<vector<long long> > mat, vector<vector<long long> > base, long long n, long long m){
-	vector<vector<long long> > f;
+long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, long long n, long long m){
+	vector<vector<long long>> f;
 
 	// Initializing Identity matrix.
 	init(mat.size());
@@ -85,7 +85,7 @@ long long solve(vector<vector<long long> > mat, vector<vector<long long> > base,
 
 /* O(Log(N)). */
 long long fibonacci(long long n){
-	vector<vector<long long> > mat, base;
+	vector<vector<long long>> mat, base;
 
 	// Filling Fibonacci matrix.
 	mat.resize(2);

@@ -14,22 +14,22 @@ long long ceil(long long num, long long den){
 	return floor(num + den - 1, den);
 }
 
-/* O(Log(Y)). */
-long long fast_exp(long long x, long long y, long long m){
+/* O(Log(B)). */
+long long fast_exp(long long a, long long b, long long m){
 	long long ans = 1; // Base case.
 
-	// In case x >= m.
-	x %= m;
+	// In case a >= m.
+	a %= m;
 
-	// Decomposing y in binary. Multiplying the answer by x^1, x^2, x^4, x^8, ...
-	while (y > 0){
+	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
+	while (b > 0){
 		// If current bit is set.
-		if (y & 1ll){
-			ans = (ans * x) % m;
+		if (b & 1ll){
+			ans = (ans * a) % m;
 		}
 
-		y >>= 1ll; // Next bit.
-		x = (x * x) % m; // Next power of x.
+		b >>= 1ll; // Next bit.
+		a = (a * a) % m; // Next power of a.
 	}
 
 	return ans;
