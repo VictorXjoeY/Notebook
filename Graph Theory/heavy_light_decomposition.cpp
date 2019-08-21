@@ -145,7 +145,7 @@ void hld_init(int root){
 	// Transforms the undirected tree into a directed tree.
 	for (int u = 1; u <= n; u++){
 		if (u != root){
-			g[parent[u]].push_back(make_pair(u, weight[u]));
+			g[parent[u]].push_back({u, weight[u]});
 		}
 	}
 

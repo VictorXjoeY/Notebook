@@ -16,7 +16,7 @@ pair<long long, long long> range_hash(int l, int r){
 		h[k] = (((s[k][r] - s[k][l - 1] + m[k]) % m[k]) * pot[k][n - r]) % m[k];
 	}
 
-	return make_pair(h[0], h[1]);
+	return {h[0], h[1]};
 }
 
 /* O(|S|) - Calculates the prime powers and the accumulated hash function. */

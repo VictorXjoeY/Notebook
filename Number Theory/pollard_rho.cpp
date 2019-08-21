@@ -1,3 +1,5 @@
+mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
+
 /* O(Log(min(a, b))) - Returns a * b mod m without overflowing. 2 * (m - 1) must not overflow. */
 long long mod_mul(long long a, long long b, long long m){
 	// O(1) - If there's __int128_t available, just multiply.
@@ -101,4 +103,78 @@ bool miller_rabin(long long n){
 	}
 
 	return true;
+}
+
+/* O(1) - Returns f(x) = x^2 + c. */
+long long f(long long x, long long c, long long n){
+	return (mod_mul(x, x, n) + c) % n;
+}
+
+/* O(N^(1/4) * Log(N)) - Finds a divisor 1 < d < n of n. Expects a composite number. */
+long long pollard_rho(long long n){
+	if (n % 2 == 0){
+		return 2;
+	}
+
+	// Randomizing values for x0 and c for the polynomial f(x) = x^2 + c.
+	long long tortoise = uniform_int_distribution<long long>(2, n - 1)(rng_64);
+	long long hare = tortoise;
+	long long c = uniform_int_distribution<long long>(1, n - 1)(rng_64);
+	long long g = 1;
+
+	while (g == 1){
+		tortoise = f(tortoise, c, n);
+		hare = f(f(hare, c, n), c, n);
+		g = __gcd(abs(hare - tortoise), n);
+	}
+
+	// Failed to find a divisor. Trying again.
+	if (g == n){
+		return pollard_rho(n);
+	}
+
+	// Found a divisor.
+	return g;
+}
+
+/* O(N^(1/4) * Log(N)). */
+void factorization(long long n, vector<long long> &p){
+	// No prime factors.
+	if (n == 1){
+		return;
+	}
+
+	// Prime.
+	if (miller_rabin(n)){
+		p.push_back(n);
+		return;
+	}
+
+	// Composite.
+	long long d = pollard_rho(n);
+	factorization(d, p);
+	factorization(n / d, p);
+}
+
+/* O(N^(1/4) * Log(N)). */
+vector<pair<long long, long long>> factorization(long long n){
+	vector<pair<long long, long long>> f; // Sorted vector of pairs (prime, exponent).
+	vector<long long> p; // Vector of prime factors.
+
+	// Factorizing.
+	factorization(n, p);
+
+	// Retrieving exponents.
+	sort(p.begin(), p.end());
+
+	for (int i = 0; i < p.size(); i++){
+		if (!f.empty() and p[i] == f.back().first){
+			f.back().second++;
+		}
+		else{
+			f.push_back({p[i], 1ll});
+		}
+	}
+
+	return f;
 }

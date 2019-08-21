@@ -40,7 +40,7 @@ void dfs(int u){
 			// If can't reach u or above from v's subtree using a back edge.
 			if (low[v] > disc[u]){
 				// Edge (u, v) is a bridge.
-				bridge.push_back(make_pair(u, v));
+				bridge.push_back({u, v});
 			}
 		}
 		else if (v != parent[u]){

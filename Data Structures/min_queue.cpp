@@ -12,7 +12,7 @@ void add(int p){
 	}
 
 	// Inserting this element at the back, at some point he might be the minimum.
-	d.push_back(make_pair(p, a[p]));
+	d.push_back({p, a[p]});
 }
 
 /* Amortized O(1). */

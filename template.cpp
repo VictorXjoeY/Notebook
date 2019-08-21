@@ -7,6 +7,14 @@ using namespace std;
 
 // Be careful when solving an inequation such as x >= a / b. To get ceil(a / b) use the code floor_ceil.cpp under "Number Theory" folder.
 
+// How to generate random numbers and random permutations:
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
+// int x = uniform_int_distribution<int>(l, r)(rng);
+// long long x = uniform_int_distribution<long long>(l, r)(rng_64);
+// double x = uniform_real_distribution<double>(l, r)(rng);
+// shuffle(p.begin(), p.end(), rng);
+
 #define PI 3.14159265358979323846
 #define MOD 1000000007
 #define INF 0x3f3f3f3f
