@@ -4,7 +4,7 @@ vector<pair<int, int>> g[N + 1]; // (Input)
 int dist[N + 1];
 int n; // (Input)
 
-/* O(V * E) - Returns true if there is a negative cycle reachable from u. */
+/* O(V * E) - Returns true if there is a negative cycle somewhere in the graph. */
 bool bellman_ford(int u){
 	bool converged = false;
 
@@ -12,7 +12,7 @@ bool bellman_ford(int u){
 	memset(dist, 0x3f, sizeof(dist));
 	dist[u] = 0;
 
-	// It takes at most n - 1 iterations to converge if there is no negative cycle reachable from u.
+	// It takes at most n - 1 iterations to converge if there are no negative cycles in the graph.
 	for (int i = 1; !converged and i <= n; i++){
 		converged = true;
 
