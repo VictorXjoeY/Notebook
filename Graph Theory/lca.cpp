@@ -1,23 +1,85 @@
 #define N 100000
-#define L 20
 
-int ancestor[N + 1][L + 1];
-vector<int> g[N + 1]; // (Input)
-int parent[N + 1];
-int depth[N + 1];
+class SparseTable{
+private:
+	vector<vector<int>> table;
+	vector<int> a;
+
+	/* O(1) - Retrieves the index of the Most Significant Bit. */
+	int msb_index(int mask){
+		return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+	}
+
+	/* O(1) - Idempotent operation. f(f(x)) = f(x) or f(f(x, y), y) = f(x, f(x, y)) = f(x, y). */
+	int merge(int x, int y){
+		return a[x] < a[y] ? x : y;
+	}
+
+public:
+	SparseTable(){}
+
+	/* O(N * Log(N)). */
+	SparseTable(vector<int> const& a){
+		this->a = a;
+		int k = msb_index(a.size());
+
+		// Allocating memory.
+		table.resize(k + 1);
+
+		for (int j = 0; j <= k; j++){
+			table[j].resize(a.size() - (1 << j) + 1);
+		}
+
+		// Base.
+		for (int i = 0; i < a.size(); i++){
+			table[0][i] = i;
+		}
+
+		// Building for each 2^j <= n
+		for (int j = 1; j <= k; j++){
+			// Building for each [i, i + 2^j - 1]
+			for (int i = 0; i + (1 << j) - 1 < a.size(); i++){
+				table[j][i] = merge(table[j - 1][i], table[j - 1][i + (1 << (j - 1))]);
+			}
+		}
+	}
+
+	/* O(1). */
+	int query(int l, int r){
+		// Finding greatest k such that 2^k <= r - l + 1
+		int k = msb_index(r - l + 1);
+		return merge(table[k][l], table[k][r - ((1 << k) - 1)]);
+	}
+};
+
+SparseTable st;
+vector<int> g[N + 1];
+int euler[2 * N + 1];
+int depth[2 * N + 1];
+int first[N + 1];
 bool seen[N + 1];
+int n, cur;
 
-/* O(V). Depth-First Search to compute depths. */
+/* O(V) - Depth-First Search to compute Euler Tour and depths. */
 void dfs(int u, int d){
 	seen[u] = true;
-	depth[u] = d;
+
+	// Pushing u into Euler Tour.
+	cur++;
+	first[u] = cur;
+	euler[cur] = u;
+	depth[cur] = d;
 
 	for (int i = 0; i < (int)g[u].size(); i++){
 		int v = g[u][i];
 
 		if (!seen[v]){
 			dfs(v, d + 1);
-			parent[v] = u;
+			
+			// Pushing u into Euler Tour.
+			cur++;
+			euler[cur] = u;
+			depth[cur] = d;
 		}
 	}
 }
@@ -25,59 +87,16 @@ void dfs(int u, int d){
 /* O(V * Log(V)). */
 void lca_init(int u){
 	// Initializing.
-	memset(parent, -1, sizeof(parent));
-	memset(ancestor, -1, sizeof(ancestor));
+	memset(seen, false, sizeof(seen));
+	cur = 0;
 
-	// Computing the depth and the parent arrays.
+	// Building.
 	dfs(u, 0);
-
-	// Base case for Dynamic Programming.
-	for (int i = 1; i <= N; i++){
-		ancestor[i][0] = parent[i];
-	}
-
-	// For each j.
-	for (int j = 1; j <= L; j++){
-		// For each vertex i.
-		for (int i = 1; i <= N; i++){
-			// If it has 2^(j - 1) ancestor.
-			if (ancestor[i][j - 1] != -1){
-				// 2^j ancestor of vertex i is the 2^(j - 1) ancestor of 2^(j - 1) ancestor of i.
-				ancestor[i][j] = ancestor[ancestor[i][j - 1]][j - 1];
-			}
-		}
-	}
+	st = SparseTable(vector<int>(depth, depth + 2 * n));
 }
 
-/* O(Log(V)). */
+/* O(1). */
 int lca(int u, int v){
-	// Making u the deepest vertex.
-	if (depth[u] < depth[v]){
-		swap(u, v);
-	}
-
-	// Getting u to the same depth as v by making "jumps" to its 2^i ancestors for each i.
-	for (int i = L; i >= 0; i--){
-		// If jumping to u's 2^i ancestor doesn't make it pass vertex v's depth.
-		if (depth[u] - (1 << i) >= depth[v]){
-			u = ancestor[u][i];
-		}
-	}
-
-	// If u and v are the same.
-	if (u == v){
-		return u;
-	}
-
-	// Making u and v "jump" up without making them go up to lca(u, v) or above.
-	for (int i = L; i >= 0; i--){
-		// Only jump if the jump makes them go below lca(u, v).
-		if (ancestor[u][i] != ancestor[v][i]){
-			u = ancestor[u][i];
-			v = ancestor[v][i];
-		}
-	}
-
-	// At the end, u and v are one level deeper than lca(u, v).
-	return parent[u];
+	// Retrieving vertex with minimum depth between first[u] and first[v] in Euler Tour.
+	return euler[st.query(min(first[u], first[v]), max(first[u], first[v]))];
 }

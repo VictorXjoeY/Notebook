@@ -2,15 +2,15 @@
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
-vector<pair<int, int>> g[N + 1]; // (Input)
+vector<pair<int, long long>> g[N + 1]; // (Input)
 bool seen[N + 1];
 int parent[N + 1];
-int weight[N + 1];
+long long weight[N + 1];
 int size[N + 1];
 int depth[N + 1];
 int d[N + 1]; // Discovery time, which represents the position in the Segment Tree.
 int d_inv[N + 1];
-int seg[4 * N + 1];
+long long seg[4 * N + 1];
 int chain[N + 1]; // chain[u] stores the chain index of the vertex u. chain[u] = u if u is the representative of his chain.
 int timer;
 int n; // (Input)
@@ -23,7 +23,7 @@ void dfs_init(int u, int cur_depth){
 
 	for (int i = 0; i < (int)g[u].size(); i++){
 		int v = g[u][i].first;
-		int w = g[u][i].second;
+		long long w = g[u][i].second;
 
 		if (!seen[v]){
 			dfs_init(v, cur_depth + 1);
@@ -47,7 +47,7 @@ void dfs_hld(int u){
 }
 
 /* O(1). */
-int merge(int nl, int nr){
+long long merge(long long nl, long long nr){
 	return max(nl, nr);
 }
 
@@ -69,7 +69,7 @@ void build(int cur, int l, int r){
 }
 
 /* O(Log(N)) - Use update(1, 1, n, d[u], w) to update u with the value w. */
-void update(int cur, int l, int r, int pos, int w){
+void update(int cur, int l, int r, int pos, long long w){
 	int m = (l + r) / 2;
 
 	if (l > pos or r < pos){
@@ -88,8 +88,9 @@ void update(int cur, int l, int r, int pos, int w){
 }
 
 /* O(Log(N)). */
-int query(int cur, int l, int r, int i, int j){
-	int nl, nr, m = (l + r) / 2;
+long long query(int cur, int l, int r, int i, int j){
+	int m = (l + r) / 2;
+	long long nl, nr;
 
 	if (l > j or r < i){
 		return 0;
@@ -106,8 +107,8 @@ int query(int cur, int l, int r, int i, int j){
 }
 
 /* O(Log^2(N)) - Queries the path between u and v. */
-int hld_query(int u, int v){
-	int ans = 0;
+long long hld_query(int u, int v){
+	long long ans = 0;
 
 	// While u and v don't belong to the same chain.
 	while (chain[u] != chain[v]){
@@ -120,9 +121,9 @@ int hld_query(int u, int v){
 			v = parent[chain[v]];
 		}
 	}
-
+	
 	// Remove "+1" and manually fill weight[] to make queries on vertices instead of queries on edges.
-	ans = merge(ans, query(1, 1, n, min(d[u], d[v]) + 1, max(d[u], d[v])));
+	ans = merge(ans, query(1, 1, n, min(d[u], d[v]) + 1, max(d[u], d[v]))); // min(d[u], d[v]) is the time of discovery of the LCA.
 
 	return ans;
 }

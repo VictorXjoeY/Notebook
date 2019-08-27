@@ -1,35 +1,51 @@
-#define N 100000
-#define L 20
+class SparseTable{
+private:
+	vector<vector<long long>> table;
+	vector<long long> a;
 
-int table[N + 1][L + 1];
-int a[N + 1]; // (Input)
-int n; // (Input)
-
-/* O(1) - Idempotent operation. */
-int merge(int x, int y){
-	return max(x, y);
-}
-
-/* O(N * Log(N)). */
-void build(){
-	// Base.
-	for (int i = 1; i <= n; i++){
-		table[i][0] = a[i];
+	/* O(1) - Retrieves the index of the Most Significant Bit. */
+	int msb_index(int mask){
+		return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 	}
 
-	// Building for each 2^j <= n
-	for (int j = 1; (1 << j) <= n; j++){
-		// Building for each [i, i + 2^j - 1]
-		for (int i = 1; i + (1 << j) - 1 <= n; i++){
-			table[i][j] = merge(table[i][j - 1], table[i + (1 << (j - 1))][j - 1]);
+	/* O(1) - Idempotent operation. f(f(x)) = f(x) or f(f(x, y), y) = f(x, f(x, y)) = f(x, y). */
+	long long merge(long long x, long long y){
+		return max(x, y);
+	}
+
+public:
+	SparseTable(){}
+
+	/* O(N * Log(N)). */
+	SparseTable(vector<long long> const& a){
+		this->a = a;
+		int k = msb_index(a.size());
+
+		// Allocating memory.
+		table.resize(k + 1);
+
+		for (int j = 0; j <= k; j++){
+			table[j].resize(a.size() - (1 << j) + 1);
+		}
+
+		// Base.
+		for (int i = 0; i < a.size(); i++){
+			table[0][i] = a[i];
+		}
+
+		// Building for each 2^j <= n
+		for (int j = 1; j <= k; j++){
+			// Building for each [i, i + 2^j - 1]
+			for (int i = 0; i + (1 << j) - 1 < a.size(); i++){
+				table[j][i] = merge(table[j - 1][i], table[j - 1][i + (1 << (j - 1))]);
+			}
 		}
 	}
-}
 
-/* O(1). */
-int query(int l, int r){
-	// Finding greatest k such that 2^k <= r - l + 1
-	int k = 32 - __builtin_clz(r - l + 1) - 1;
-
-	return merge(table[l][k], table[r - ((1 << k) - 1)][k]);
-}
+	/* O(1). */
+	long long query(int l, int r){
+		// Finding greatest k such that 2^k <= r - l + 1
+		int k = msb_index(r - l + 1);
+		return merge(table[k][l], table[k][r - ((1 << k) - 1)]);
+	}
+};
