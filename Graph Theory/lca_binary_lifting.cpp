@@ -23,14 +23,15 @@ void dfs(int u, int d){
 }
 
 /* O(V * Log(V)). */
-void lca_init(int u){
+void lca_init(int root){
 	// Initializing.
+	memset(depth, -1, sizeof(depth));
 	memset(parent, -1, sizeof(parent));
 	memset(ancestor, -1, sizeof(ancestor));
 	memset(seen, false, sizeof(seen));
 
 	// Computing the depth and the parent arrays.
-	dfs(u, 0);
+	dfs(root, 0);
 
 	// Base case for Dynamic Programming.
 	for (int i = 1; i <= N; i++){

@@ -53,12 +53,13 @@ public:
 };
 
 SparseTable st;
-vector<int> g[N + 1];
+vector<int> g[N + 1]; // (Input)
 int euler[2 * N + 1];
 int depth[2 * N + 1];
 int first[N + 1];
 bool seen[N + 1];
-int n, cur;
+int cur;
+int n; // (Input)
 
 /* O(V) - Depth-First Search to compute Euler Tour and depths. */
 void dfs(int u, int d){
@@ -85,13 +86,13 @@ void dfs(int u, int d){
 }
 
 /* O(V * Log(V)). */
-void lca_init(int u){
+void lca_init(int root){
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	cur = 0;
 
 	// Building.
-	dfs(u, 0);
+	dfs(root, 0);
 	st = SparseTable(vector<int>(depth, depth + 2 * n));
 }
 

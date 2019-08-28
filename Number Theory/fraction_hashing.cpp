@@ -1,5 +1,8 @@
-/* Every individual fraction has to have a numerator and a denominator lesser than these mods.
-   The time complexity of the division and construction can be exchanged by the time complexity of the == comparison operator. */
+/* The time complexity of the division and construction can be exchanged by the time
+complexity of the == comparison operator by storing both p and q modulo m instead of
+just storing x = p * q^(-1) modulo m. */
+
+// Every individual fraction has to have a numerator and a denominator lesser than these mods.
 long long m[2] = {1000000007, 1000000009};
  
 /* O(Log(B)). */
