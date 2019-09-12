@@ -19,7 +19,9 @@ Eulerian Path for Directed Graph:
 	- All other vertices have in degree equals to out degree.
 
 We can find an Eulerian Path using Hierholzer's algorithm to find Eulerian Circuit 
-if we add an edge from the end vertex to the start vertex. */
+if we add an edge from the end vertex to the start vertex. 
+
+Note that an Eulerian Circuit is also an Eulerian Path. */
 
 #define N 100000
 
