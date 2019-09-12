@@ -43,7 +43,7 @@ int bfs(int s, int t){
 
 /* O(V * E^2). */
 int edmonds_karp(int s, int t){
-	int f, m, u, v;
+	int f, m;
 
 	// Copying the capacities.
 	for (int u = 1; u <= n; u++){
