@@ -15,11 +15,11 @@ void floyd(int x0, int &mu, int &lambda){
 		hare = f(f(hare));
 	}while (tortoise != hare);
 
-	// Tortoise gets back to initial position.
-	tortoise = x0;
+	// Hare gets back to initial position.
+	hare = x0;
 	mu = 0;
 
-	// Maintaining their distance constant at 2 * i == 2 * k * lambda so that they first meet at x_mu.
+	// Maintaining their distance constant at i == k * lambda so that they first meet at x_mu.
 	while (tortoise != hare){
 		tortoise = f(tortoise);
 		hare = f(hare);
