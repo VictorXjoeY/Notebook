@@ -1,3 +1,5 @@
+from math import gcd
+
 # O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n.
 def integer_sqrt(n):
 	l, r = 0, n
@@ -43,7 +45,7 @@ def modular_inverse(a, m):
 # By dividing it by g:
 # (g * alpha)^(x - 1) = beta * alpha^(-1) (mod mu)
 def baby_step_giant_step(a, b, n):
-	g = extended_gcd(a, n)[0]
+	g = gcd(a, n)
 
 	if g > 1:
 		# No solution

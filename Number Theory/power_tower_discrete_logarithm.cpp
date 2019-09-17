@@ -272,6 +272,7 @@ long long power_tower(long long a, long long n){
 		g = __gcd(a, n);
 	}
 
+	// Treating this case separatedly because Modular Inverse modulo 1 doesn't exist.
 	if (n == 1){
 		return 0;
 	}

@@ -1,3 +1,5 @@
+from math import gcd
+
 # O(1).
 def ceil(num, den):
 	return (num + den - 1) // den
@@ -144,7 +146,7 @@ def modular_inverse(a, m):
 # By dividing it by g:
 # (g * alpha)^(x - 1) = beta * alpha^(-1) (mod mu)
 def baby_step_giant_step(a, b, n):
-	g = extended_gcd(a, n)[0]
+	g = gcd(a, n)
 
 	if g > 1:
 		# No solution
@@ -195,13 +197,15 @@ def power_tower(a, n):
 		return 0
 
 	cf = 1 # Common factors.
-	g = extended_gcd(a, n)[0]
+	g = gcd(a, n)
 
+	# O(Log^2(N)).
 	while g > 1:
 		cf *= g
 		n //= g
-		g = extended_gcd(a, n)[0]
+		g = gcd(a, n)
 
+	# Treating this case separatedly because Modular Inverse modulo 1 doesn't exist.
 	if n == 1:
 		return 0
 
