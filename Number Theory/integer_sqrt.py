@@ -1,4 +1,4 @@
-# O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n.
+# O(Log(N)) - Returns the greatest integer k such that k^2 <= n.
 def integer_sqrt(n):
 	l, r = 0, n
 
