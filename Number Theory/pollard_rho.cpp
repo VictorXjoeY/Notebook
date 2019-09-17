@@ -157,16 +157,15 @@ void factorization(long long n, vector<long long> &p){
 }
 
 /* O(N^(1/4) * Log(N)). */
-vector<pair<long long, long long>> factorization(long long n){
+vector<pair<long long, long long>> factor(long long n){
 	vector<pair<long long, long long>> f; // Sorted vector of pairs (prime, exponent).
 	vector<long long> p; // Vector of prime factors.
 
 	// Factorizing.
 	factorization(n, p);
-
-	// Retrieving exponents.
 	sort(p.begin(), p.end());
 
+	// Retrieving exponents.
 	for (int i = 0; i < p.size(); i++){
 		if (!f.empty() and p[i] == f.back().first){
 			f.back().second++;
