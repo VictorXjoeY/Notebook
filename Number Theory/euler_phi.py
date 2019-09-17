@@ -1,4 +1,4 @@
-# O(sqrt(N))
+# O(sqrt(N)).
 def euler_phi(n):
 	ans = n
 	p = 2
