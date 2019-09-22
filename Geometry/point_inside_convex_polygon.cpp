@@ -60,49 +60,34 @@ void sort_convex_polygon(vector<Point> &p){
 	reverse(p.begin() + i + 1, p.end());
 }
 
-/* O(N * Log(N)) - Returns the Convex Hull of a set of points. Expects at least 3 points and expects that not all of them are collinear. */
-stack<Point> graham_scan(vector<Point> p){
-	stack<Point> ch;
-	Point a, b, c;
+/* O(1) - Returns true if point Q is inside triangle ABC or on one of its edges. */ 
+bool point_inside_triangle(const Point &q, const Point &a, const Point &b, const Point &c){
+	return (((b - a) ^ (q - a)) >= 0 and ((c - b) ^ (q - b)) >= 0 and ((a - c) ^ (q - c)) >= 0) or (((b - a) ^ (q - a)) <= 0 and ((c - b) ^ (q - b)) <= 0 and ((a - c) ^ (q - c)) <= 0);
+}
 
-	// Sorting the points and pushing and extra Pivot to the back as a sentinel.
-	sort_convex_polygon(p);
-	p.push_back(pivot);
+/* O(Log(N)) - Returns true if point Q is inside polygon P. */
+bool point_inside_convex_polygon(const Point &q, const vector<Point> &p){
+	int l, r, m;
 
-	// Pushing first two points.
-	ch.push(p[0]); // Pivot.
-	ch.push(p[1]);
+	// Retrieving the last point p[x] in P such that (p[0], p[x], q) is not a right turn.
+	l = 1;
+	r = (int)p.size() - 2;
 
-	// Appending points to the Convex Hull one by one.
-	for (int i = 2; i < p.size(); i++){
-		c = p[i];
+	while (l < r){
+		m = (l + r + 1) / 2;
 
-		// There are always at least 2 points in the stack at this point.
-		do{
-			// Retrieving the top 2 from stack (A and B).
-			b = ch.top();
-			ch.pop();
-			a = ch.top();
-			ch.pop();
-
-			// If it is a left turn, the three points belong to the current Convex Hull.
-			if (((b - a) ^ (c - a)) > 0){
-				// Pushing back A and B.
-				ch.push(a);
-				ch.push(b);
-				break;
-			}
-
-			// Not a left turn. Removing B by only pushing back A.
-			ch.push(a);
-		}while (ch.size() >= 2);
-
-		// Appending C.
-		ch.push(c);
+		if (((p[m] - p[0]) ^ (q - p[0])) >= 0){
+			l = m;
+		}
+		else{
+			r = m - 1;
+		}
 	}
 
-	// Removing the Pivot initially pushed as a sentinel.
-	ch.pop();
+	return point_inside_triangle(q, p[0], p[l], p[l + 1]);
+}
 
-	return ch;
+/* O(N * Log(N)) - Sorts the polygon so that we can do a binary search for the queries. */
+void init(vector<Point> &p){
+	sort_convex_polygon(p);
 }

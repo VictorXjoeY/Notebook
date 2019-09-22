@@ -3,16 +3,14 @@ struct Point{
 
 	// Empty constructor.
 	Point(){
-		this->x = 0;
-		this->y = 0;
-		this->z = 0;
+		this->x = this->y = this->z = 0;
 	}
 
 	// Constructor.
-	Point(long long x, long long y, long long z){
-		this->x = x;
-		this->y = y;
-		this->z = z;
+	Point(long long x_, long long y_, long long z_){
+		this->x = x_;
+		this->y = y_;
+		this->z = z_;
 	}
 
 	// Vector sum.
