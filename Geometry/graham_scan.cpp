@@ -61,8 +61,8 @@ void sort_convex_polygon(vector<Point> &p){
 }
 
 /* O(N * Log(N)) - Returns the Convex Hull of a set of points. Expects at least 3 points and expects that not all of them are collinear. */
-stack<Point> graham_scan(vector<Point> p){
-	stack<Point> ch;
+vector<Point> graham_scan(vector<Point> p){
+	vector<Point> ch; // "Stack"
 	Point a, b, c;
 
 	// Sorting the points and pushing and extra Pivot to the back as a sentinel.
@@ -70,8 +70,8 @@ stack<Point> graham_scan(vector<Point> p){
 	p.push_back(pivot);
 
 	// Pushing first two points.
-	ch.push(p[0]); // Pivot.
-	ch.push(p[1]);
+	ch.push_back(p[0]); // Pivot.
+	ch.push_back(p[1]);
 
 	// Appending points to the Convex Hull one by one.
 	for (int i = 2; i < p.size(); i++){
@@ -80,29 +80,29 @@ stack<Point> graham_scan(vector<Point> p){
 		// There are always at least 2 points in the stack at this point.
 		do{
 			// Retrieving the top 2 from stack (A and B).
-			b = ch.top();
-			ch.pop();
-			a = ch.top();
-			ch.pop();
+			b = ch.back();
+			ch.pop_back();
+			a = ch.back();
+			ch.pop_back();
 
 			// If it is a left turn, the three points belong to the current Convex Hull.
 			if (((b - a) ^ (c - a)) > 0){
 				// Pushing back A and B.
-				ch.push(a);
-				ch.push(b);
+				ch.push_back(a);
+				ch.push_back(b);
 				break;
 			}
 
 			// Not a left turn. Removing B by only pushing back A.
-			ch.push(a);
+			ch.push_back(a);
 		}while (ch.size() >= 2);
 
 		// Appending C.
-		ch.push(c);
+		ch.push_back(c);
 	}
 
 	// Removing the Pivot initially pushed as a sentinel.
-	ch.pop();
+	ch.pop_back();
 
 	return ch;
 }
