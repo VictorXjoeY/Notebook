@@ -1,11 +1,11 @@
 #define N 100000
 #define T 100000
-#define L 17
+#define L 18
 
 int root[T + 1];
-int seg[4 * L * N + 1];
-int lchild[4 * L * N + 1];
-int rchild[4 * L * N + 1];
+int seg[4 * N + T * L + 1];
+int lchild[4 * N + T * L + 1];
+int rchild[4 * N + T * L + 1];
 int a[N + 1]; // (Input)
 int last;
 
@@ -54,6 +54,8 @@ int update(int cur, int l, int r, int p, int x){
 
 	// Calculating new internal node.
 	seg[ncur] = merge(seg[lchild[ncur]], seg[rchild[ncur]]);
+
+	return ncur;
 }
 
 /* O(Log(N)) - Use query(root[k], 1, n, l, r) to query after the k'th update */
