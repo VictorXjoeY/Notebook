@@ -1,7 +1,10 @@
+N = 10000000
+
+# mp[i] stores the minimum prime number which divides i. i is prime if it's not 0 and mp[i] == i.
+mp = [0 for i in range(N + 1)]
+
 # O(N) - Returns the prime numbers up to n.
 def linear_sieve(n):
-	# mp[i] stores the minimum prime number which divides i. i is prime if it's not 0 and mp[i] == i.
-	mp = [0 for i in range(n + 1)]
 	p = []
 
 	for i in range(2, n + 1):
@@ -17,3 +20,23 @@ def linear_sieve(n):
 			j += 1
 
 	return p
+
+# O(Log(N)).
+def factor(n):
+	# Asserting that linear_sieve was executed before factorizing.
+	assert(mp[2] == 2)
+
+	# Retrieving exponents.
+	f = []
+
+	# While there are still prime factors.
+	while n > 1:
+		if len(f) > 0 and mp[n] == f[-1][0]:
+			f[-1][1] += 1
+		else:
+			f.append([mp[n], 1])
+
+		# Dividing n by its smallest prime factor.
+		n //= mp[n]
+
+	return f
