@@ -3,9 +3,9 @@ struct Point{
 
 	Point(){}
 
-	Point(long long x, long long y){
-		this->x = x;
-		this->y = y;
+	Point(long long x_, long long y_){
+		this->x = x_;
+		this->y = y_;
 	}
 
 	// Vector subtraction.
