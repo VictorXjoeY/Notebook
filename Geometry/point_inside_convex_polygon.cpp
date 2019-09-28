@@ -50,13 +50,13 @@ void sort_convex_polygon(vector<Point> &p){
 	// Sorting according to angles relative to the pivot.
 	sort(p.begin(), p.end(), comp);
 
+	// Reversing last collinear part.
 	for (i = (int)p.size() - 2; i >= 1; i--){
 		if (((p.back() - pivot) ^ (p[i] - pivot)) != 0){
 			break;
 		}
 	}
 
-	// Reversing last collinear part.
 	reverse(p.begin() + i + 1, p.end());
 }
 

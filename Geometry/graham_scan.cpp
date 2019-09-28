@@ -25,6 +25,10 @@ struct Point{
 
 		return this->x < b.x;
 	}
+
+	bool operator == (const Point &b) const{
+		return this->x == b.x and this->y == b.y;
+	}
 };
 
 Point pivot;
@@ -50,23 +54,39 @@ void sort_convex_polygon(vector<Point> &p){
 	// Sorting according to angles relative to the pivot.
 	sort(p.begin(), p.end(), comp);
 
+	// Reversing last collinear part.
 	for (i = (int)p.size() - 2; i >= 1; i--){
 		if (((p.back() - pivot) ^ (p[i] - pivot)) != 0){
 			break;
 		}
 	}
 
-	// Reversing last collinear part.
 	reverse(p.begin() + i + 1, p.end());
 }
 
-/* O(N * Log(N)) - Returns the Convex Hull of a set of points. Expects at least 3 points and expects that not all of them are collinear. */
+/* O(N * Log(N)) - Returns the Convex Hull of a set of points. Expects at least one point. */
 vector<Point> graham_scan(vector<Point> p){
 	vector<Point> ch; // "Stack"
 	Point a, b, c;
 
-	// Sorting the points and pushing and extra Pivot to the back as a sentinel.
+	// Sorting and removing repeated points.
 	sort_convex_polygon(p);
+	p.resize(unique(p.begin(), p.end()) - p.begin());
+
+	// Convex Hull of only one point.
+	if (p.size() == 1){
+		ch.push_back(p[0]);
+		return ch;
+	}
+
+	// Convex Hull of only collinear points.
+	if (((p[1] - p[0]) ^ (p.back() - p[0])) == 0){
+		ch.push_back(p[0]);
+		ch.push_back(p[1]);
+		return ch;
+	}
+
+	// Pushing an extra Pivot as a sentinel.
 	p.push_back(pivot);
 
 	// Pushing first two points.
