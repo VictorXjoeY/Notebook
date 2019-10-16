@@ -1,11 +1,11 @@
-N = 10000000
+N = 1000000
 
 # mp[i] stores the minimum prime number which divides i. i is prime if it's not 0 and mp[i] == i.
 mp = [0 for i in range(N + 1)]
 
 # O(N) - Returns the prime numbers up to n.
 def linear_sieve(n):
-	p = []
+	p = [] # Stores prime numbers.
 
 	for i in range(2, n + 1):
 		if mp[i] == 0: # i is prime if we haven't found any smaller factors of it.
