@@ -4,14 +4,11 @@ double f(double x){
 	// Define this function.
 }
 
-/* O(Log(N)). */
-void ternary_search_double(){
-	double l, r, m1, m2;
-
-	// Maximum.
+/* O(Log(R - L)). */
+double maximum(double l, double r){
 	while (r - l > eps){
-		m1 = l + (r - l) / 3.0;
-		m2 = l + 2.0 * (r - l) / 3.0;
+		double m1 = l + (r - l) / 3.0;
+		double m2 = l + 2.0 * (r - l) / 3.0;
 
 		if (f(m1) < f(m2)){
 			l = m1;
@@ -21,10 +18,14 @@ void ternary_search_double(){
 		}
 	}
 
-	// Minimum.
+	return (l + r) / 2.0;
+}
+
+/* O(Log(R - L)). */
+double minimum(double l, double r){
 	while (r - l > eps){
-		m1 = l + (r - l) / 3.0;
-		m2 = l + 2.0 * (r - l) / 3.0;
+		double m1 = l + (r - l) / 3.0;
+		double m2 = l + 2.0 * (r - l) / 3.0;
 
 		if (f(m1) < f(m2)){
 			r = m2;
@@ -33,19 +34,18 @@ void ternary_search_double(){
 			l = m1;
 		}
 	}
+
+	return (l + r) / 2.0;
 }
 
 int f(int x){
 	// Define this function.
 }
 
-/* O(Log(N)) - Must be strictly increasing or strictly decreasing where it is not Maximum/Minimum. */
-void ternary_search_int(){
-	int l, r, m;
-
-	// Maximum.
+/* O(Log(R - L)) - Must be strictly increasing or strictly decreasing where it is not Maximum. */
+int maximum(int l, int r){
 	while (l < r){
-		m = (l + r) / 2;
+		int m = (l + r) / 2;
 
 		if (f(m) <= f(m + 1)){
 			l = m + 1;
@@ -55,9 +55,13 @@ void ternary_search_int(){
 		}
 	}
 
-	// Minimum.
+	return l;
+}
+
+/* O(Log(R - L)) - Must be strictly increasing or strictly decreasing where it is not Minimum. */
+int minimum(int l, int r){
 	while (l < r){
-		m = (l + r) / 2;
+		int m = (l + r) / 2;
 
 		if (f(m) <= f(m + 1)){
 			r = m;
@@ -66,4 +70,6 @@ void ternary_search_int(){
 			l = m + 1;
 		}
 	}
+
+	return l;
 }
