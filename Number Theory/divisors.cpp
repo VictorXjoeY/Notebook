@@ -18,5 +18,7 @@ vector<long long> divisors(long long n){
 		}
 	}
 
+	sort(d.begin(), d.end());
+
 	return d;
 }
