@@ -1,20 +1,9 @@
 struct Point{
 	long long x, y;
 
-	// Empty constructor.
-	Point(){
-		this->x = this->y = 0;
-	}
-
-	// Constructor.
-	Point(long long x_, long long y_){
-		this->x = x_;
-		this->y = y_;
-	}
-
 	// Vector sum.
 	Point operator + (const Point &b) const{
-		return Point(this->x + b.x, this->y + b.y);
+		return {this->x + b.x, this->y + b.y};
 	}
 
 	// Vector sum (cumulative).
@@ -27,12 +16,12 @@ struct Point{
 
 	// Vector subtraction.
 	Point operator - (const Point &b) const{
-		return Point(this->x - b.x, this->y - b.y);
+		return {this->x - b.x, this->y - b.y};
 	}
 
 	// Negative vector.
 	Point operator - () const{
-		return Point(-this->x, -this->y);
+		return {-this->x, -this->y};
 	}
 
 	// Vector subtraction (cumulative).
@@ -45,7 +34,7 @@ struct Point{
 
 	// Vector product by scalar.
 	Point operator * (long long a){
-		return Point(this->x * a, this->y * a);
+		return {this->x * a, this->y * a};
 	}
 
 	// Vector product by scalar (cumulative).
@@ -58,7 +47,7 @@ struct Point{
 
 	// Vector division by scalar.
 	Point operator / (long long a){
-		return Point(this->x / a, this->y / a);
+		return {this->x / a, this->y / a};
 	}
 
 	// Vector division by scalar (cumulative).

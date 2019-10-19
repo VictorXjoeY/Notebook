@@ -4,14 +4,6 @@ constexpr int N = 100000;
 struct State{
 	int u, v, w;
 
-	State(){}
-
-	State(int u, int v, int w){
-		this->u = u;
-		this->v = v;
-		this->w = w;
-	}
-
 	bool operator < (const State &b) const{
 		return w > b.w;
 	}
@@ -32,7 +24,7 @@ void prim(int u){
 
 	// Pushing initial vertex. Cost of adding the first vertex u to Minimum Spanning Tree is 0.
 	cost[u] = 0;
-	pq.push(State(-1, u, 0));
+	pq.push({-1, u, 0});
 
 	// While there are vertices to visit.
 	while (!pq.empty()){
@@ -55,7 +47,7 @@ void prim(int u){
 				// If I've found a lower cost to add the vertex v to the Minimum Spanning Tree.
 				if (!in_mst[v] and w < cost[v]){
 					cost[v] = w;
-					pq.push(State(u, v, cost[v]));
+					pq.push({u, v, cost[v]});
 				}
 			}
 		}

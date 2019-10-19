@@ -5,14 +5,6 @@ constexpr int SQ = (int)sqrt(N);
 struct Query{
 	int idx, l, r;
 
-	Query(){}
-
-	Query(int idx, int l, int r){
-		this->idx = idx;
-		this->l = l;
-		this->r = r;
-	}
-
 	bool operator < (const Query &b) const{
 		// If they belong to the same bucket, sort by r.
 		if (l / SQ == b.l / SQ){

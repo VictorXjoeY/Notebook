@@ -1,12 +1,5 @@
 struct Point{
 	long long x, y;
-
-	Point(){}
-
-	Point(long long x_, long long y_){
-		this->x = x_;
-		this->y = y_;
-	}
 };
 
 /* O(N) - Computes the area of a simple (convex or concave) polygon. */

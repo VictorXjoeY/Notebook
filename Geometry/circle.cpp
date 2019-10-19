@@ -4,41 +4,22 @@ constexpr double PI = 3.14159265358979323846;
 
 struct Point{
 	double x, y;
-
-	Point(){
-		this->x = this->y = 0.0;
-	}
-
-	Point(double x, double y){
-		this->x = x;
-		this->y = y;
-	}
 };
 
 struct Circle{
 	long long x, y, r;
-
-	Circle(){
-		this->x = this->y = this->r = 0;
-	}
-
-	Circle(long long x, long long y, long long r){
-		this->x = x;
-		this->y = y;
-		this->r = r;
-	}
 };
 
 Point sum(const Point &a, const Point &b){
-	return Point(a.x + b.x, a.y + b.y);
+	return {a.x + b.x, a.y + b.y};
 }
 
 Point sub(const Point &a, const Point &b){
-	return Point(a.x - b.x, a.y - b.y);
+	return {a.x - b.x, a.y - b.y};
 }
 
 Point mul(const Point &a, double x){
-	return Point(a.x * x, a.y * x);
+	return {a.x * x, a.y * x};
 }
 
 long long squared_norm(const Point &a){
@@ -50,15 +31,15 @@ double norm(const Point &a){
 }
 
 Point rotate(const Point &a, double theta){
-	return Point(cos(theta) * a.x - sin(theta) * a.y, sin(theta) * a.x + cos(theta) * a.y);
+	return {cos(theta) * a.x - sin(theta) * a.y, sin(theta) * a.x + cos(theta) * a.y};
 }
 
 double circle_area(const Circle &c){
 	return PI * c.r * c.r;
 }
 
-/* Returns the intersection points of 2 DIFFERENT circles. */
-vector<Point> circle_circle_intersection_points(Circle circle1, Circle circle2){
+/* O(1) - Returns the intersection points of 2 DIFFERENT circles. */
+vector<Point> circle_circle_intersection_points(const Circle &circle1, const Circle &circle2){
 	vector<Point> ans;
 	Point c1, c2, v;
 	double alpha;
@@ -66,11 +47,11 @@ vector<Point> circle_circle_intersection_points(Circle circle1, Circle circle2){
 
 	// Making r1 >= r2.
 	if (circle1.r < circle2.r){
-		swap(circle1, circle2);
+		return circle_circle_intersection_points(circle2, circle1);
 	}
 
-	c1 = Point(circle1.x, circle1.y);
-	c2 = Point(circle2.x, circle2.y);
+	c1 = {(double)circle1.x, (double)circle1.y};
+	c2 = {(double)circle2.x, (double)circle2.y};
 
 	// Squared distance.
 	d = squared_norm(sub(c2, c1));
@@ -89,19 +70,19 @@ vector<Point> circle_circle_intersection_points(Circle circle1, Circle circle2){
 	return ans;
 }
 
-/* Returns the intersection area of 2 circles. */
-double circle_circle_intersection_area(Circle circle1, Circle circle2){
+/* O(1) - Returns the intersection area of 2 circles. */
+double circle_circle_intersection_area(const Circle &circle1, const Circle &circle2){
 	double ans, alpha, beta, sectors, triangles;
-	Point c1, c2, p1, p2, v;
+	Point c1, c2;
 	long long d;
 
 	// Making r1 >= r2.
 	if (circle1.r < circle2.r){
-		swap(circle1, circle2);
+		return circle_circle_intersection_area(circle2, circle1);
 	}
 
-	c1 = Point(circle1.x, circle1.y);
-	c2 = Point(circle2.x, circle2.y);
+	c1 = {(double)circle1.x, (double)circle1.y};
+	c2 = {(double)circle2.x, (double)circle2.y};
 
 	// Squared distance.
 	d = squared_norm(sub(c2, c1));

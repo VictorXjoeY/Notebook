@@ -1,16 +1,9 @@
 struct Point{
 	long long x, y;
 
-	Point(){}
-
-	Point(long long x_, long long y_){
-		this->x = x_;
-		this->y = y_;
-	}
-
 	// Vector subtraction.
 	Point operator - (const Point &b) const{
-		return Point(this->x - b.x, this->y - b.y);
+		return {this->x - b.x, this->y - b.y};
 	}
 
 	// Cross product.

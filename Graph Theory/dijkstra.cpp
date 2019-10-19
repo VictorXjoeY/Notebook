@@ -4,13 +4,6 @@ constexpr int N = 100000;
 struct State{
 	int u, d;
 
-	State(){}
-
-	State(int u, int d){
-		this->u = u;
-		this->d = d;
-	}
-
 	bool operator < (const State &b) const{
 		return d > b.d;
 	}
@@ -31,7 +24,7 @@ void dijkstra(int u){
 
 	// Pushing initial vertex.
 	dist[u] = 0;
-	pq.push(State(u, 0));
+	pq.push({u, 0});
 
 	// While there are vertices to visit.
 	while (!pq.empty()){
@@ -54,7 +47,7 @@ void dijkstra(int u){
 				// If a better path was found to add the vertex v to the Shortest Path Tree.
 				if (!in_spt[v] and dist[u] + w < dist[v]){
 					dist[v] = dist[u] + w;
-					pq.push(State(v, dist[v]));
+					pq.push({v, dist[v]});
 				}
 			}
 		}
