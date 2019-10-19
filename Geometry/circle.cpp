@@ -1,6 +1,6 @@
 /* The area of the intersection still gives Wrong Answer on https://codeforces.com/contest/600/problem/D */
 
-#define PI 3.14159265358979323846
+constexpr double PI = 3.14159265358979323846;
 
 struct Point{
 	double x, y;

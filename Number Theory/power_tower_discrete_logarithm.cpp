@@ -1,5 +1,5 @@
 // MAX is defined such that the binary search doesn't overflow the long long.
-#define MAX 3000000000ll
+constexpr long long MAX = 3000000000ll;
 
 long long ceil(long long, long long);
 

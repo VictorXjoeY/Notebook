@@ -1,4 +1,4 @@
-#define N 1000000
+constexpr int N = 1000000;
 
 int mp[N + 1]; // mp[i] stores the minimum prime number which divides i. i is prime if it's not 0 and mp[i] == i.
 int mobius[N + 1];

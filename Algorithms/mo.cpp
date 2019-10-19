@@ -1,6 +1,6 @@
-#define N 100000
-#define M 100000
-#define SQ (int)sqrt(N)
+constexpr int N = 100000;
+constexpr int M = 100000;
+constexpr int SQ = (int)sqrt(N);
 
 struct Query{
 	int idx, l, r;

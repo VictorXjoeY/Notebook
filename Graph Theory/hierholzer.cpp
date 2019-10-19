@@ -23,7 +23,7 @@ if we add an edge from the end vertex to the start vertex.
 
 Note that an Eulerian Circuit is also an Eulerian Path. */
 
-#define N 100000
+constexpr int N = 100000;
 
 vector<int> g[N + 1]; // (Input)
 int outdegree[N + 1];

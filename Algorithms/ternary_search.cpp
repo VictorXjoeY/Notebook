@@ -1,4 +1,4 @@
-#define eps 1e-9
+constexpr double eps = 1e-9;
 
 double f(double x){
 	// Define this function.

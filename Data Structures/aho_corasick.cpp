@@ -1,5 +1,5 @@
-#define OFFSET 'a'
-#define ALPHABET_SIZE 26
+constexpr int OFFSET = 'a';
+constexpr int ALPHABET_SIZE = 26;
 
 struct AhoCorasick{
 	int child[ALPHABET_SIZE], dp[ALPHABET_SIZE];

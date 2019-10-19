@@ -1,11 +1,16 @@
-#define N 100000
-#define T 100000
-#define L 18
+/* O(1) - Retrieves the index of the Most Significant Bit. */
+constexpr int msb_index(int mask){
+	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+}
+
+constexpr int N = 100000;
+constexpr int T = 100000;
+constexpr int L = msb_index(N); // Greatest L such that 2^L <= N
 
 int root[T + 1];
-int seg[4 * N + T * L + 1];
-int lchild[4 * N + T * L + 1];
-int rchild[4 * N + T * L + 1];
+int seg[2 * N + (L + 2) * T]; // 2 * N - 1 initial nodes + (L + 2) nodes for each one of the T updates.
+int lchild[2 * N + (L + 2) * T];
+int rchild[2 * N + (L + 2) * T];
 int a[N + 1]; // (Input)
 int last;
 

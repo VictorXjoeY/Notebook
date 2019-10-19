@@ -1,4 +1,4 @@
-#define N 100000
+constexpr int N = 100000;
 
 class SparseTable{
 private:

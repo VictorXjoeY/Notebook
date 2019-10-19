@@ -1,5 +1,5 @@
-#define N 100000
-#define Q 100000
+constexpr int N = 100000;
+constexpr int Q = 100000;
 
 class UnionFind{
 private:

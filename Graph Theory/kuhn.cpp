@@ -13,7 +13,7 @@ The complement of a Vertex Cover is an Independent Set, therefore a
 Maximum Independent Set is the complement of a Minimum Vertex Cover.
 */
 
-#define N 1000
+constexpr int N = 1000;
 
 vector<int> g[N + 1]; // (Input)
 bool in_a[N + 1];

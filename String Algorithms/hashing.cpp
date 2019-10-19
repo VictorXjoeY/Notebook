@@ -1,8 +1,8 @@
-#define OFFSET 'a'
-#define N 100000
+constexpr int OFFSET = 'a';
+constexpr int N = 100000;
+constexpr long long m[2] = {1000000007, 1000000009};
+constexpr long long prime[2] = {31, 37}; // Choose primes greater than the size of the alphabet.
 
-long long m[2] = {1000000007, 1000000009};
-long long prime[2] = {31, 37}; // Choose primes greater than the size of the alphabet.
 long long pot[2][N + 1];
 long long s[2][N + 1];
 char str[N + 2]; // (Input)

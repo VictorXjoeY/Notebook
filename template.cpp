@@ -15,9 +15,9 @@ mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
 // double x = uniform_real_distribution<double>(l, r)(rng);
 // shuffle(p.begin(), p.end(), rng);
 
-#define PI 3.14159265358979323846
-#define MOD 1000000007
-#define INF 0x3f3f3f3f
+constexpr double PI = 3.14159265358979323846;
+constexpr int MOD = 1000000007;
+constexpr int INF = 0x3f3f3f3f;
 #define mp make_pair
 #define pb push_back
 #define fi first

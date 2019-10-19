@@ -1,4 +1,4 @@
-#define N 100000
+constexpr int N = 100000;
 
 deque<pair<int, int> > d; // Stores (p, a[p]). Both p and a[p] are strictly increasing.
 int a[N + 1];

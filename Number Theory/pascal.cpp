@@ -1,5 +1,5 @@
-#define MOD 1000000007
-#define N 1000
+constexpr int MOD = 1000000007;
+constexpr int N = 1000;
 
 long long nck[N + 2][N + 2];
 

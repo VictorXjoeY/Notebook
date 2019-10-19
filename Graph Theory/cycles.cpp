@@ -1,4 +1,4 @@
-#define N 100000
+constexpr int N = 100000;
 
 vector<int> cycle[N + 1]; // cycle[c] contains the vertices in the cycle c.
 int color[N + 1]; // color[u] contains the index of the cycle that u belongs to.

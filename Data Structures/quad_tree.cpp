@@ -1,4 +1,4 @@
-#define N 1000
+constexpr int N = 1000;
 
 #define TOP_LEFT(x) (4 * x + 1)
 #define TOP_RIGHT(x) (4 * x + 2)

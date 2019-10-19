@@ -1,4 +1,4 @@
-#define N 1000000
+constexpr int N = 1000000;
 
 long long f[N + 1];
 

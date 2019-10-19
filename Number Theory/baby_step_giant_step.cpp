@@ -1,5 +1,5 @@
 // MAX is defined such that the binary search doesn't overflow the long long.
-#define MAX 3000000000ll
+constexpr long long MAX = 3000000000ll;
 
 /* O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n (n <= 9 * 10^18). */
 long long integer_sqrt(long long n){

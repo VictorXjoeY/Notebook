@@ -1,5 +1,5 @@
-#define INF 0x3f3f3f3f
-#define N 100
+constexpr int INF = 0x3f3f3f3f;
+constexpr int N = 100;
 
 bool seen[N + 1];
 int C[N + 1][N + 1]; // (Input)

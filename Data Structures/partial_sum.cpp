@@ -1,3 +1,5 @@
+constexpr int N = 100000;
+
 int p[N + 2];
 int a[N + 2];
 int n;

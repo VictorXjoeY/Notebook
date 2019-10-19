@@ -1,4 +1,4 @@
-#define N 1000
+constexpr int N = 1000;
 
 int men_pref[N + 1][N + 1]; // (Input) men_pref[i][1...n] stores the preference list of the i'th man.
 int women_pref[N + 1][N + 1]; // (Input) women_pref[i][1...n] stores the preference list of the i'th woman.

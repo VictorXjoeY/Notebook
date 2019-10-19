@@ -1,5 +1,5 @@
-#define N 100000
-#define INF 0x3f3f3f3f
+constexpr int INF = 0x3f3f3f3f;
+constexpr int N = 100000;
 
 struct State{
 	int u, d;

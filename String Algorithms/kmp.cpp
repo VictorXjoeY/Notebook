@@ -1,5 +1,5 @@
-#define OFFSET 'a'
-#define ALPHABET_SIZE 26
+constexpr int OFFSET = 'a';
+constexpr int ALPHABET_SIZE = 26;
 
 /* O(|S|) - Use pattern#text. p[i] = the length of the longest match between
 the suffix ending at s[i] and the prefix of s. */

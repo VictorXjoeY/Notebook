@@ -1,4 +1,4 @@
-#define eps 1e-9
+constexpr double eps = 1e-9;
 
 bool check(double m){
 	// Define this function.

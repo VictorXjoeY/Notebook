@@ -1,4 +1,4 @@
-#define N 100000
+constexpr int N = 100000;
 
 int dp[N + 1];
 int a[N + 1]; // (Input)

@@ -1,5 +1,10 @@
-#define N 100000
-#define L 20
+/* O(1) - Retrieves the index of the Most Significant Bit. */
+constexpr int msb_index(int mask){
+	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+}
+
+constexpr int N = 100000;
+constexpr int L = msb_index(N); // Greatest L such that 2^L <= N
 
 int ancestor[N + 1][L + 1];
 vector<int> g[N + 1]; // (Input)

@@ -1,4 +1,4 @@
-#define N 1000
+constexpr int N = 1000;
 
 vector<pair<int, int>> g[N + 1]; // (Input)
 int dist[N + 1];

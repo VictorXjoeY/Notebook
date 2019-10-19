@@ -1,6 +1,6 @@
+constexpr int N = 100000;
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
-#define N 100000
 
 int a[N + 1]; // (Input)
 int seg[4 * N + 1];

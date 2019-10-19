@@ -1,5 +1,5 @@
-#define INF 0x3f3f3f3f
-#define N 100000
+constexpr int INF = 0x3f3f3f3f;
+constexpr int N = 100000;
 
 int a[N + 1]; // (Input)
 int l[N + 1];

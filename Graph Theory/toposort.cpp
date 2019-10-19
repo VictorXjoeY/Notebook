@@ -1,4 +1,4 @@
-#define N 100000
+constexpr int N = 100000;
 
 vector<int> g[N + 1]; // (Input)
 bool in_stack[N + 1];
