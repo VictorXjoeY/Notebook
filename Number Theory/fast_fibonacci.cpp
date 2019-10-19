@@ -8,14 +8,14 @@ vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const v
 	C.resize(A.size());
 
 	// For each row of C.
-	for (int i = 0; i < (int)C.size(); i++){
+	for (int i = 0; i < C.size(); i++){
 		// C will have the same number of columns as B.
 		C[i].assign(B[0].size(), 0);
 
 		// For each column of C.
-		for (int j = 0; j < (int)C[i].size(); j++){
+		for (int j = 0; j < C[i].size(); j++){
 			// For each column of A or row of B.
-			for (int k = 0; k < (int)A[0].size(); k++){
+			for (int k = 0; k < A[0].size(); k++){
 				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % m;
 			}
 		}
@@ -46,10 +46,10 @@ vector<vector<long long>> matrix_exp(vector<vector<long long>> a, long long b, l
 void init(int n){
 	identity.resize(n);
 
-	for (int i = 0; i < (int)identity.size(); i++){
+	for (int i = 0; i < identity.size(); i++){
 		identity[i].resize(n);
 
-		for (int j = 0; j < (int)identity[i].size(); j++){
+		for (int j = 0; j < identity[i].size(); j++){
 			identity[i][j] = (i == j);
 		}
 	}

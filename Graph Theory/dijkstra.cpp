@@ -47,7 +47,7 @@ void dijkstra(int u){
 			in_spt[u] = true;
 
 			// For every vertex v adjacent to u.
-			for (int i = 0; i < (int)g[u].size(); i++){
+			for (int i = 0; i < g[u].size(); i++){
 				int v = g[u][i].first;
 				int w = g[u][i].second;
 

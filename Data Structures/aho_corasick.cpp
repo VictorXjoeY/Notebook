@@ -19,7 +19,7 @@ vector<AhoCorasick> vt = {AhoCorasick()};
 void aho_corasick_insert(const string &s){
 	int u, i;
 
-	for (i = 0, u = 0; i < (int)s.size(); i++){
+	for (i = 0, u = 0; i < s.size(); i++){
 		// If this child has not been created yet.
 		if (vt[u].child[s[i] - OFFSET] == 0){
 			vt[u].child[s[i] - OFFSET] = vt.size(); // Adding pointer.

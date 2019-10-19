@@ -16,7 +16,7 @@ vector<int> linear_sieve(int n){
 		}
 
 		// Since every number x can be written as x = i * mp[x] we can iterate over every prime mp[x] (prime[j]).
-		for (int j = 0; j < (int)p.size() and p[j] <= mp[i] and i * p[j] <= n; j++){
+		for (int j = 0; j < p.size() and p[j] <= mp[i] and i * p[j] <= n; j++){
 			// mobius[x] = mobius[i * mp[x]] = mobius[i] * 0 if mp[x] divides i or mobius[i] * -1 if mp[x] doesn't divide i.
 			mobius[i * p[j]] = mobius[i] * (p[j] == mp[i] ? 0 : -1);
 			mp[i * p[j]] = p[j];

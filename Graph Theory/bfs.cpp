@@ -20,7 +20,7 @@ void bfs(int u){
 		q.pop();
 
 		// For every vertex v adjacent to u.
-		for (int i = 0; i < (int)g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++){
 			int v = g[u][i];
 
 			// If vertex v wasn't already visited.

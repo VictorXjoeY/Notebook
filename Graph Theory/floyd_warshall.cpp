@@ -13,7 +13,7 @@ void floyd_warshall(){
 	for (int u = 1; u <= n; u++){
 		dist[u][u] = 0;
 
-		for (int i = 0; i < (int)g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++){
 			int v = g[u][i].first;
 			int w = g[u][i].second;
 

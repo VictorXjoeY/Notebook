@@ -10,7 +10,7 @@ vector<int> prefix_function(const string &s){
 	p.resize(s.size());
 	p[0] = 0;
 
-	for (int i = 1; i < (int)s.size(); i++){
+	for (int i = 1; i < s.size(); i++){
 		p[i] = p[i - 1];
 
 		// While it is not possible to expand a prefix of size p[i], move to a shorter prefix.
@@ -38,7 +38,7 @@ vector<vector<int>> kmp_automaton(const string &s){
 	kmp.resize(s.size());
 
 	// Allocating.
-	for (int i = 0; i < (int)s.size(); i++){
+	for (int i = 0; i < s.size(); i++){
 		kmp[i].resize(ALPHABET_SIZE);
 	}
 
@@ -48,7 +48,7 @@ vector<vector<int>> kmp_automaton(const string &s){
 	}
 
 	// Calculating for every matching prefix of size i.
-	for (int i = 1; i < (int)s.size(); i++){
+	for (int i = 1; i < s.size(); i++){
 		for (char c = 0; c < ALPHABET_SIZE; c++){
 			if (c + OFFSET == s[i]){ // Can expand a prefix of size i.
 				kmp[i][c] = i + 1;

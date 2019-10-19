@@ -59,12 +59,12 @@ void build_x(int cur, int l, int r){
 
 	if (l == r){ // Creating leaf and building segment tree on y coordinate.
 		// Inserting every unique sorted y coordinate that has vx[l] as x coordinate.
-		for (i = 0; i < (int)mx[l].size(); i++){
+		for (i = 0; i < mx[l].size(); i++){
 			seg_x[cur].push_back(mx[l][i]);
 		}
 
 		// Allocating memory for the segment tree stored in this leaf.
-		seg_y[cur].resize(4 * (int)seg_x[cur].size() + 1);
+		seg_y[cur].resize(4 * seg_x[cur].size() + 1);
 		build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 		return;
 	}
@@ -75,7 +75,7 @@ void build_x(int cur, int l, int r){
 
 	// Merging and building segment tree on y coordinates.
 	seg_x[cur] = merge_x(seg_x[LEFT(cur)], seg_x[RIGHT(cur)]);
-	seg_y[cur].resize(4 * (int)seg_x[cur].size() + 1);
+	seg_y[cur].resize(4 * seg_x[cur].size() + 1);
 	build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 }
 
@@ -97,7 +97,7 @@ int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int 
 	return merge_y(nl, nr);
 }
 
-/* O(Log^2(N)) - Query. query_x(1, 0, (int)vx.size() - 1, xi, xf, yi, yf) */
+/* O(Log^2(N)) - Query. query_x(1, 0, vx.size() - 1, xi, xf, yi, yf) */
 int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf){
 	int nl, nr, m = (l + r) / 2;
 
@@ -138,7 +138,7 @@ void update_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, in
 	seg[cur] = merge_y(seg[LEFT(cur)], seg[RIGHT(cur)]);
 }
 
-/* O(Log^2(N)) - Update. update_x(1, 0, (int)vx.size() - 1, x, y, val) */
+/* O(Log^2(N)) - Update. update_x(1, 0, vx.size() - 1, x, y, val) */
 void update_x(int cur, int l, int r, int x, int y, int val){
 	int nl, nr, m = (l + r) / 2;
 
@@ -170,7 +170,7 @@ void init(){
 	int pos;
 
 	// Retrieving x coordinates.
-	for (int i = 0; i < (int)p.size(); i++){
+	for (int i = 0; i < p.size(); i++){
 		vx.push_back(p[i].x);
 	}
 
@@ -181,17 +181,17 @@ void init(){
 	// Retrieving y coordinates for every x coordinate.
 	mx.resize(vx.size());
 
-	for (int i = 0; i < (int)p.size(); i++){
+	for (int i = 0; i < p.size(); i++){
 		pos = lower_bound(vx.begin(), vx.end(), p[i].x) - vx.begin();
 		mx[pos].push_back(p[i].y);
 	}
 
 	// Making y coordinates unique for every x coordinate.
-	for (int i = 0; i < (int)mx.size(); i++){
+	for (int i = 0; i < mx.size(); i++){
 		sort(mx[i].begin(), mx[i].end());
 		mx[i].resize(unique(mx[i].begin(), mx[i].end()) - mx[i].begin());
 	}
 
 	// Building.
-	build_x(1, 0, (int)vx.size() - 1);
+	build_x(1, 0, vx.size() - 1);
 }

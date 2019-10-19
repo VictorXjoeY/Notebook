@@ -12,7 +12,7 @@ bool kahn(){
 
 	// Counting the in degree of every vertex.
 	for (int u = 1; u <= n; u++){
-		for (int i = 0; i < (int)g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++){
 			int v = g[u][i];
 			in_degree[v]++;
 		}
@@ -39,7 +39,7 @@ bool kahn(){
 		ans[k] = u;
 
 		// Updating the in degree of every adjacent vertex v.
-		for (int i = 0; i < (int)g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++){
 			int v = g[u][i];
 			in_degree[v]--;
 

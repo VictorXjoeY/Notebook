@@ -21,7 +21,7 @@ void dfs_init(int u, int cur_depth){
 	size[u] = 1;
 	depth[u] = cur_depth;
 
-	for (int i = 0; i < (int)g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++){
 		int v = g[u][i].first;
 		long long w = g[u][i].second;
 
@@ -39,7 +39,7 @@ void dfs_hld(int u){
 	d[u] = ++timer;
 	d_inv[d[u]] = u;
 
-	for (int i = 0; i < (int)g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++){
 		int v = g[u][i].first;
 		chain[v] = (i == 0 ? chain[u] : v); // Creates a new chain for every i != 0.
 		dfs_hld(v);
@@ -152,7 +152,7 @@ void hld_init(int root){
 
 	// Place the child v with the greatest subtree first in the adjacency list of u.
 	for (int u = 1; u <= n; u++){
-		for (int i = 1; i < (int)g[u].size(); i++){
+		for (int i = 1; i < g[u].size(); i++){
 			if (size[g[u][i].first] > size[g[u][0].first]){
 				swap(g[u][i], g[u][0]);
 			}

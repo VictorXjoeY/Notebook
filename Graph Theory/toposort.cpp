@@ -13,7 +13,7 @@ bool dfs(int u){
 	seen[u] = true;
 	in_stack[u] = true;
 
-	for (int i = 0; i < (int)g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++){
 		int v = g[u][i];
 
 		if (!seen[v]){

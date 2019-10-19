@@ -19,7 +19,7 @@ bool bellman_ford(int u){
 		// For every vertex u.
 		for (int u = 1; u <= n; u++){
 			// For every edge (u, v).
-			for (int j = 0; j < (int)g[u].size(); j++){
+			for (int j = 0; j < g[u].size(); j++){
 				int v = g[u][j].first;
 				int w = g[u][j].second;
 

@@ -37,7 +37,7 @@ public:
 
 	// Adjust point p by x.
 	void update(int p, int x){
-		while (p < (int)ft.size()){
+		while (p < ft.size()){
 			ft[p] += x;
 			p += LSOne(p);
 		}

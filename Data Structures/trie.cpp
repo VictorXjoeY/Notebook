@@ -18,7 +18,7 @@ vector<Trie> vt = {Trie()};
 void trie_insert(const string &s){
 	int cur, i;
 
-	for (i = 0, cur = 0; i < (int)s.size(); i++){
+	for (i = 0, cur = 0; i < s.size(); i++){
 		vt[cur].size++;
 
 		// If this child has not been created yet.
@@ -40,7 +40,7 @@ void trie_insert(const string &s){
 int trie_count(const string &s){
 	int cur, i;
 
-	for (i = 0, cur = 0; i < (int)s.size(); i++){
+	for (i = 0, cur = 0; i < s.size(); i++){
 		// If there's no child with this character.
 		if (vt[cur].child[s[i] - OFFSET] == -1){
 			return 0;

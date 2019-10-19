@@ -13,7 +13,7 @@ vector<int> linear_sieve(int n){
 		}
 
 		// Since every number x can be written as x = i * mp[x] we can iterate over every prime mp[x] (prime[j]).
-		for (int j = 0; j < (int)p.size() and p[j] <= mp[i] and i * p[j] <= n; j++){
+		for (int j = 0; j < p.size() and p[j] <= mp[i] and i * p[j] <= n; j++){
 			mp[i * p[j]] = p[j];
 		}
 	}

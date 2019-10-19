@@ -26,7 +26,7 @@ bool dfs(int u){
 	seen[u] = true;
 
 	// Here the vertex u always belongs to Set A and the vertices v always belongs to Set B.
-	for (int i = 0; i < (int)g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++){
 		int v = g[u][i];
 
 		// If vertex v from Set B is unmatched or I can find an augmenting path starting from v's match.
@@ -45,7 +45,7 @@ void bicolor(int u, bool color){
 	seen[u] = true;
 	in_a[u] = color;
 
-	for (int i = 0; i < (int)g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++){
 		int v = g[u][i];
 
 		if (!seen[v]){
