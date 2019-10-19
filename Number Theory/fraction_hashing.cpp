@@ -6,16 +6,16 @@ just storing x = p * q^(-1) modulo m. */
 constexpr long long m[2] = {1000000007, 1000000009};
  
 /* O(Log(B)). */
-long long fast_exp(long long a, long long b, long long m){
+long long fast_exp(long long a, long long b, long long m) {
 	long long ans = 1; // Base case.
 
 	// In case a >= m.
 	a %= m;
 
 	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
-	while (b > 0){
+	while (b > 0) {
 		// If current bit is set.
-		if (b & 1ll){
+		if (b & 1ll) {
 			ans = (ans * a) % m;
 		}
 
@@ -30,22 +30,22 @@ struct Fraction{
 	long long x[2]; // Stores x = p * q^(-1) (mod m) with x >= 0
  
  	/* O(1). */
-	Fraction(){
+	Fraction() {
 		memset(this->x, 0, sizeof(this->x));
 	}
  
  	/* O(Log(M)). */
-	Fraction(long long p, long long q){
-		for (int k = 0; k < 2; k++){
+	Fraction(long long p, long long q) {
+		for (int k = 0; k < 2; k++) {
 			this->x[k] = ((p * fast_exp(q, m[k] - 2, m[k])) % m[k] + m[k]) % m[k];
 		}
 	}
  
  	/* O(1) - Fraction addition. */
-	Fraction operator + (const Fraction &f) const{
+	Fraction operator + (const Fraction &f) const {
 		Fraction ans;
  
-		for (int k = 0; k < 2; k++){
+		for (int k = 0; k < 2; k++) {
 			ans.x[k] = (this->x[k] + f.x[k]) % m[k];
 		}
  
@@ -53,10 +53,10 @@ struct Fraction{
 	}
  
  	/* O(1) - Fraction subtraction. */
-	Fraction operator - (const Fraction &f) const{
+	Fraction operator - (const Fraction &f) const {
 		Fraction ans;
  
-		for (int k = 0; k < 2; k++){
+		for (int k = 0; k < 2; k++) {
 			ans.x[k] = ((this->x[k] - f.x[k]) % m[k] + m[k]) % m[k];
 		}
  
@@ -64,10 +64,10 @@ struct Fraction{
 	}
  
  	/* O(1) - Fraction multiplication. */
-	Fraction operator * (const Fraction &f) const{
+	Fraction operator * (const Fraction &f) const {
 		Fraction ans;
  
-		for (int k = 0; k < 2; k++){
+		for (int k = 0; k < 2; k++) {
 			ans.x[k] = (this->x[k] * f.x[k]) % m[k];
 		}
  
@@ -75,10 +75,10 @@ struct Fraction{
 	}
  
  	/* O(Log(M)) - Fraction division. */
-	Fraction operator / (const Fraction &f) const{
+	Fraction operator / (const Fraction &f) const {
 		Fraction ans;
  
-		for (int k = 0; k < 2; k++){
+		for (int k = 0; k < 2; k++) {
 			ans.x[k] = (this->x[k] * fast_exp(f.x[k], m[k] - 2, m[k])) % m[k];
 		}
  
@@ -86,9 +86,9 @@ struct Fraction{
 	}
  
  	/* O(1) - Checks if two fraction are equal based on their hash values. */
-	bool operator == (const Fraction &f) const{
-		for (int k = 0; k < 2; k++){
-			if (this->x[k] != f.x[k]){
+	bool operator == (const Fraction &f) const {
+		for (int k = 0; k < 2; k++) {
+			if (this->x[k] != f.x[k]) {
 				return false;
 			}
 		}
@@ -97,7 +97,7 @@ struct Fraction{
 	}
 
  	/* O(1) - Checks if two fraction are not equal based on their hash values. */
- 	bool operator != (const Fraction &f) const{
+ 	bool operator != (const Fraction &f) const {
  		return !((*this) == f);
  	}
 };

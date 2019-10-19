@@ -6,46 +6,46 @@ private:
 	vector<int> a;
 
 	/* O(1) - Retrieves the index of the Most Significant Bit. */
-	int msb_index(int mask){
+	int msb_index(int mask) {
 		return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 	}
 
 	/* O(1) - Idempotent operation. f(f(x)) = f(x) or f(f(x, y), y) = f(x, f(x, y)) = f(x, y). */
-	int merge(int x, int y){
+	int merge(int x, int y) {
 		return a[x] < a[y] ? x : y;
 	}
 
 public:
-	SparseTable(){}
+	SparseTable() {}
 
 	/* O(N * Log(N)). */
-	SparseTable(vector<int> const& a){
+	SparseTable(vector<int> const& a) {
 		this->a = a;
 		int k = msb_index(a.size());
 
 		// Allocating memory.
 		table.resize(k + 1);
 
-		for (int j = 0; j <= k; j++){
+		for (int j = 0; j <= k; j++) {
 			table[j].resize(a.size() - (1 << j) + 1);
 		}
 
 		// Base.
-		for (int i = 0; i < a.size(); i++){
+		for (int i = 0; i < a.size(); i++) {
 			table[0][i] = i;
 		}
 
 		// Building for each 2^j <= n
-		for (int j = 1; j <= k; j++){
+		for (int j = 1; j <= k; j++) {
 			// Building for each [i, i + 2^j - 1]
-			for (int i = 0; i + (1 << j) - 1 < a.size(); i++){
+			for (int i = 0; i + (1 << j) - 1 < a.size(); i++) {
 				table[j][i] = merge(table[j - 1][i], table[j - 1][i + (1 << (j - 1))]);
 			}
 		}
 	}
 
 	/* O(1). */
-	int query(int l, int r){
+	int query(int l, int r) {
 		// Finding greatest k such that 2^k <= r - l + 1
 		int k = msb_index(r - l + 1);
 		return merge(table[k][l], table[k][r - ((1 << k) - 1)]);
@@ -62,7 +62,7 @@ int cur;
 int n; // (Input)
 
 /* O(V) - Depth-First Search to compute Euler Tour and depths. */
-void dfs(int u, int d){
+void dfs(int u, int d) {
 	seen[u] = true;
 
 	// Pushing u into Euler Tour.
@@ -71,10 +71,10 @@ void dfs(int u, int d){
 	euler[cur] = u;
 	depth[cur] = d;
 
-	for (int i = 0; i < g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i];
 
-		if (!seen[v]){
+		if (!seen[v]) {
 			dfs(v, d + 1);
 			
 			// Pushing u into Euler Tour.
@@ -86,7 +86,7 @@ void dfs(int u, int d){
 }
 
 /* O(V * Log(V)). */
-void lca_init(int root){
+void lca_init(int root) {
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	cur = 0;
@@ -97,7 +97,7 @@ void lca_init(int root){
 }
 
 /* O(1). */
-int lca(int u, int v){
+int lca(int u, int v) {
 	// Retrieving vertex with minimum depth between first[u] and first[v] in Euler Tour.
 	return euler[st.query(min(first[u], first[v]), max(first[u], first[v]))];
 }

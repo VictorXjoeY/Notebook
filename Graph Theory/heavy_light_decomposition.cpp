@@ -16,16 +16,16 @@ int timer;
 int n; // (Input)
 
 /* O(V) - Fills parent[], weight[], size[] and depth[]. */
-void dfs_init(int u, int cur_depth){
+void dfs_init(int u, int cur_depth) {
 	seen[u] = true;
 	size[u] = 1;
 	depth[u] = cur_depth;
 
-	for (int i = 0; i < g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i].first;
 		long long w = g[u][i].second;
 
-		if (!seen[v]){
+		if (!seen[v]) {
 			dfs_init(v, cur_depth + 1);
 			parent[v] = u;
 			weight[v] = w;
@@ -35,11 +35,11 @@ void dfs_init(int u, int cur_depth){
 }
 
 /* O(V) - Fills d[], d_inv[] and chain[]. */
-void dfs_hld(int u){
+void dfs_hld(int u) {
 	d[u] = ++timer;
 	d_inv[d[u]] = u;
 
-	for (int i = 0; i < g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i].first;
 		chain[v] = (i == 0 ? chain[u] : v); // Creates a new chain for every i != 0.
 		dfs_hld(v);
@@ -47,15 +47,15 @@ void dfs_hld(int u){
 }
 
 /* O(1). */
-long long merge(long long nl, long long nr){
+long long merge(long long nl, long long nr) {
 	return max(nl, nr);
 }
 
 /* O(V). */
-void build(int cur, int l, int r){
+void build(int cur, int l, int r) {
 	int u, m = (l + r) / 2;
 
-	if (l == r){
+	if (l == r) {
 		// Obtaining the vertex with discovery time equal to l.
 		u = d_inv[l];
 		seg[cur] = weight[u];
@@ -69,14 +69,14 @@ void build(int cur, int l, int r){
 }
 
 /* O(Log(N)) - Use update(1, 1, n, d[u], w) to update u with the value w. */
-void update(int cur, int l, int r, int pos, long long w){
+void update(int cur, int l, int r, int pos, long long w) {
 	int m = (l + r) / 2;
 
-	if (l > pos or r < pos){
+	if (l > pos or r < pos) {
 		return;
 	}
 
-	if (l == r){
+	if (l == r) {
 		seg[cur] = w;
 		return;
 	}
@@ -88,15 +88,15 @@ void update(int cur, int l, int r, int pos, long long w){
 }
 
 /* O(Log(N)). */
-long long query(int cur, int l, int r, int i, int j){
+long long query(int cur, int l, int r, int i, int j) {
 	int m = (l + r) / 2;
 	long long nl, nr;
 
-	if (l > j or r < i){
+	if (l > j or r < i) {
 		return 0;
 	}
 
-	if (l >= i and r <= j){
+	if (l >= i and r <= j) {
 		return seg[cur];
 	}
 
@@ -107,12 +107,12 @@ long long query(int cur, int l, int r, int i, int j){
 }
 
 /* O(Log^2(N)) - Queries the path between u and v. */
-long long hld_query(int u, int v){
+long long hld_query(int u, int v) {
 	long long ans = 0;
 
 	// While u and v don't belong to the same chain.
-	while (chain[u] != chain[v]){
-		if (depth[chain[u]] > depth[chain[v]]){ // Going up u's chain.
+	while (chain[u] != chain[v]) {
+		if (depth[chain[u]] > depth[chain[v]]) { // Going up u's chain.
 			ans = merge(ans, query(1, 1, n, d[chain[u]], d[u]));
 			u = parent[chain[u]];
 		}
@@ -129,7 +129,7 @@ long long hld_query(int u, int v){
 }
 
 /* O(V) - Builds the Heavy-Light structure. */
-void hld_init(int root){
+void hld_init(int root) {
 	// Initialize.
 	memset(seen, false, sizeof(seen));
 	memset(size, 0, sizeof(size));
@@ -139,21 +139,21 @@ void hld_init(int root){
 	dfs_init(root, 0);
 
 	// Clears graph.
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		g[u].clear();
 	}
 
 	// Transforms the undirected tree into a directed tree.
-	for (int u = 1; u <= n; u++){
-		if (u != root){
+	for (int u = 1; u <= n; u++) {
+		if (u != root) {
 			g[parent[u]].push_back({u, weight[u]});
 		}
 	}
 
 	// Place the child v with the greatest subtree first in the adjacency list of u.
-	for (int u = 1; u <= n; u++){
-		for (int i = 1; i < g[u].size(); i++){
-			if (size[g[u][i].first] > size[g[u][0].first]){
+	for (int u = 1; u <= n; u++) {
+		for (int i = 1; i < g[u].size(); i++) {
+			if (size[g[u][i].first] > size[g[u][0].first]) {
 				swap(g[u][i], g[u][0]);
 			}
 		}

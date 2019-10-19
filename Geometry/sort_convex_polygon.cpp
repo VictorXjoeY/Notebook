@@ -2,17 +2,17 @@ struct Point{
 	long long x, y;
 
 	// Vector subtraction.
-	Point operator - (const Point &b) const{
+	Point operator - (const Point &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
 	// Cross product.
-	long long operator ^ (const Point &b) const{
+	long long operator ^ (const Point &b) const {
 		return this->x * b.y - this->y * b.x;
 	}
 
-	bool operator < (const Point &b) const{
-		if (this->x == b.x){
+	bool operator < (const Point &b) const {
+		if (this->x == b.x) {
 			return this->y < b.y;
 		}
 
@@ -23,9 +23,9 @@ struct Point{
 Point pivot;
 
 /* O(1) - Compares points A and B using their angle relative to the Pivot. */
-bool comp(const Point &a, const Point &b){
+bool comp(const Point &a, const Point &b) {
 	// Same angle. Closest point first.
-	if (((a - pivot) ^ (b - pivot)) == 0){
+	if (((a - pivot) ^ (b - pivot)) == 0) {
 		return a < b;
 	}
 
@@ -34,7 +34,7 @@ bool comp(const Point &a, const Point &b){
 }
 
 /* O(N * Log(N)) - Sorts the points in a convex polygon in counter-clockwise order. */
-void sort_convex_polygon(vector<Point> &p){
+void sort_convex_polygon(vector<Point> &p) {
 	int i;
 
 	// Retrieving a pivot point.
@@ -44,8 +44,8 @@ void sort_convex_polygon(vector<Point> &p){
 	sort(p.begin(), p.end(), comp);
 
 	// Reversing last collinear part.
-	for (i = (int)p.size() - 2; i >= 1; i--){
-		if (((p.back() - pivot) ^ (p[i] - pivot)) != 0){
+	for (i = (int)p.size() - 2; i >= 1; i--) {
+		if (((p.back() - pivot) ^ (p[i] - pivot)) != 0) {
 			break;
 		}
 	}

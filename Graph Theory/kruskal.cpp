@@ -5,9 +5,9 @@ private:
 	vector<int> p, rank, size;
 	int n;
 public:
-	UnionFind(){}
+	UnionFind() {}
 
-	UnionFind(int n){
+	UnionFind(int n) {
 		// Initializing.
 		size.assign(n, 1); // Size of sets is 1 initially.
 		rank.assign(n, 0); // Rank of sets is 0 initially.
@@ -15,15 +15,15 @@ public:
 		this->n = n;
 
 		// Setting the representative to be itself for each set.
-		for (int i = 0; i < n; i++){
+		for (int i = 0; i < n; i++) {
 			p[i] = i;
 		}
 	}
 
 	/* O(1). */
-	int find_set(int u){
+	int find_set(int u) {
 		// Found representative.
-		if (u == p[u]){
+		if (u == p[u]) {
 			return u;
 		}
 
@@ -32,18 +32,18 @@ public:
 	}
 
 	/* O(1). */
-	void union_set(int u, int v){
+	void union_set(int u, int v) {
 		// Finding representatives of u and v.
 		int x = find_set(u);
 		int y = find_set(v);
 
 		// If u and v belong to different sets.
-		if (x != y){
-			if (rank[x] > rank[y]){ // Attaching y's tree to the root x.
+		if (x != y) {
+			if (rank[x] > rank[y]) { // Attaching y's tree to the root x.
 				size[x] += size[y];
 				p[y] = x;
 			}
-			else if (rank[x] < rank[y]){ // Attaching x's tree to the root y.
+			else if (rank[x] < rank[y]) { // Attaching x's tree to the root y.
 				size[y] += size[x];
 				p[x] = y;
 			}
@@ -59,12 +59,12 @@ public:
 	}
 
 	/* O(1). */
-	int num_sets(){
+	int num_sets() {
 		return n;
 	}
 
 	/* O(1). */
-	int set_size(int u){
+	int set_size(int u) {
 		return size[find_set(u)];
 	}
 };
@@ -72,15 +72,15 @@ public:
 struct Edge{
 	int u, v, w;
 
-	Edge(){}
+	Edge() {}
 
-	Edge(int u, int v, int w){
+	Edge(int u, int v, int w) {
 		this->u = u;
 		this->v = v;
 		this->w = w;
 	}
 
-	bool operator < (const Edge &b) const{
+	bool operator < (const Edge &b) const {
 		return w < b.w;
 	}
 };
@@ -89,7 +89,7 @@ Edge e[M + 1]; // (Input)
 int n, m; // (Input)
 
 /* O(E * Log(E)). */
-int kruskal(){
+int kruskal() {
 	UnionFind uf;
 	int ans;
 
@@ -101,9 +101,9 @@ int kruskal(){
 	ans = 0;
 
 	// For every edge (u, v).
-	for (int i = 1; i <= m; i++){
+	for (int i = 1; i <= m; i++) {
 		// If vertex u and vertex v belongs to different sets.
-		if (uf.findSet(e[i].u) != uf.findSet(e[i].v)){
+		if (uf.findSet(e[i].u) != uf.findSet(e[i].v)) {
 			// Edge (u, v) belongs to the Minimum Spanning Tree. Unite u's set with v's set.
 			uf.unionSet(e[i].u, e[i].v);
 			ans += e[i].w;

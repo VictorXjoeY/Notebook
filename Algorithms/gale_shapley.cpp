@@ -10,7 +10,7 @@ queue<int> available_men; // Stores the men which are still available (with men_
 int n; // (Input)
 
 /* O(N^2) - Gale Shapley algorithm to produce a Stable Matching between n men and n women. */
-void gale_shapley(){
+void gale_shapley() {
 	int k, x, y;
 
 	// Initializing.
@@ -19,21 +19,21 @@ void gale_shapley(){
 	memset(men_match, 0, sizeof(men_match));
 
 	// For each woman i.
-	for (int i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++) {
 		// Pre-calculating the position of each man x in the preference list of the woman i.
-		for (int j = 1; j <= n; j++){
+		for (int j = 1; j <= n; j++) {
 			x = women_pref[i][j];
 			women_pref_pos[i][x] = j;
 		}
 	}
 
 	// Marking all men as available.
-	for (int i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++) {
 		available_men.push(i);
 	}
 
 	// While there are still available men.
-	while (!available_men.empty()){
+	while (!available_men.empty()) {
 		// Retrieving any available man x.
 		x = available_men.front();
 		available_men.pop();
@@ -42,10 +42,10 @@ void gale_shapley(){
 		last_proposal[x]++;
 		y = men_pref[x][last_proposal[x]];
 
-		if (women_match[y]){ // If the woman y is already taken by the man k.
+		if (women_match[y]) { // If the woman y is already taken by the man k.
 			k = women_match[y];
 
-			if (women_pref_pos[y][x] < women_pref_pos[y][k]){ // If the woman y prefers the man x over the man k. Accepts proposal.
+			if (women_pref_pos[y][x] < women_pref_pos[y][k]) { // If the woman y prefers the man x over the man k. Accepts proposal.
 				// Matching the man x with the woman y.
 				men_match[x] = y;
 				women_match[y] = x;

@@ -32,20 +32,20 @@ int degree[N + 1];
 int n; // (Input)
 
 /* O(V + E). */
-void dfs(int u, const vector<unordered_map<int, int>> &graph, vector<bool> &seen){
+void dfs(int u, const vector<unordered_map<int, int>> &graph, vector<bool> &seen) {
 	seen[u] = true;
 
-	for (unordered_map<int, int>::const_iterator it = graph[u].begin(); it != graph[u].end(); it++){
+	for (unordered_map<int, int>::const_iterator it = graph[u].begin(); it != graph[u].end(); it++) {
 		int v = it->first;
 
-		if (!seen[v]){
+		if (!seen[v]) {
 			dfs(v, graph, seen);
 		}
 	}
 }
 
 /* O(V + E). */
-vector<int> undirected_eulerian_circuit(){
+vector<int> undirected_eulerian_circuit() {
 	vector<unordered_map<int, int>> gaux;
 	vector<int> circuit;
 	vector<bool> seen;
@@ -55,18 +55,18 @@ vector<int> undirected_eulerian_circuit(){
 	memset(degree, 0, sizeof(degree));
 	gaux.resize(n + 1);
 
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		degree[u] = g[u].size();
 
-		for (int i = 0; i < g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i];
 			gaux[u][v]++;
 		}
 	}
 
 	// Checking degrees.
-	for (int u = 1; u <= n; u++){
-		if (degree[u] % 2){
+	for (int u = 1; u <= n; u++) {
+		if (degree[u] % 2) {
 			return vector<int>();
 		}
 	}
@@ -74,12 +74,12 @@ vector<int> undirected_eulerian_circuit(){
 	// Retrieving the start vertex.
 	int root = 1;
 
-	while (root <= n and degree[root] == 0){
+	while (root <= n and degree[root] == 0) {
 		root++;
 	}
 
 	// No edges in this graph.
-	if (root > n){
+	if (root > n) {
 		return vector<int>();
 	}
 
@@ -87,8 +87,8 @@ vector<int> undirected_eulerian_circuit(){
 	seen.assign(n + 1, false);
 	dfs(root, gaux, seen);
 
-	for (int u = 1; u <= n; u++){
-		if (degree[u] != 0 and !seen[u]){
+	for (int u = 1; u <= n; u++) {
+		if (degree[u] != 0 and !seen[u]) {
 			return vector<int>();
 		}
 	}
@@ -96,10 +96,10 @@ vector<int> undirected_eulerian_circuit(){
 	// Pushing initial vertex.
 	s.push(root);
 
-	while (!s.empty()){
+	while (!s.empty()) {
 		int u = s.top();
 
-		if (gaux[u].empty()){
+		if (gaux[u].empty()) {
 			circuit.push_back(u);
 			s.pop();
 		}
@@ -109,7 +109,7 @@ vector<int> undirected_eulerian_circuit(){
 			s.push(v);
 
 			// Removing (u, v).
-			if (gaux[u][v] == 1){
+			if (gaux[u][v] == 1) {
 				gaux[u].erase(v);
 			}
 			else{
@@ -117,7 +117,7 @@ vector<int> undirected_eulerian_circuit(){
 			}
 
 			// Removing (v, u).
-			if (gaux[v][u] == 1){
+			if (gaux[v][u] == 1) {
 				gaux[v].erase(u);
 			}
 			else{
@@ -130,7 +130,7 @@ vector<int> undirected_eulerian_circuit(){
 }
 
 /* O(V + E). */
-vector<int> undirected_eulerian_path(){
+vector<int> undirected_eulerian_path() {
 	vector<unordered_map<int, int>> gaux;
 	vector<int> circuit, path;
 	vector<bool> seen;
@@ -140,10 +140,10 @@ vector<int> undirected_eulerian_path(){
 	memset(degree, 0, sizeof(degree));
 	gaux.resize(n + 1);
 
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		degree[u] = g[u].size();
 
-		for (int i = 0; i < g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i];
 			gaux[u][v]++;
 		}
@@ -153,9 +153,9 @@ vector<int> undirected_eulerian_path(){
 	int x = -1;
 	int y = -1;
 
-	for (int u = 1; u <= n; u++){
-		if (degree[u] % 2){
-			if (x == -1){
+	for (int u = 1; u <= n; u++) {
+		if (degree[u] % 2) {
+			if (x == -1) {
 				x = u;
 			}
 			else{
@@ -164,7 +164,7 @@ vector<int> undirected_eulerian_path(){
 		}
 	}
 
-	if (x != -1 and y != -1){ // No circuit but path might exist.
+	if (x != -1 and y != -1) { // No circuit but path might exist.
 		// Adding an edge between the end vertex and the start vertex.
 		gaux[x][y]++;
 		gaux[y][x]++;
@@ -173,8 +173,8 @@ vector<int> undirected_eulerian_path(){
 	}
 
 	// Checking degrees.
-	for (int u = 1; u <= n; u++){
-		if (degree[u] % 2){
+	for (int u = 1; u <= n; u++) {
+		if (degree[u] % 2) {
 			return vector<int>();
 		}
 	}
@@ -182,12 +182,12 @@ vector<int> undirected_eulerian_path(){
 	// Retrieving the start vertex.
 	int root = 1;
 
-	while (root <= n and degree[root] == 0){
+	while (root <= n and degree[root] == 0) {
 		root++;
 	}
 
 	// No edges in this graph.
-	if (root > n){
+	if (root > n) {
 		return vector<int>();
 	}
 
@@ -195,8 +195,8 @@ vector<int> undirected_eulerian_path(){
 	seen.assign(n + 1, false);
 	dfs(root, gaux, seen);
 
-	for (int u = 1; u <= n; u++){
-		if (degree[u] != 0 and !seen[u]){
+	for (int u = 1; u <= n; u++) {
+		if (degree[u] != 0 and !seen[u]) {
 			return vector<int>();
 		}
 	}
@@ -204,10 +204,10 @@ vector<int> undirected_eulerian_path(){
 	// Pushing initial vertex.
 	s.push(root);
 
-	while (!s.empty()){
+	while (!s.empty()) {
 		int u = s.top();
 
-		if (gaux[u].empty()){
+		if (gaux[u].empty()) {
 			circuit.push_back(u);
 			s.pop();
 		}
@@ -217,7 +217,7 @@ vector<int> undirected_eulerian_path(){
 			s.push(v);
 
 			// Removing (u, v).
-			if (gaux[u][v] == 1){
+			if (gaux[u][v] == 1) {
 				gaux[u].erase(v);
 			}
 			else{
@@ -225,7 +225,7 @@ vector<int> undirected_eulerian_path(){
 			}
 
 			// Removing (v, u).
-			if (gaux[v][u] == 1){
+			if (gaux[v][u] == 1) {
 				gaux[v].erase(u);
 			}
 			else{
@@ -235,16 +235,16 @@ vector<int> undirected_eulerian_path(){
 	}
 
 	// If an edge was artificially inserted.
-	if (x != -1 and y != -1){
+	if (x != -1 and y != -1) {
 		// Removing extra edge.
-		for (int i = 1; i < circuit.size(); i++){ // For each edge.
-			if ((circuit[i - 1] == y and circuit[i] == x) or (circuit[i - 1] == x and circuit[i] == y)){ // Found the edge artificially inserted.
-				for (int j = i; j < circuit.size(); j++){
+		for (int i = 1; i < circuit.size(); i++) { // For each edge.
+			if ((circuit[i - 1] == y and circuit[i] == x) or (circuit[i - 1] == x and circuit[i] == y)) { // Found the edge artificially inserted.
+				for (int j = i; j < circuit.size(); j++) {
 					path.push_back(circuit[j]);
 				}
 
 				// Ignoring first vertex of the circuit because it is equal to the last vertex of the circuit.
-				for (int j = 1; j <= i - 1; j++){
+				for (int j = 1; j <= i - 1; j++) {
 					path.push_back(circuit[j]);
 				}
 
@@ -259,20 +259,20 @@ vector<int> undirected_eulerian_path(){
 }
 
 /* O(V + E). */
-void dfs(int u, const vector<vector<int>> &graph, vector<bool> &seen){
+void dfs(int u, const vector<vector<int>> &graph, vector<bool> &seen) {
 	seen[u] = true;
 
-	for (int i = 0; i < graph[u].size(); i++){
+	for (int i = 0; i < graph[u].size(); i++) {
 		int v = graph[u][i];
 
-		if (!seen[v]){
+		if (!seen[v]) {
 			dfs(v, graph, seen);
 		}
 	}
 }
 
 /* O(V + E). */
-vector<int> directed_eulerian_circuit(){
+vector<int> directed_eulerian_circuit() {
 	vector<vector<int>> gaux, gt;
 	vector<bool> seen, seent;
 	vector<int> circuit;
@@ -283,10 +283,10 @@ vector<int> directed_eulerian_circuit(){
 	gaux.resize(n + 1);
 	gt.resize(n + 1);
 
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		outdegree[u] = g[u].size();
 
-		for (int i = 0; i < g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i];
 			indegree[v]++;
 
@@ -296,8 +296,8 @@ vector<int> directed_eulerian_circuit(){
 	}
 
 	// Checking degrees.
-	for (int u = 1; u <= n; u++){
-		if (indegree[u] != outdegree[u]){
+	for (int u = 1; u <= n; u++) {
+		if (indegree[u] != outdegree[u]) {
 			return vector<int>();
 		}
 	}
@@ -305,12 +305,12 @@ vector<int> directed_eulerian_circuit(){
 	// Retrieving the start vertex.
 	int root = 1;
 
-	while (root <= n and outdegree[root] == 0){
+	while (root <= n and outdegree[root] == 0) {
 		root++;
 	}
 
 	// No edges in this graph.
-	if (root > n){
+	if (root > n) {
 		return vector<int>();
 	}
 
@@ -320,8 +320,8 @@ vector<int> directed_eulerian_circuit(){
 	dfs(root, gaux, seen);
 	dfs(root, gt, seent);
 
-	for (int u = 1; u <= n; u++){
-		if (indegree[u] + outdegree[u] > 0 and (!seen[u] or !seent[u])){
+	for (int u = 1; u <= n; u++) {
+		if (indegree[u] + outdegree[u] > 0 and (!seen[u] or !seent[u])) {
 			return vector<int>();
 		}
 	}
@@ -330,9 +330,9 @@ vector<int> directed_eulerian_circuit(){
 	s.push(root);
 	int u = root;
 
-	while (!s.empty()){
+	while (!s.empty()) {
 		// If there's a remaining edge.
-		if (!gaux[u].empty()){
+		if (!gaux[u].empty()) {
 			// Pushing the current vertex.
 			s.push(u);
 
@@ -358,7 +358,7 @@ vector<int> directed_eulerian_circuit(){
 }
 
 /* O(V + E). */
-vector<int> directed_eulerian_path(){
+vector<int> directed_eulerian_path() {
 	vector<vector<int>> gaux, gt;
 	vector<int> path, circuit;
 	vector<bool> seen, seent;
@@ -369,10 +369,10 @@ vector<int> directed_eulerian_path(){
 	gaux.resize(n + 1);
 	gt.resize(n + 1);
 
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		outdegree[u] = g[u].size();
 
-		for (int i = 0; i < g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i];
 			indegree[v]++;
 
@@ -385,17 +385,17 @@ vector<int> directed_eulerian_path(){
 	int x = -1;
 	int y = -1;
 
-	for (int u = 1; u <= n; u++){
-		if (outdegree[u] == indegree[u] + 1){
+	for (int u = 1; u <= n; u++) {
+		if (outdegree[u] == indegree[u] + 1) {
 			x = u;
 		}
 
-		if (indegree[u] == outdegree[u] + 1){
+		if (indegree[u] == outdegree[u] + 1) {
 			y = u;
 		}
 	}
 
-	if (x != -1 and y != -1){ // No circuit but a path might exist.
+	if (x != -1 and y != -1) { // No circuit but a path might exist.
 		// Adding an edge between the end vertex and the start vertex.
 		gaux[y].push_back(x);
 		gt[x].push_back(y);
@@ -404,8 +404,8 @@ vector<int> directed_eulerian_path(){
 	}
 
 	// Checking degrees.
-	for (int u = 1; u <= n; u++){
-		if (indegree[u] != outdegree[u]){
+	for (int u = 1; u <= n; u++) {
+		if (indegree[u] != outdegree[u]) {
 			return vector<int>();
 		}
 	}
@@ -413,12 +413,12 @@ vector<int> directed_eulerian_path(){
 	// Retrieving the start vertex.
 	int root = 1;
 
-	while (root <= n and outdegree[root] == 0){
+	while (root <= n and outdegree[root] == 0) {
 		root++;
 	}
 
 	// No edges in this graph.
-	if (root > n){
+	if (root > n) {
 		return vector<int>();
 	}
 
@@ -428,8 +428,8 @@ vector<int> directed_eulerian_path(){
 	dfs(root, gaux, seen);
 	dfs(root, gt, seent);
 
-	for (int u = 1; u <= n; u++){
-		if (indegree[u] + outdegree[u] > 0 and (!seen[u] or !seent[u])){
+	for (int u = 1; u <= n; u++) {
+		if (indegree[u] + outdegree[u] > 0 and (!seen[u] or !seent[u])) {
 			return vector<int>();
 		}
 	}
@@ -438,9 +438,9 @@ vector<int> directed_eulerian_path(){
 	s.push(root);
 	int u = root;
 
-	while (!s.empty()){
+	while (!s.empty()) {
 		// If there's a remaining edge.
-		if (!gaux[u].empty()){
+		if (!gaux[u].empty()) {
 			// Pushing the current vertex.
 			s.push(u);
 
@@ -463,17 +463,17 @@ vector<int> directed_eulerian_path(){
 	reverse(circuit.begin(), circuit.end());
 
 	// If an edge was artificially inserted.
-	if (x != -1 and y != -1){
+	if (x != -1 and y != -1) {
 		// Removing extra edge.
-		for (int i = 1; i < circuit.size(); i++){ // For each edge.
-			if (circuit[i - 1] == y and circuit[i] == x){ // Found the edge artificially inserted.
+		for (int i = 1; i < circuit.size(); i++) { // For each edge.
+			if (circuit[i - 1] == y and circuit[i] == x) { // Found the edge artificially inserted.
 				// Starting from x.
-				for (int j = i; j < circuit.size(); j++){
+				for (int j = i; j < circuit.size(); j++) {
 					path.push_back(circuit[j]);
 				}
 
 				// Ending at y. Ignoring first vertex of the circuit because it is equal to the last vertex of the circuit.
-				for (int j = 1; j <= i - 1; j++){
+				for (int j = 1; j <= i - 1; j++) {
 					path.push_back(circuit[j]);
 				}
 

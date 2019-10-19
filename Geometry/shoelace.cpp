@@ -3,12 +3,12 @@ struct Point{
 };
 
 /* O(N) - Computes the area of a simple (convex or concave) polygon. */
-double shoelace(const vector<Point> &p){
+double shoelace(const vector<Point> &p) {
 	long long ans;
 
 	ans = 0;
 
-	for (int i = 0; i < p.size() - 1; i++){
+	for (int i = 0; i < p.size() - 1; i++) {
 		ans += p[i].x * p[i + 1].y - p[i + 1].x * p[i].y;
 	}
 

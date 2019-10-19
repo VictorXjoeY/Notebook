@@ -5,7 +5,7 @@ int dist[N + 1];
 bool seen[N + 1];
 
 /* O(V + E). */
-void bfs(int u){
+void bfs(int u) {
 	queue<int> q;
 
 	// Initializing.
@@ -15,16 +15,16 @@ void bfs(int u){
 	q.push(u);
 
 	// While there are vertices to visit.
-	while (!q.empty()){
+	while (!q.empty()) {
 		u = q.front();
 		q.pop();
 
 		// For every vertex v adjacent to u.
-		for (int i = 0; i < g[u].size(); i++){
+		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i];
 
 			// If vertex v wasn't already visited.
-			if (!seen[v]){
+			if (!seen[v]) {
 				seen[v] = true;
 				dist[v] = dist[u] + 1;
 				q.push(v);

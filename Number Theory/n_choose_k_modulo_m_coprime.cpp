@@ -4,10 +4,10 @@ long long f[N + 1];
 
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-long long extended_gcd(long long a, long long b, long long &x, long long &y){
+long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
-	if (a == 0){
+	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;
@@ -22,10 +22,10 @@ long long extended_gcd(long long a, long long b, long long &x, long long &y){
 
 /* O(Log(M)) - Returns the modular multiplicative inverse of a mod m, if it exists.
 Returns x that satisfies a * x = 1 (mod m) if a and m are coprime. Returns 0 otherwise. */
-long long modular_inverse(long long a, long long m){
+long long modular_inverse(long long a, long long m) {
 	long long x, y;
 
-	if (extended_gcd((a % m + m) % m, m, x, y) != 1){
+	if (extended_gcd((a % m + m) % m, m, x, y) != 1) {
 		return 0;
 	}
 
@@ -33,11 +33,11 @@ long long modular_inverse(long long a, long long m){
 }
 
 /* O(Log(M)) - This only works if k! * (n - k)! is coprime with m. */
-long long nck(long long n, long long k, long long m){
+long long nck(long long n, long long k, long long m) {
 	long long num, den;
 
 	// Trivial case.
-	if (k < 0 or k > n){
+	if (k < 0 or k > n) {
 		return 0;
 	}
 
@@ -48,10 +48,10 @@ long long nck(long long n, long long k, long long m){
 }
 
 /* O(N). */
-void nck_init(long long m){
+void nck_init(long long m) {
 	f[0] = 1;
 
-	for (long long i = 1; i <= N; i++){
+	for (long long i = 1; i <= N; i++) {
 		f[i] = (f[i - 1] * i) % m;
 	}
 }

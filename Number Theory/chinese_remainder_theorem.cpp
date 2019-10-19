@@ -1,8 +1,8 @@
 long long ceil(long long, long long);
 
 /* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor(long long num, long long den){
-	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)){
+long long floor(long long num, long long den) {
+	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
 		return abs(num) / abs(den);
 	}
 
@@ -10,16 +10,16 @@ long long floor(long long num, long long den){
 }
 
 /* O(1). */
-long long ceil(long long num, long long den){
+long long ceil(long long num, long long den) {
 	return floor(num + den - 1, den);
 }
 
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-long long extended_gcd(long long a, long long b, long long &x, long long &y){
+long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
-	if (a == 0){
+	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;
@@ -52,14 +52,14 @@ a * x - b * y = c ---> a * x + b * (-y) = c
 Use positive values for a and b for this function.
 Has infinite solutions if and only if gcd(a, b) divides c.
 If a and/or b are 0, treat those cases separately. */
-long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1){
+long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1) {
 	long long gcd, k;
 
 	// Obtaining a * x1 + b * y1 = gcd(a, b)
 	gcd = extended_gcd(a, b, x1, y1);
 
 	// No solution
-	if (c % gcd != 0){
+	if (c % gcd != 0) {
 		return 0;
 	}
 
@@ -106,25 +106,25 @@ t - (a1 + m1 * x1) = lcm(m1, m2) * k ---> t = a1 + m1 * x1 (mod lcm(m1, m2))
 t - a2 = m2 * (-y1 + k * m1 / gcd(m1, m2))
 t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
-void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
+void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1) {
 	long long a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
-	for (int i = 0; i < a.size(); i++){
+	for (int i = 0; i < a.size(); i++) {
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
 	a1 = a[0];
 	m1 = m[0];
 
-	for (int i = 1; i < a.size(); i++){
+	for (int i = 1; i < a.size(); i++) {
 		a2 = a[i];
 		m2 = m[i];
 
 		// Solving m1 * x + m2 * (-y) = a2 - a1
 		gcd = diophantine(m1, m2, a2 - a1, x1, y1);
 
-		if (gcd == 0){ // No solution.
+		if (gcd == 0) { // No solution.
 			a1 = -1;
 			m1 = 0;
 			return;

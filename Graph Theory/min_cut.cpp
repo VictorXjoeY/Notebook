@@ -10,7 +10,7 @@ int M[N + 1];
 int n; // (Input)
 
 /* O(V + E). */
-int bfs(int s, int t){
+int bfs(int s, int t) {
 	queue<int> q;
 
 	memset(M, 0, sizeof(M));
@@ -20,16 +20,16 @@ int bfs(int s, int t){
 
 	q.push(s);
 
-	while (!q.empty()){
+	while (!q.empty()) {
 		int u = q.front();
 		q.pop();
 
-		for (int v = 1; v <= n; v++){
-			if (v != u and T[u][v] > 0 and P[v] == -1){
+		for (int v = 1; v <= n; v++) {
+			if (v != u and T[u][v] > 0 and P[v] == -1) {
 				P[v] = u;
 				M[v] = min(M[u], C[u][v] - F[u][v]);
 
-				if (v != t){
+				if (v != t) {
 					q.push(v);
 				}
 				else{
@@ -43,12 +43,12 @@ int bfs(int s, int t){
 }
 
 /* O(V * E^2). */
-int edmonds_karp(int s, int t){
+int edmonds_karp(int s, int t) {
 	int f, m;
 
 	// Copying the capacities.
-	for (int u = 1; u <= n; u++){
-		for (int v = 1; v <= n; v++){
+	for (int u = 1; u <= n; u++) {
+		for (int v = 1; v <= n; v++) {
 			T[u][v] = C[u][v];
 		}
 	}
@@ -58,12 +58,12 @@ int edmonds_karp(int s, int t){
 	f = 0;
 
 	// While I can improve the flow.
-	while (true){
+	while (true) {
 		// Finding an augmenting path.
 		m = bfs(s, t);
 
 		// Cannot improve the flow.
-		if (!m){
+		if (!m) {
 			break;
 		}
 
@@ -71,7 +71,7 @@ int edmonds_karp(int s, int t){
 		int v = t;
 
 		// Updating the flow throughout the path found by BFS.
-		while (v != s){
+		while (v != s) {
 			int u = P[v];
 
 			F[u][v] += m;
@@ -86,23 +86,23 @@ int edmonds_karp(int s, int t){
 	return f;
 }
 
-void dfs(int u){
+void dfs(int u) {
 	seen[u] = true;
 
-	for (int v = 1; v <= n; v++){
-		if (T[u][v] and !seen[v]){
+	for (int v = 1; v <= n; v++) {
+		if (T[u][v] and !seen[v]) {
 			dfs(v);
 		}
 	}
 }
 
-void min_cut(int s, int t){
+void min_cut(int s, int t) {
 	edmonds_karp(s, t);
 	dfs(s);
 
-	for (int u = 1; u <= n; u++){
-		for (int v = 1; v <= n; v++){
-			if (seen[u] and !seen[v] and C[u][v]){
+	for (int u = 1; u <= n; u++) {
+		for (int v = 1; v <= n; v++) {
+			if (seen[u] and !seen[v] and C[u][v]) {
 				printf("%d %d\n", u, v);
 			}
 		}

@@ -5,9 +5,9 @@ constexpr int SQ = (int)sqrt(N);
 struct Query{
 	int idx, l, r;
 
-	bool operator < (const Query &b) const{
+	bool operator < (const Query &b) const {
 		// If they belong to the same bucket, sort by r.
-		if (l / SQ == b.l / SQ){
+		if (l / SQ == b.l / SQ) {
 			return r < b.r;
 		}
 
@@ -21,16 +21,16 @@ int ans[M + 1];
 int a[N + 1]; // (Input)
 int n, m; // (Input)
 
-void remove(int p){
+void remove(int p) {
 	// Define this function.
 }
 
-void add(int p){
+void add(int p) {
 	// Define this function.
 }
 
 /* O(Q * log(Q) + Q * sqrt(N)). */
-void mo(){
+void mo() {
 	int l, r;
 
 	// Sorting queries.
@@ -41,27 +41,27 @@ void mo(){
 	r = 0;
 
 	// For every query.
-	for (int i = 1; i <= m; i++){
+	for (int i = 1; i <= m; i++) {
 		// Adjusting up r.
-		while (r < q[i].r){
+		while (r < q[i].r) {
 			r++;
 			add(r);
 		}
 
 		// Adjusting down r.
-		while (r > q[i].r){
+		while (r > q[i].r) {
 			remove(r);
 			r--;
 		}
 
 		// Adjusting up l.
-		while (l < q[i].l){
+		while (l < q[i].l) {
 			remove(l);
 			l++;
 		}
 
 		// Adjusting down l.
-		while (l > q[i].l){
+		while (l > q[i].l) {
 			l--;
 			add(l);
 		}

@@ -1,9 +1,9 @@
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-long long extended_gcd(long long a, long long b, long long &x, long long &y){
+long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
-	if (a == 0){
+	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;

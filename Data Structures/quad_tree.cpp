@@ -8,23 +8,23 @@ constexpr int N = 1000;
 int quad[4 * N * N + 1];
 int mat[N + 1][N + 1]; // (Input)
 
-int merge(int ntl, int ntr, int nbl, int nbr){
+int merge(int ntl, int ntr, int nbl, int nbr) {
 	return max(max(ntl, ntr), max(nbl, nbr));
 }
 
-void build(int cur, int xmin, int xmax, int ymin, int ymax){
+void build(int cur, int xmin, int xmax, int ymin, int ymax) {
 	int xmid, ymid;
 
 	xmid = (xmin + xmax) / 2;
 	ymid = (ymin + ymax) / 2;
 
 	// Invalid.
-	if (xmin > xmax or ymin > ymax){
+	if (xmin > xmax or ymin > ymax) {
 		return;
 	}
 
 	// Leaf.
-	if (xmin == xmax and ymin == ymax){
+	if (xmin == xmax and ymin == ymax) {
 		quad[cur] = mat[xmin][ymin];
 		return;
 	}
@@ -39,24 +39,24 @@ void build(int cur, int xmin, int xmax, int ymin, int ymax){
 	quad[cur] = merge(quad[TOP_LEFT(cur)], quad[TOP_RIGHT(cur)], quad[BOTTOM_LEFT(cur)], quad[BOTTOM_RIGHT(cur)]);
 }
 
-void update(int cur, int xmin, int xmax, int ymin, int ymax, int x, int y, int val){
+void update(int cur, int xmin, int xmax, int ymin, int ymax, int x, int y, int val) {
 	int xmid, ymid;
 
 	xmid = (xmin + xmax) / 2;
 	ymid = (ymin + ymax) / 2;
 
 	// Invalid.
-	if (xmin > xmax or ymin > ymax){
+	if (xmin > xmax or ymin > ymax) {
 		return;
 	}
 
 	// Out of range.
-	if (xmin > x or xmax < x or ymin > y or ymax < y){
+	if (xmin > x or xmax < x or ymin > y or ymax < y) {
 		return;
 	}
 
 	// Leaf.
-	if (xmin == xmax and ymin == ymax){
+	if (xmin == xmax and ymin == ymax) {
 		quad[cur] += val;
 		return;
 	}
@@ -71,24 +71,24 @@ void update(int cur, int xmin, int xmax, int ymin, int ymax, int x, int y, int v
 	quad[cur] = merge(quad[TOP_LEFT(cur)], quad[TOP_RIGHT(cur)], quad[BOTTOM_LEFT(cur)], quad[BOTTOM_RIGHT(cur)]);
 }
 
-int query(int cur, int xmin, int xmax, int ymin, int ymax, int imin, int imax, int jmin, int jmax){
+int query(int cur, int xmin, int xmax, int ymin, int ymax, int imin, int imax, int jmin, int jmax) {
 	int ntl, ntr, nbl, nbr, xmid, ymid;
 
 	xmid = (xmin + xmax) / 2;
 	ymid = (ymin + ymax) / 2;
 
 	// Invalid.
-	if (xmin > xmax or ymin > ymax){
+	if (xmin > xmax or ymin > ymax) {
 		return;
 	}
 
 	// Out of range.
-	if (xmin > x or xmax < x or ymin > y or ymax < y){
+	if (xmin > x or xmax < x or ymin > y or ymax < y) {
 		return;
 	}
 
 	// Leaf.
-	if (xmin == xmax and ymin == ymax){
+	if (xmin == xmax and ymin == ymax) {
 		quad[cur] += val;
 		return;
 	}

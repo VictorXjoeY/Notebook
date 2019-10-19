@@ -33,7 +33,7 @@ constexpr int INF = 0x3f3f3f3f;
 typedef long long ll;
 typedef unsigned long long ull;
 
-int main(){
+int main() {
 	// ios::sync_with_stdio(false);
 
 	// freopen("input.txt", "r", stdin);

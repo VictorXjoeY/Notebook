@@ -1,13 +1,13 @@
 /* O(sqrt(N)). */
-int mobius(long long n){
+int mobius(long long n) {
 	int ans = 0;
 
 	// For every prime p up to sqrt(n).
-	for (long long p = 2; p * p <= n; p++){
+	for (long long p = 2; p * p <= n; p++) {
 		// If prime p divides n.
-		if (n % p == 0){
+		if (n % p == 0) {
 			// Not square-free.
-			if (n % (p * p) == 0){
+			if (n % (p * p) == 0) {
 				return 0;
 			}
 

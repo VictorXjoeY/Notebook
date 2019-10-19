@@ -1,21 +1,21 @@
 vector<vector<long long>> identity;
 
 /* O(N^3). */
-vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const vector<vector<long long>> &B, long long m){
+vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const vector<vector<long long>> &B, long long m) {
 	vector<vector<long long>> C;
 
 	// C will have the same number of rows as A.
 	C.resize(A.size());
 
 	// For each row of C.
-	for (int i = 0; i < C.size(); i++){
+	for (int i = 0; i < C.size(); i++) {
 		// C will have the same number of columns as B.
 		C[i].assign(B[0].size(), 0);
 
 		// For each column of C.
-		for (int j = 0; j < C[i].size(); j++){
+		for (int j = 0; j < C[i].size(); j++) {
 			// For each column of A or row of B.
-			for (int k = 0; k < A[0].size(); k++){
+			for (int k = 0; k < A[0].size(); k++) {
 				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % m;
 			}
 		}
@@ -25,13 +25,13 @@ vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const v
 }
 
 /* O(N^3 * Log(B)). */
-vector<vector<long long>> matrix_exp(vector<vector<long long>> a, long long b, long long m){
+vector<vector<long long>> matrix_exp(vector<vector<long long>> a, long long b, long long m) {
 	vector<vector<long long>> ans = identity; // Base case.
 
 	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
-	while (b > 0){
+	while (b > 0) {
 		// If current bit is set.
-		if (b & 1ll){
+		if (b & 1ll) {
 			ans = matrix_mul(ans, a, m);
 		}
 
@@ -43,13 +43,13 @@ vector<vector<long long>> matrix_exp(vector<vector<long long>> a, long long b, l
 }
 
 /* O(N^2) - Fills up the Identity matrix. */
-void init(int n){
+void init(int n) {
 	identity.resize(n);
 
-	for (int i = 0; i < identity.size(); i++){
+	for (int i = 0; i < identity.size(); i++) {
 		identity[i].resize(n);
 
-		for (int j = 0; j < identity[i].size(); j++){
+		for (int j = 0; j < identity[i].size(); j++) {
 			identity[i][j] = (i == j);
 		}
 	}
@@ -68,7 +68,7 @@ void init(int n){
 /* | A(n) |   | aa ab ac |   | A(n - 1) |                                      */
 /* | B(n) | = | ba bb bc | * | B(n - 1) |                                      */
 /* | C(n) |   | ca cb cc |   | C(n - 1) |                                      */
-long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, long long n, long long m){
+long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, long long n, long long m) {
 	vector<vector<long long>> f;
 
 	// Initializing Identity matrix.
@@ -84,7 +84,7 @@ long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, l
 
 
 /* O(Log(N)). */
-long long fibonacci(long long n){
+long long fibonacci(long long n) {
 	vector<vector<long long>> mat, base;
 
 	// Filling Fibonacci matrix.

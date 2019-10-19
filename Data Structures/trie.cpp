@@ -5,7 +5,7 @@ struct Trie{
 	int child[ALPHABET_SIZE];
 	int size, terminal;
 
-	Trie(){
+	Trie() {
 		memset(this->child, -1, sizeof(this->child));
 		this->size = this->terminal = 0;
 	}
@@ -15,14 +15,14 @@ struct Trie{
 vector<Trie> vt = {Trie()};
 
 /* O(|S|). */
-void trie_insert(const string &s){
+void trie_insert(const string &s) {
 	int cur, i;
 
-	for (i = 0, cur = 0; i < s.size(); i++){
+	for (i = 0, cur = 0; i < s.size(); i++) {
 		vt[cur].size++;
 
 		// If this child has not been created yet.
-		if (vt[cur].child[s[i] - OFFSET] == -1){
+		if (vt[cur].child[s[i] - OFFSET] == -1) {
 			vt[cur].child[s[i] - OFFSET] = vt.size(); // Adding pointer.
 			vt.push_back(Trie()); // Creating child.
 		}
@@ -37,12 +37,12 @@ void trie_insert(const string &s){
 }
 
 /* O(|S|). */
-int trie_count(const string &s){
+int trie_count(const string &s) {
 	int cur, i;
 
-	for (i = 0, cur = 0; i < s.size(); i++){
+	for (i = 0, cur = 0; i < s.size(); i++) {
 		// If there's no child with this character.
-		if (vt[cur].child[s[i] - OFFSET] == -1){
+		if (vt[cur].child[s[i] - OFFSET] == -1) {
 			return 0;
 		}
 

@@ -14,12 +14,12 @@ vector<vector<int>> mx; // Unique y values for every x value.
 vector<int> dp;
 
 /* O(1) - Merge for seg_y[][]. */
-int merge_y(int nl, int nr){
+int merge_y(int nl, int nr) {
 	return max(nl, nr);
 }
 
 /* O(N) - Merge for seg_x[]. */
-vector<int> merge_x(const vector<int> &nl, const vector<int> &nr){
+vector<int> merge_x(const vector<int> &nl, const vector<int> &nr) {
 	vector<int> ans;
 
 	ans.resize(nl.size() + nr.size());
@@ -30,10 +30,10 @@ vector<int> merge_x(const vector<int> &nl, const vector<int> &nr){
 }
 
 /* O(N) - Builds a segment tree over a 0-based array of y values. Called as build_y(1, 0, seg_x[cur].size() - 1) by build_x(). */
-void build_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r){
+void build_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r) {
 	int m = (l + r) / 2;
 
-	if (l == r){
+	if (l == r) {
 		// This node should represent the point vy[l].
 		seg[cur] = 0;
 		return;
@@ -48,12 +48,12 @@ void build_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r){
 }
 
 /* O(N) - Builds a segment tree over a 0-based array of points. Use build_x(1, 0, vx.size() - 1) to build. */
-void build_x(int cur, int l, int r){
+void build_x(int cur, int l, int r) {
 	int i, m = (l + r) / 2;
 
-	if (l == r){ // Creating leaf and building segment tree on y coordinate.
+	if (l == r) { // Creating leaf and building segment tree on y coordinate.
 		// Inserting every unique sorted y coordinate that has vx[l] as x coordinate.
-		for (i = 0; i < mx[l].size(); i++){
+		for (i = 0; i < mx[l].size(); i++) {
 			seg_x[cur].push_back(mx[l][i]);
 		}
 
@@ -74,14 +74,14 @@ void build_x(int cur, int l, int r){
 }
 
 /* O(Log(N)) - Query called by query_x(). */
-int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int yi, int yf){
+int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int yi, int yf) {
 	int nl, nr, m = (l + r) / 2;
 
-	if (vy[l] > yf or vy[r] < yi){
+	if (vy[l] > yf or vy[r] < yi) {
 		return 0;
 	}
 
-	if (vy[l] >= yi and vy[r] <= yf){
+	if (vy[l] >= yi and vy[r] <= yf) {
 		return seg[cur];
 	}
 
@@ -92,14 +92,14 @@ int query_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int 
 }
 
 /* O(Log^2(N)) - Query. query_x(1, 0, vx.size() - 1, xi, xf, yi, yf) */
-int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf){
+int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf) {
 	int nl, nr, m = (l + r) / 2;
 
-	if (vx[l] > xf or vx[r] < xi){
+	if (vx[l] > xf or vx[r] < xi) {
 		return 0;
 	}
 
-	if (vx[l] >= xi and vx[r] <= xf){
+	if (vx[l] >= xi and vx[r] <= xf) {
 		return query_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, yi, yf);
 	}
 
@@ -110,16 +110,16 @@ int query_x(int cur, int l, int r, int xi, int xf, int yi, int yf){
 }
 
 /* O(Log(N)) - Update called by update_x(). */
-void update_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int y, int val){
+void update_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, int y, int val) {
 	int m = (l + r) / 2;
 
 	// Outside of the update range.
-	if (vy[l] > y or vy[r] < y){
+	if (vy[l] > y or vy[r] < y) {
 		return;
 	}
 
 	// Found node with the correct y value. Not necessarily a leaf node.
-	if (vy[l] == vy[r]){
+	if (vy[l] == vy[r]) {
 		seg[cur] = max(seg[cur], val);
 		return;
 	}
@@ -133,16 +133,16 @@ void update_y(vector<int> &seg, const vector<int> &vy, int cur, int l, int r, in
 }
 
 /* O(Log^2(N)) - Update. update_x(1, 0, vx.size() - 1, x, y, val) */
-void update_x(int cur, int l, int r, int x, int y, int val){
+void update_x(int cur, int l, int r, int x, int y, int val) {
 	int nl, nr, m = (l + r) / 2;
 
 	// Outside of update range.
-	if (vx[l] > x or vx[r] < x){
+	if (vx[l] > x or vx[r] < x) {
 		return;
 	}
 	
 	// Found node with the correct x value. Not necessarily a leaf node.
-	if (vx[l] == vx[r]){
+	if (vx[l] == vx[r]) {
 		update_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1, y, val);
 		return;
 	}
@@ -160,11 +160,11 @@ void update_x(int cur, int l, int r, int x, int y, int val){
 }
 
 /* O(N * Log(N)) */
-void init(){
+void init() {
 	int pos;
 
 	// Retrieving x coordinates.
-	for (int i = 0; i < p.size(); i++){
+	for (int i = 0; i < p.size(); i++) {
 		vx.push_back(p[i].x);
 	}
 
@@ -175,13 +175,13 @@ void init(){
 	// Retrieving y coordinates for every x coordinate.
 	mx.resize(vx.size());
 
-	for (int i = 0; i < p.size(); i++){
+	for (int i = 0; i < p.size(); i++) {
 		pos = lower_bound(vx.begin(), vx.end(), p[i].x) - vx.begin();
 		mx[pos].push_back(p[i].y);
 	}
 
 	// Making y coordinates unique for every x coordinate.
-	for (int i = 0; i < mx.size(); i++){
+	for (int i = 0; i < mx.size(); i++) {
 		sort(mx[i].begin(), mx[i].end());
 		mx[i].resize(unique(mx[i].begin(), mx[i].end()) - mx[i].begin());
 	}
@@ -191,12 +191,12 @@ void init(){
 }
 
 /* O(N * Log^2(N)). */
-int lis_2d(){
+int lis_2d() {
 	init();
 	dp.resize(p.size());
 
 	// Filling dp.
-	for (int i = 0; i < p.size(); i++){
+	for (int i = 0; i < p.size(); i++) {
 		dp[i] = 1 + query_x(1, 0, vx.size() - 1, 1, p[i].x, 1, p[i].y);
 		update_x(1, 0, vx.size() - 1, p[i].x, p[i].y, dp[i]);
 	}

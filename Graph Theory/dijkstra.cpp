@@ -4,7 +4,7 @@ constexpr int N = 100000;
 struct State{
 	int u, d;
 
-	bool operator < (const State &b) const{
+	bool operator < (const State &b) const {
 		return d > b.d;
 	}
 };
@@ -15,7 +15,7 @@ priority_queue<State> pq;
 vector<pair<int, int>> g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
-void dijkstra(int u){
+void dijkstra(int u) {
 	State cur;
 
 	// Initializing.
@@ -27,7 +27,7 @@ void dijkstra(int u){
 	pq.push({u, 0});
 
 	// While there are vertices to visit.
-	while (!pq.empty()){
+	while (!pq.empty()) {
 		cur = pq.top();
 		pq.pop();
 
@@ -35,17 +35,17 @@ void dijkstra(int u){
 		u = cur.u;
 
 		// If vertex u still doesn't belong to Shortest Path Tree.
-		if (!in_spt[u]){
+		if (!in_spt[u]) {
 			// Vertex u now belongs to Shortest Path Tree.
 			in_spt[u] = true;
 
 			// For every vertex v adjacent to u.
-			for (int i = 0; i < g[u].size(); i++){
+			for (int i = 0; i < g[u].size(); i++) {
 				int v = g[u][i].first;
 				int w = g[u][i].second;
 
 				// If a better path was found to add the vertex v to the Shortest Path Tree.
-				if (!in_spt[v] and dist[u] + w < dist[v]){
+				if (!in_spt[v] and dist[u] + w < dist[v]) {
 					dist[v] = dist[u] + w;
 					pq.push({v, dist[v]});
 				}

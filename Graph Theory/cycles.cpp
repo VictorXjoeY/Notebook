@@ -10,23 +10,23 @@ int cycle_count;
 int n; // (Input)
 
 /* O(V + E) - Finds all the cycles of a graph that doesn't have any composite cycles. */
-void dfs(int u){
+void dfs(int u) {
 	in_stack[u] = true;
 	seen[u] = true;
 
-	for (int i = 0; i < g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i];
 
-		if (!seen[v]){ // Not seen yet.
+		if (!seen[v]) { // Not seen yet.
 			parent[v] = u;
 			dfs(v);
 		}
-		else if (v != parent[u] and in_stack[v]){ // Not current node's parent and is currently in stack. Found cycle.
+		else if (v != parent[u] and in_stack[v]) { // Not current node's parent and is currently in stack. Found cycle.
 			cycle_count++;
 			int p = u;
 
 			// Backtracking through the entire cycle.
-			while (p != v){
+			while (p != v) {
 				color[p] = cycle_count;
 				cycle[cycle_count].push_back(p);
 				p = parent[p];
@@ -40,9 +40,9 @@ void dfs(int u){
 	in_stack[u] = false;
 }
 
-void cycles(){
-	for (int u = 1; u <= n; u++){
-		if (!seen[u]){
+void cycles() {
+	for (int u = 1; u <= n; u++) {
+		if (!seen[u]) {
 			dfs(u);
 		}
 	}

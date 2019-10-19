@@ -4,7 +4,7 @@ constexpr int N = 100000;
 struct State{
 	int u, v, w;
 
-	bool operator < (const State &b) const{
+	bool operator < (const State &b) const {
 		return w > b.w;
 	}
 };
@@ -15,7 +15,7 @@ priority_queue<State> pq;
 vector<pair<int, int>> g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
-void prim(int u){
+void prim(int u) {
 	State cur;
 
 	// Initializing.
@@ -27,7 +27,7 @@ void prim(int u){
 	pq.push({-1, u, 0});
 
 	// While there are vertices to visit.
-	while (!pq.empty()){
+	while (!pq.empty()) {
 		cur = pq.top();
 		pq.pop();
 
@@ -35,17 +35,17 @@ void prim(int u){
 		u = cur.v;
 
 		// If vertex u still doesn't belong to Minimum Spanning Tree.
-		if (!in_mst[u]){
+		if (!in_mst[u]) {
 			// Vertex u now belongs to Minimum Spanning Tree.
 			in_mst[u] = true;
 
 			// For every vertex v adjacent to u.
-			for (int i = 0; i < g[u].size(); i++){
+			for (int i = 0; i < g[u].size(); i++) {
 				int v = g[u][i].first;
 				int w = g[u][i].second;
 
 				// If I've found a lower cost to add the vertex v to the Minimum Spanning Tree.
-				if (!in_mst[v] and w < cost[v]){
+				if (!in_mst[v] and w < cost[v]) {
 					cost[v] = w;
 					pq.push({u, v, cost[v]});
 				}

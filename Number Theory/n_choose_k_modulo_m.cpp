@@ -6,8 +6,8 @@ vector<vector<long long>> dp_f; // dp for function f(n).
 long long ceil(long long, long long);
 
 /* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor(long long num, long long den){
-	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)){
+long long floor(long long num, long long den) {
+	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
 		return abs(num) / abs(den);
 	}
 
@@ -15,21 +15,21 @@ long long floor(long long num, long long den){
 }
 
 /* O(1). */
-long long ceil(long long num, long long den){
+long long ceil(long long num, long long den) {
 	return floor(num + den - 1, den);
 }
 
 /* O(Log(B)). */
-long long fast_exp(long long a, long long b, long long m){
+long long fast_exp(long long a, long long b, long long m) {
 	long long ans = 1; // Base case.
 
 	// In case a >= m.
 	a %= m;
 
 	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
-	while (b > 0){
+	while (b > 0) {
 		// If current bit is set.
-		if (b & 1ll){
+		if (b & 1ll) {
 			ans = (ans * a) % m;
 		}
 
@@ -41,16 +41,16 @@ long long fast_exp(long long a, long long b, long long m){
 }
 
 /* O(sqrt(N)). */
-vector<pair<long long, long long>> factorization(long long n){
+vector<pair<long long, long long>> factorization(long long n) {
 	vector<pair<long long, long long>> f; // Sorted vector of pairs (prime, exponent).
 
 	// For every prime p up to sqrt(n).
-	for (long long p = 2; p * p <= n; p++){
-		if (n % p == 0){
+	for (long long p = 2; p * p <= n; p++) {
+		if (n % p == 0) {
 			f.push_back({p, 0ll});
 			
 			// While p divides n, keep dividing n by p and increasing the number of p factors.
-			while (n % p == 0){
+			while (n % p == 0) {
 				n /= p;
 				f.back().second++;
 			}
@@ -58,7 +58,7 @@ vector<pair<long long, long long>> factorization(long long n){
 	}
 
 	// If n is not 1 by now, then it is a prime factor.
-	if (n > 1){
+	if (n > 1) {
 		f.push_back({n, 1ll});
 	}
 	
@@ -66,7 +66,7 @@ vector<pair<long long, long long>> factorization(long long n){
 }
 
 /* O(LogP(N)) - Returns the number of prime factors p in n!. */
-long long factorial_factorization(long long n, long long p){
+long long factorial_factorization(long long n, long long p) {
 	long long ans, k;
 
 	// Initializing.
@@ -74,7 +74,7 @@ long long factorial_factorization(long long n, long long p){
 	k = p;
 
 	// While n / k still adds to the answer.
-	while (k <= n){
+	while (k <= n) {
 		ans += n / k;
 		k *= p;
 	}
@@ -85,10 +85,10 @@ long long factorial_factorization(long long n, long long p){
 
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-long long extended_gcd(long long a, long long b, long long &x, long long &y){
+long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
-	if (a == 0){
+	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;
@@ -121,14 +121,14 @@ a * x - b * y = c ---> a * x + b * (-y) = c
 Use positive values for a and b for this function.
 Has infinite solutions if and only if gcd(a, b) divides c.
 If a and/or b are 0, treat those cases separately. */
-long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1){
+long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1) {
 	long long gcd, k;
 
 	// Obtaining a * x1 + b * y1 = gcd(a, b)
 	gcd = extended_gcd(a, b, x1, y1);
 
 	// No solution
-	if (c % gcd != 0){
+	if (c % gcd != 0) {
 		return 0;
 	}
 
@@ -175,25 +175,25 @@ t - (a1 + m1 * x1) = lcm(m1, m2) * k ---> t = a1 + m1 * x1 (mod lcm(m1, m2))
 t - a2 = m2 * (-y1 + k * m1 / gcd(m1, m2))
 t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
-void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
+void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1) {
 	long long a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
-	for (int i = 0; i < a.size(); i++){
+	for (int i = 0; i < a.size(); i++) {
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
 	a1 = a[0];
 	m1 = m[0];
 
-	for (int i = 1; i < a.size(); i++){
+	for (int i = 1; i < a.size(); i++) {
 		a2 = a[i];
 		m2 = m[i];
 
 		// Solving m1 * x + m2 * (-y) = a2 - a1
 		gcd = diophantine(m1, m2, a2 - a1, x1, y1);
 
-		if (gcd == 0){ // No solution.
+		if (gcd == 0) { // No solution.
 			a1 = -1;
 			m1 = 0;
 			return;
@@ -209,20 +209,20 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 }
 
 /* O(1) - Returns 1 if p divides n and n otherwise. */
-long long g(long long n, long long p){
+long long g(long long n, long long p) {
 	return n % p == 0 ? 1 : n;
 }
 
 /* O(E) - Returns the value of f(n). */
-long long f(long long n, long long p, long long pe, const vector<long long> &dp){
+long long f(long long n, long long p, long long pe, const vector<long long> &dp) {
 	return (fast_exp(dp[pe], n / pe, pe) * dp[n % pe]) % pe;
 }
 
 /* O(E * LogP(N)) - Returns the value of F(n). */
-long long F(long long n, long long p, long long pe, const vector<long long> &dp){
+long long F(long long n, long long p, long long pe, const vector<long long> &dp) {
 	long long ans;
 
-	for (ans = 1; n > 0; n /= p){
+	for (ans = 1; n > 0; n /= p) {
 		ans = (ans * f(n, p, pe, dp)) % pe;
 	}
 
@@ -230,12 +230,12 @@ long long F(long long n, long long p, long long pe, const vector<long long> &dp)
 }
 
 /* O(E * LogP(N)) - Calculates n choose k modulo p^e. */
-long long nck_mod_prime_power(long long n, long long k, long long p, long long e, long long pe, const vector<long long> &dp){
+long long nck_mod_prime_power(long long n, long long k, long long p, long long e, long long pe, const vector<long long> &dp) {
 	long long num, den, nck_pe;
 
 	nck_pe = factorial_factorization(n, p) - factorial_factorization(k, p) - factorial_factorization(n - k, p);
 
-	if (nck_pe >= e){
+	if (nck_pe >= e) {
 		return 0;
 	}
 
@@ -249,17 +249,17 @@ long long nck_mod_prime_power(long long n, long long k, long long p, long long e
 }
 
 /* O(Log(N) * Log(M) + Log^2(M)) - Calculates n choose k modulo m for any m. */
-long long nck(long long n, long long k, long long m){
+long long nck(long long n, long long k, long long m) {
 	long long p, e, pe, a1, r1;
 	vector<long long> a, r;
 
 	// Trivial case.
-	if (k < 0 or k > n){
+	if (k < 0 or k > n) {
 		return 0;
 	}
 
 	// O(Log(N) * Log(M)) - Calculating n choose k modulo each prime power that composes m.
-	for (int i = 0; i < factor.size(); i++){
+	for (int i = 0; i < factor.size(); i++) {
 		p = factor[i].first;
 		e = factor[i].second;
 		pe = fast_exp(p, e, m + 1);
@@ -274,13 +274,13 @@ long long nck(long long n, long long k, long long m){
 }
 
 /* O(P^E) - Pre-calculates the value of f(n) for n from 1 to p^e. */
-vector<long long> f_init(long long p, long long pe){
+vector<long long> f_init(long long p, long long pe) {
 	vector<long long> dp;
 
 	dp.resize(pe + 1);
 	dp[0] = 1;
 
-	for (int i = 1; i <= pe; i++){
+	for (int i = 1; i <= pe; i++) {
 		dp[i] = (dp[i - 1] * g(i, p)) % pe;
 	}
 
@@ -288,7 +288,7 @@ vector<long long> f_init(long long p, long long pe){
 }
 
 /* O(M) - Pre-calculates factors and function f(n) for a given modulo m. */
-void nck_init(long long m){
+void nck_init(long long m) {
 	long long p, e, pe;
 
 	// O(sqrt(M)) - Returns the pairs (p, p^e) from the factorization of m.
@@ -296,7 +296,7 @@ void nck_init(long long m){
 	dp_f.resize(factor.size());
 
 	// O(M) - For each prime power that composes m.
-	for (int i = 0; i < factor.size(); i++){
+	for (int i = 0; i < factor.size(); i++) {
 		p = factor[i].first;
 		e = factor[i].second;
 		pe = fast_exp(p, e, m + 1);

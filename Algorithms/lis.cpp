@@ -6,7 +6,7 @@ int l[N + 1];
 int n; // (Input)
 
 /* O(N * log(N)). */
-int lis(){
+int lis() {
 	int ans, p;
 
 	// Initializing everyone as INF.
@@ -17,7 +17,7 @@ int lis(){
 	ans = 0;
 
 	// Longest Increasing Subsequence.
-	for (int i = 1; i <= n; i++){
+	for (int i = 1; i <= n; i++) {
 		// Find position to place.
 		p = lower_bound(l, l + N + 1, a[i]) - l;
 

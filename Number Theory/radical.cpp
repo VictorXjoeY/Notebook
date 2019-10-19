@@ -2,16 +2,16 @@
 constexpr long long MAX = 3000000000ll;
 
 /* O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n (n <= 9 * 10^18). */
-long long integer_sqrt(long long n){
+long long integer_sqrt(long long n) {
 	long long l, r, m;
 
 	l = 0;
 	r = min(n, MAX);
 
-	while (l < r){
+	while (l < r) {
 		m = (l + r + 1) / 2;
 
-		if (m * m <= n){
+		if (m * m <= n) {
 			l = m;
 		}
 		else{
@@ -23,17 +23,17 @@ long long integer_sqrt(long long n){
 }
 
 /* O(N^(1/3)) - Returns the product of the distinct prime numbers that divide n. */
-long long radical(long long n){
+long long radical(long long n) {
 	long long ans, p;
 
 	ans = 1;
 
 	// O(N^(1/3)) - For every prime p <= n^(1/3) that divides n.
-	for (p = 2; p * p * p <= n; p++){
-		if (n % p == 0){
+	for (p = 2; p * p * p <= n; p++) {
+		if (n % p == 0) {
 			ans *= p;
 
-			while (n % p == 0){
+			while (n % p == 0) {
 				n /= p;
 			}
 		}
@@ -43,7 +43,7 @@ long long radical(long long n){
 	// the answer by p, otherwise we multiply the answer by n.
 	p = integer_sqrt(n);
 
-	if (p * p == n){
+	if (p * p == n) {
 		ans *= p;
 	}
 	else{

@@ -1,6 +1,6 @@
 /* O(1) - Given the date, returns the day of the week from 0 to 6 starting from Sunday. */
-int zeller(long long d, long long m, long long y){
-	if (m == 1 or m == 2){
+int zeller(long long d, long long m, long long y) {
+	if (m == 1 or m == 2) {
 		m += 12;
 		y--;
 	}

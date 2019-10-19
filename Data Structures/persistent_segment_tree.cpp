@@ -1,5 +1,5 @@
 /* O(1) - Retrieves the index of the Most Significant Bit. */
-constexpr int msb_index(int mask){
+constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
@@ -14,17 +14,17 @@ int rchild[2 * N + (L + 2) * T];
 int a[N + 1]; // (Input)
 int last;
 
-int merge(int nl, int nr){
+int merge(int nl, int nr) {
 	return nl + nr;
 }
 
 /* O(N) - Use root[0] = build(1, n) */
-int build(int l, int r){
+int build(int l, int r) {
 	int cur, m = (l + r) / 2;
 
 	cur = ++last;
 
-	if (l == r){
+	if (l == r) {
 		seg[cur] = a[l];
 		return cur;
 	}
@@ -38,16 +38,16 @@ int build(int l, int r){
 }
 
 /* O(Log(N)) - Use root[t] = update(root[t - 1], 1, n, p, x) */
-int update(int cur, int l, int r, int p, int x){
+int update(int cur, int l, int r, int p, int x) {
 	int ncur, m = (l + r) / 2;
 
-	if (l > p or r < p){
+	if (l > p or r < p) {
 		return cur;
 	}
 
 	ncur = ++last;
 
-	if (l == r){
+	if (l == r) {
 		// Creating new leaf node.
 		seg[ncur] = x;
 		return ncur;
@@ -64,14 +64,14 @@ int update(int cur, int l, int r, int p, int x){
 }
 
 /* O(Log(N)) - Use query(root[k], 1, n, l, r) to query after the k'th update */
-int query(int cur, int l, int r, int i, int j){
+int query(int cur, int l, int r, int i, int j) {
 	int nl, nr, m = (l + r) / 2;
 
-	if (l > j or r < i){
+	if (l > j or r < i) {
 		return 0;
 	}
 
-	if (l >= i and r <= j){
+	if (l >= i and r <= j) {
 		return seg[cur];
 	}
 

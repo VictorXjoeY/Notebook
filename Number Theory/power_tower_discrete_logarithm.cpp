@@ -4,8 +4,8 @@ constexpr long long MAX = 3000000000ll;
 long long ceil(long long, long long);
 
 /* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor(long long num, long long den){
-	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)){
+long long floor(long long num, long long den) {
+	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
 		return abs(num) / abs(den);
 	}
 
@@ -13,21 +13,21 @@ long long floor(long long num, long long den){
 }
 
 /* O(1). */
-long long ceil(long long num, long long den){
+long long ceil(long long num, long long den) {
 	return floor(num + den - 1, den);
 }
 
 /* O(Log(B)). */
-long long fast_exp(long long a, long long b, long long m){
+long long fast_exp(long long a, long long b, long long m) {
 	long long ans = 1; // Base case.
 
 	// In case a >= m.
 	a %= m;
 
 	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
-	while (b > 0){
+	while (b > 0) {
 		// If current bit is set.
-		if (b & 1ll){
+		if (b & 1ll) {
 			ans = (ans * a) % m;
 		}
 
@@ -40,10 +40,10 @@ long long fast_exp(long long a, long long b, long long m){
 
 /* O(Log(max(a, b))). */
 /* a * x + b * y = gcd(a, b) */
-long long extended_gcd(long long a, long long b, long long &x, long long &y){
+long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
-	if (a == 0){
+	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;
@@ -76,14 +76,14 @@ a * x - b * y = c ---> a * x + b * (-y) = c
 Use positive values for a and b for this function.
 Has infinite solutions if and only if gcd(a, b) divides c.
 If a and/or b are 0, treat those cases separately. */
-long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1){
+long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1) {
 	long long gcd, k;
 
 	// Obtaining a * x1 + b * y1 = gcd(a, b)
 	gcd = extended_gcd(a, b, x1, y1);
 
 	// No solution
-	if (c % gcd != 0){
+	if (c % gcd != 0) {
 		return 0;
 	}
 
@@ -130,25 +130,25 @@ t - (a1 + m1 * x1) = lcm(m1, m2) * k ---> t = a1 + m1 * x1 (mod lcm(m1, m2))
 t - a2 = m2 * (-y1 + k * m1 / gcd(m1, m2))
 t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
-void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1){
+void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1) {
 	long long a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
-	for (int i = 0; i < a.size(); i++){
+	for (int i = 0; i < a.size(); i++) {
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
 	a1 = a[0];
 	m1 = m[0];
 
-	for (int i = 1; i < a.size(); i++){
+	for (int i = 1; i < a.size(); i++) {
 		a2 = a[i];
 		m2 = m[i];
 
 		// Solving m1 * x + m2 * (-y) = a2 - a1
 		gcd = diophantine(m1, m2, a2 - a1, x1, y1);
 
-		if (gcd == 0){ // No solution.
+		if (gcd == 0) { // No solution.
 			a1 = -1;
 			m1 = 0;
 			return;
@@ -164,16 +164,16 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 }
 
 /* O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n (n <= 9 * 10^18). */
-long long integer_sqrt(long long n){
+long long integer_sqrt(long long n) {
 	long long l, r, m;
 
 	l = 0;
 	r = min(n, MAX);
 
-	while (l < r){
+	while (l < r) {
 		m = (l + r + 1) / 2;
 
-		if (m * m <= n){
+		if (m * m <= n) {
 			l = m;
 		}
 		else{
@@ -186,10 +186,10 @@ long long integer_sqrt(long long n){
 
 /* O(Log(M)) - Returns the modular multiplicative inverse of a mod m, if it exists.
 Returns x that satisfies a * x = 1 (mod m) if a and m are coprime. Returns 0 otherwise. */
-long long modular_inverse(long long a, long long m){
+long long modular_inverse(long long a, long long m) {
 	long long x, y;
 
-	if (extended_gcd((a % m + m) % m, m, x, y) != 1){
+	if (extended_gcd((a % m + m) % m, m, x, y) != 1) {
 		return 0;
 	}
 
@@ -206,14 +206,14 @@ Reduce:
 (g * alpha)^x = g * beta (mod g * mu)
 By dividing it by g:
 (g * alpha)^(x - 1) = beta * alpha^(-1) (mod mu) */
-long long baby_step_giant_step(long long a, long long b, long long n){
+long long baby_step_giant_step(long long a, long long b, long long n) {
 	unordered_map<long long, long long> table;
 
 	long long g = __gcd(a, n);
 
-	if (g > 1){
+	if (g > 1) {
 		// No solution.
-		if (b % g != 0){
+		if (b % g != 0) {
 			return -1;
 		}
 
@@ -223,7 +223,7 @@ long long baby_step_giant_step(long long a, long long b, long long n){
 
 		long long x = baby_step_giant_step(a % mu, (beta * modular_inverse(alpha, mu)) % mu, mu);
 
-		if (x == -1){
+		if (x == -1) {
 			return -1;
 		}
 
@@ -233,7 +233,7 @@ long long baby_step_giant_step(long long a, long long b, long long n){
 	// Defining m as ceil(sqrt(n)).
 	long long m = integer_sqrt(n);
 
-	if (m * m < n){
+	if (m * m < n) {
 		m++;
 	}
 
@@ -241,13 +241,13 @@ long long baby_step_giant_step(long long a, long long b, long long n){
 	long long a_inv_m = fast_exp(modular_inverse(a, n), m, n);
 
 	// Baby-step.
-	for (long long r = 0, cur = 1; r < m; r++, cur = (cur * a) % n){
+	for (long long r = 0, cur = 1; r < m; r++, cur = (cur * a) % n) {
 		table[cur] = r;
 	}
 
 	// Giant-step.
-	for (long long q = 0, cur = 1; q < m; q++, cur = (cur * a_inv_m) % n){
-		if (table.count((cur * b) % n)){
+	for (long long q = 0, cur = 1; q < m; q++, cur = (cur * a_inv_m) % n) {
+		if (table.count((cur * b) % n)) {
 			return m * q + table[(cur * b) % n];
 		}
 	}
@@ -257,8 +257,8 @@ long long baby_step_giant_step(long long a, long long b, long long n){
 }
 
 /* O(sqrt(N)) - Returns the value of a^a^a^a^a... mod n */
-long long power_tower(long long a, long long n){
-	if (n == 1){
+long long power_tower(long long a, long long n) {
+	if (n == 1) {
 		return 0;
 	}
 
@@ -266,14 +266,14 @@ long long power_tower(long long a, long long n){
 	long long g = __gcd(a, n);
 
 	// O(Log^2(N)).
-	while (g > 1){
+	while (g > 1) {
 		cf *= g;
 		n /= g;
 		g = __gcd(a, n);
 	}
 
 	// Treating this case separatedly because Modular Inverse modulo 1 doesn't exist.
-	if (n == 1){
+	if (n == 1) {
 		return 0;
 	}
 

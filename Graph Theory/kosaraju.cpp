@@ -11,16 +11,16 @@ int nc; // Stores the number of components.
 int n; // (Input)
 
 /* O(V + E). */
-void dfs1(int u){
+void dfs1(int u) {
 	// Marking u as visited.
 	seen[u] = true;
 
 	// For every vertex v adjacent to u.
-	for (int i = 0; i < g[u].size(); i++){
+	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i];
 
 		// If vertex v wasn't already visited.
-		if (!seen[v]){
+		if (!seen[v]) {
 			dfs1(v);
 		}
 	}
@@ -30,20 +30,20 @@ void dfs1(int u){
 }
 
 /* O(V + E). */
-void dfs2(int u){
+void dfs2(int u) {
 	// Vertex u belongs to current component.
 	color[u] = nc;
 	component[nc].push_back(u);
 
 	// For every vertex v adjacent to u.
-	for (int i = 0; i < gt[u].size(); i++){
+	for (int i = 0; i < gt[u].size(); i++) {
 		int v = gt[u][i];
 
 		// If vertex v wasn't already visited.
-		if (!color[v]){
+		if (!color[v]) {
 			dfs2(v);
 		}
-		else if (color[v] != color[u]){ // If vertex v was already visited but it belongs to another component.
+		else if (color[v] != color[u]) { // If vertex v was already visited but it belongs to another component.
 			// There's an edge from v's component to u's component.
 			gs[color[v]].push_back(color[u]);
 		}
@@ -51,27 +51,27 @@ void dfs2(int u){
 }
 
 /* O(V + E). */
-void kosaraju(){
+void kosaraju() {
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(color, 0, sizeof(color));
 	nc = 0;
 
 	// Running first DFS to fill the Stack s.
-	for (int u = 1; u <= n; u++){
+	for (int u = 1; u <= n; u++) {
 		// If vertex u wasn't already visited.
-		if (!seen[u]){
+		if (!seen[u]) {
 			dfs1(u);
 		}
 	}
 
 	// Running second DFS to build the Strongly Connected Components.
-	while (!s.empty()){
+	while (!s.empty()) {
 		int u = s.top();
 		s.pop();
 
 		// If vertex u wasn't already visited.
-		if (!color[u]){
+		if (!color[u]) {
 			nc++;
 			dfs2(u);
 		}
