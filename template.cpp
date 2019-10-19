@@ -7,6 +7,10 @@ using namespace std;
 
 // Be careful when solving an inequation such as x >= a / b. To get ceil(a / b) use the code floor_ceil.cpp under "Number Theory" folder.
 
+// Segment trees uses exactly 2 * N - 1 nodes, but we need to declare 2 * 2^(ceil(log2(N))) - 1 nodes if we use 2 * x and 2 * x + 1 as children nodes.
+
+// Use: s = regex_replace(s, regex(a), b); to replace every occurence of a for b in s.
+
 // How to generate random numbers and random permutations:
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
