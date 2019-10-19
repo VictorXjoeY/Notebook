@@ -11,6 +11,9 @@ using namespace std;
 
 // Use: s = regex_replace(s, regex(a), b); to replace every occurence of a for b in s.
 
+// Maximum number of divisors for N <= 10^5 ---> 83160 with 128 divisors.
+// Maximum number of divisors for N <= 10^6 ---> 720720 with 240 divisors.
+
 // How to generate random numbers and random permutations:
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
