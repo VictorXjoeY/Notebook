@@ -4,13 +4,6 @@ constexpr int N = 100000;
 
 struct Point{
 	int x, y;
-
-	Point(){}
-
-	Point(int x, int y){
-		this->x = x;
-		this->y = y;
-	}
 };
 
 vector<Point> p; // (Input) Points.
