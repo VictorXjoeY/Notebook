@@ -5,18 +5,18 @@ private:
 	vector<int> ft;
 	int m;
 
-	// Least Significant One.
-	inline int LSOne(int x){
-		return (x & (-x));
+	/* O(1) - Retrieves the Least Significant Bit. */
+	int lsb(int mask){
+		return mask & (-mask);
 	}
 
-	// Range Sum Query [1..r].
+	/* O(log(R)) - Range Sum Query [1..r]. */
 	int query(int r){
 		int sum = 0;
 
 		while (r){
 			sum += ft[r];
-			r -= LSOne(r);
+			r -= lsb(r);
 		}
 
 		return sum;
@@ -25,21 +25,22 @@ private:
 public:
 	FenwickTree(){}
 
+	/* O(N). */
 	FenwickTree(int m){
 		this->m = m;
 		ft.assign(m + 1, 0);
 	}
 
-	// Range Sum Query [l..r].
+	/* O(log(L) + log(R)) - Range Sum Query [l..r]. */
 	int query(int l, int r){
 		return query(r) - query(l - 1);
 	}
 
-	// Adjust point p by x.
+	/* O(P) - Adjust point p by x. */
 	void update(int p, int x){
 		while (p < ft.size()){
 			ft[p] += x;
-			p += LSOne(p);
+			p += lsb(p);
 		}
 	}
 };
