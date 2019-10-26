@@ -6,13 +6,13 @@ int a[N + 1]; // (Input)
 int seg[4 * N + 1];
 int lazy[4 * N + 1];
 
-/* O(1) - Updates the current node with lazy and flusshes down the lazyness. */
+/* O(1) - Updates the current node with lazy and flushes down the lazyness. */
 void lazy_update(int cur, int l, int r) {
 	// Updating it.
 	seg[cur] += lazy[cur];
 
 	// If not a leaf node.
-	if (l != r) {
+	if (l < r) {
 		// Marking children as lazy.
 		lazy[LEFT(cur)] += lazy[cur];
 		lazy[RIGHT(cur)] += lazy[cur];

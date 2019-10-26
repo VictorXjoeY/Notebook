@@ -5,7 +5,7 @@ constexpr int msb_index(int mask) {
 
 constexpr int N = 100000;
 constexpr int T = 100000;
-constexpr int L = msb_index(N); // Greatest L such that 2^L <= N
+constexpr int L = msb_index(N - 1); // Greatest L such that 2^L <= N - 1
 
 int root[T + 1];
 int seg[2 * N + (L + 2) * T]; // 2 * N - 1 initial nodes + (L + 2) nodes for each one of the T updates.
@@ -14,6 +14,7 @@ int rchild[2 * N + (L + 2) * T];
 int a[N + 1]; // (Input)
 int last;
 
+/* O(1) - Merges the children's values. */
 int merge(int nl, int nr) {
 	return nl + nr;
 }
