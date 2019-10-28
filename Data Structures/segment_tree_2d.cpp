@@ -1,6 +1,7 @@
-constexpr int N = 100000;
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
+
+constexpr int N = 100000;
 
 struct Point{
 	int x, y;

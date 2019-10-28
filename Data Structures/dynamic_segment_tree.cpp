@@ -3,17 +3,18 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
-constexpr int Q = 100000; // Number of updates.
 constexpr int MIN = 1;
 constexpr int MAX = 1000000000;
+constexpr int Q = 100000; // Number of range updates.
 constexpr int L = msb_index(MAX - MIN); // Greatest L such that 2^L <= (MAX - MIN + 1) - 1
+constexpr int LQ = msb_index(Q); // Greatest LQ such that 2^LQ <= Q
 
-// Every node in this tree other than the leaves have 2 children. Leaves have seg[cur] = 0 but will have a lazy[cur] != 0.
-// Everything should be cleared before reusing.
-long long seg[4 * (L + 2) * Q + 1]; // seg[0] should store the neutral value for the merge operation.
-long long lazy[4 * (L + 2) * Q + 1];
-int lchild[4 * (L + 2) * Q + 1];
-int rchild[4 * (L + 2) * Q + 1];
+// Every node in this tree other than the leaves have 2 children. Leaves have seg[cur] = 0 but will have a lazy[cur] != 0 after updates.
+// The tree can have at most exactly 2^(LQ + 3) + 4 * (L - LQ - 1) * Q - 1 nodes, which can be approximated by 4 * (L - LQ + 1) * Q - 1.
+long long seg[4 * (L - LQ + 1) * Q - 1]; // seg[0] should store the neutral value for the merge operation.
+long long lazy[4 * (L - LQ + 1) * Q - 1];
+int lchild[4 * (L - LQ + 1) * Q - 1];
+int rchild[4 * (L - LQ + 1) * Q - 1];
 int root, last;
 
 /* O(1) - Returns the real value of the node, considering its lazy value. */

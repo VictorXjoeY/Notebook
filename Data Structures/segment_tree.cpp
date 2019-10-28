@@ -1,7 +1,9 @@
-constexpr int N = 100000;
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
+constexpr int N = 100000;
+
+// The tree has exactly 2^(L + 2) - 1 nodes, which can be approximated by 4 * N - 1.
 int a[N + 1]; // (Input)
 int seg[4 * N + 1];
 int lazy[4 * N + 1];
