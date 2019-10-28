@@ -11,6 +11,7 @@ constexpr int LQ = msb_index(Q); // Greatest LQ such that 2^LQ <= Q
 
 // Every node in this tree other than the leaves have 2 children. Leaves have seg[cur] = 0 but will have a lazy[cur] != 0 after updates.
 // The tree can have at most exactly 2^(LQ + 3) + 4 * (L - LQ - 1) * Q - 1 nodes, which can be approximated by 4 * (L - LQ + 1) * Q - 1.
+// Assumes that L >= LQ.
 long long seg[4 * (L - LQ + 1) * Q - 1]; // seg[0] should store the neutral value for the merge operation.
 long long lazy[4 * (L - LQ + 1) * Q - 1];
 int lchild[4 * (L - LQ + 1) * Q - 1];
