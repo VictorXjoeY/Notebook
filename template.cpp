@@ -7,6 +7,9 @@ using namespace std;
 
 // Be careful when solving an inequation such as x >= a / b. To get ceil(a / b) use the code floor_ceil.cpp under "Number Theory" folder.
 
+// Trie is the most beautiful Data Structure. It is a more generic version of the Dynamic (Implicit) Segment Tree, since it doesn't need to be binary.
+// The Trie can behave just like a Segment Tree if you insert the value a[i] at the node that represents position i (following the path given by the decomposition of i in binary).
+
 // Use: s = regex_replace(s, regex(a), b); to replace every occurence of a for b in s.
 
 // Maximum number of divisors for N <= 10^5 ---> 83160 with 128 divisors.
