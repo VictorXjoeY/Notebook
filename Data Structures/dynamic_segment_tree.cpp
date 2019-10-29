@@ -93,11 +93,7 @@ long long query(int cur, int l, int r, int i, int j) {
 		return 0;
 	}
 
-	if (l >= i and r <= j) { // Fully in range.
-		return value(cur, l, r);
-	}
-
-	if (!lchild[cur] and !rchild[cur]) { // Leaf but l < r.
+	if ((l >= i and r <= j) or (!lchild[cur] and !rchild[cur])) { // Fully in range or leaf.
 		return value(cur, max(l, i), min(r, j));
 	}
 

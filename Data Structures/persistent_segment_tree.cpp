@@ -66,7 +66,7 @@ int update(int cur, int l, int r, int p, long long x) {
 	return ncur;
 }
 
-/* O(Log(N)) - Use query(root[k], 1, n, l, r) to query after the k'th update */
+/* O(Log(N)) - Use query(root[k], 1, n, i, j) to query after the k'th update */
 long long query(int cur, int l, int r, int i, int j) {
 	int m = (l + r) / 2;
 	long long nl, nr;
