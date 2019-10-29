@@ -1,12 +1,19 @@
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
-constexpr int N = 100000;
+/* O(1) - Retrieves the index of the Most Significant Bit. */
+constexpr int msb_index(int mask) {
+	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+}
 
-// The tree has exactly 2^(L + 2) - 1 nodes, which can be approximated by 4 * N - 1.
+constexpr int N = 100000;
+constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
+
+// The segment tree uses exactly 2 * N - 1 nodes, but we need at least 2^(ceil(log(N)) + 1) - 1 when we index the tree using
+// 2 * cur and 2 * cur + 1. This value can be further simplified by a more relaxed upperbound of  4 * N - 5 nodes.
+int lazy[1 << (L + 1)];
+int seg[1 << (L + 1)];
 int a[N + 1]; // (Input)
-int seg[4 * N + 1];
-int lazy[4 * N + 1];
 
 /* O(1) - Updates the current node with lazy and flushes down the lazyness. */
 void lazy_update(int cur, int l, int r) {

@@ -1,16 +1,24 @@
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
 
+/* O(1) - Retrieves the index of the Most Significant Bit. */
+constexpr int msb_index(int mask) {
+	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+}
+
 constexpr int N = 100000;
+constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
 
 struct Point{
 	int x, y;
 };
 
+// The segment tree uses exactly 2 * N - 1 nodes, but we need at least 2^(ceil(log(N)) + 1) - 1 when we index the tree using
+// 2 * cur and 2 * cur + 1. This value can be further simplified by a more relaxed upperbound of  4 * N - 5 nodes.
 vector<Point> p; // (Input) Points.
 vector<int> vx; // X coordinates (sorted and unique).
-vector<int> seg_x[4 * N + 1]; // Segments of y coordinates (sorted and unique).
-vector<int> seg_y[4 * N + 1]; // Segment Trees on y.
+vector<int> seg_x[1 << (L + 1)]; // Segments of y coordinates (sorted and unique).
+vector<int> seg_y[1 << (L + 1)]; // Segment Trees on y.
 vector<vector<int>> mx; // Unique y values for every x value.
 
 /* O(1) - Merge for seg_y[][]. */
@@ -58,7 +66,7 @@ void build_x(int cur, int l, int r) {
 		}
 
 		// Allocating memory for the segment tree stored in this leaf.
-		seg_y[cur].resize(4 * seg_x[cur].size() + 1);
+		seg_y[cur].resize(1 << (msb_index(seg_x[cur].size() - 1) + 2));
 		build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 		return;
 	}
@@ -69,7 +77,7 @@ void build_x(int cur, int l, int r) {
 
 	// Merging and building segment tree on y coordinates.
 	seg_x[cur] = merge_x(seg_x[LEFT(cur)], seg_x[RIGHT(cur)]);
-	seg_y[cur].resize(4 * seg_x[cur].size() + 1);
+	seg_y[cur].resize(1 << (msb_index(seg_x[cur].size() - 1) + 2));
 	build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 }
 

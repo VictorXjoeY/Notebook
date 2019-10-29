@@ -5,12 +5,14 @@ constexpr int msb_index(int mask) {
 
 constexpr int N = 100000;
 constexpr int T = 100000;
-constexpr int L = msb_index(N - 1); // Greatest L such that 2^L <= N - 1
+constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
 
+// The persistent segment tree uses exactly 2 * N - 1 + T * (ceil(log(N)) + 1) nodes in the worst case.
+// 2 * N - 1 initial nodes + (L + 1) nodes for each one of the T updates.
 int root[T + 1];
-int seg[2 * N + (L + 2) * T]; // 2 * N - 1 initial nodes + (L + 2) nodes for each one of the T updates.
-int lchild[2 * N + (L + 2) * T];
-int rchild[2 * N + (L + 2) * T];
+int seg[2 * N + T * (L + 1)];
+int lchild[2 * N + T * (L + 1)];
+int rchild[2 * N + T * (L + 1)];
 int a[N + 1]; // (Input)
 int last;
 
