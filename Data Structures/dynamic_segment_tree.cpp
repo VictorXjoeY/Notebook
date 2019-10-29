@@ -4,19 +4,20 @@ constexpr int msb_index(int mask) {
 }
 
 constexpr int MIN = 1;
-constexpr int MAX = 1000000000; // MAX - MIN + 1 >= 4 * Q
+constexpr int MAX = 1000000000;
+constexpr int RANGE = MAX - MIN + 1; // RANGE >= 4 * Q
 constexpr int Q = 100000; // Number of range updates.
-constexpr int L = msb_index(MAX - MIN + 1); // L = floor(log(MAX))
+constexpr int L = msb_index(RANGE); // L = floor(log(RANGE))
 constexpr int LQ = msb_index(Q); // LQ = floor(log(Q))
 
 // Every node in this tree other than the leaves have 2 children. Leaves have seg[cur] = 0 but will have a lazy[cur] != 0 after updates.
-// We assume that MAX - MIN + 1 >= 4 * Q, you wouldn't need to use the dynamic segment tree otherwise.
-// The dynamic segment tree uses exactly 2^(floor(log(Q)) + 3) - 1 + 4 * (floor(log(MAX)) - floor(log(Q)) - 2) * Q + min(2 * (MAX - 2^floor(log(MAX)), 4 * Q).
-// This value can be further simplified by a more relaxed upperbound of 4 * (floor(log(MAX)) - floor(log(Q)) + 1) * Q - 1 nodes.
-long long seg[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * ((MAX - MIN + 1) - (1 << L)), 4 * Q)]; // seg[0] should store the neutral value for the merge operation.
-long long lazy[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * ((MAX - MIN + 1) - (1 << L)), 4 * Q)];
-int lchild[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * ((MAX - MIN + 1) - (1 << L)), 4 * Q)];
-int rchild[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * ((MAX - MIN + 1) - (1 << L)), 4 * Q)];
+// We assume that RANGE >= 4 * Q, you wouldn't need to use the dynamic segment tree otherwise.
+// The dynamic segment tree uses exactly 2^(floor(log(Q)) + 3) - 1 + 4 * (floor(log(RANGE)) - floor(log(Q)) - 2) * Q + min(2 * (RANGE - 2^floor(log(RANGE)), 4 * Q).
+// This value can be further simplified by a more relaxed upperbound of 4 * (floor(log(RANGE)) - floor(log(Q)) + 1) * Q - 1 nodes.
+long long seg[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * (RANGE - (1 << L)), 4 * Q)]; // seg[0] should store the neutral value for the merge operation.
+long long lazy[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * (RANGE - (1 << L)), 4 * Q)];
+int lchild[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * (RANGE - (1 << L)), 4 * Q)];
+int rchild[(1 << (LQ + 3)) + 4 * (L - LQ - 2) * Q + min(2 * (RANGE - (1 << L)), 4 * Q)];
 int root, last;
 
 /* O(1) - Returns the real value of the node, considering its lazy value. */
