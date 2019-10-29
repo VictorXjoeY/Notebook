@@ -15,6 +15,7 @@ struct Point{
 
 // The segment tree uses exactly 2 * N - 1 nodes, but we need at least 2^(ceil(log(N)) + 1) - 1 when we index the tree using
 // 2 * cur and 2 * cur + 1. This value can be further simplified by a more relaxed upperbound of  4 * N - 5 nodes.
+// It's not possible to do a rectangle update (xi, yi, xf, yf) but it is possible to do a point update on x and range update on y (x, yi, yf).
 vector<Point> p; // (Input) Points.
 vector<int> vx; // X coordinates (sorted and unique).
 vector<int> seg_x[1 << (L + 1)]; // Segments of y coordinates (sorted and unique).
