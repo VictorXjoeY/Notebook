@@ -11,8 +11,8 @@ constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
 
 // The segment tree uses exactly 2 * N - 1 nodes, but we need at least 2^(ceil(log(N)) + 1) - 1 when we index the tree using
 // 2 * cur and 2 * cur + 1. This value can be further simplified by a more relaxed upperbound of  4 * N - 5 nodes.
-int lazy[1 << (L + 1)];
-int seg[1 << (L + 1)];
+long long lazy[1 << (L + 1)];
+long long seg[1 << (L + 1)];
 int a[N + 1]; // (Input)
 
 /* O(1) - Updates the current node with lazy and flushes down the lazyness. */
@@ -32,7 +32,7 @@ void lazy_update(int cur, int l, int r) {
 }
 
 /* O(1) - Merges the children's values. */
-int merge(int nl, int nr) {
+long long merge(long long nl, long long nr) {
 	return max(nl, nr);
 }
 
@@ -55,7 +55,7 @@ void build(int cur, int l, int r) {
 }
 
 /* O(Log(N)) - Updates the range [i..j]. */
-void update(int cur, int l, int r, int i, int j, int x) {
+void update(int cur, int l, int r, int i, int j, long long x) {
 	int m = (l + r) / 2;
 
 	// Updates current node with lazy if it needs an update.
@@ -85,8 +85,9 @@ void update(int cur, int l, int r, int i, int j, int x) {
 }
 
 /* O(Log(N)) - Returns the content of the range [i, j] of the Segment Tree. */
-int query(int cur, int l, int r, int i, int j) {
-	int nl, nr, m = (l + r) / 2;
+long long query(int cur, int l, int r, int i, int j) {
+	int m = (l + r) / 2;
+	long long nl, nr;
 
 	// Updates current node with lazy if it needs an update.
 	if (lazy[cur] != 0) {

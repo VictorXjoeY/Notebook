@@ -10,14 +10,14 @@ constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
 // The persistent segment tree uses exactly 2 * N - 1 + T * (ceil(log(N)) + 1) nodes in the worst case.
 // 2 * N - 1 initial nodes + (L + 1) nodes for each one of the T updates.
 int root[T + 1];
-int seg[2 * N + T * (L + 1)];
+long long seg[2 * N + T * (L + 1)];
 int lchild[2 * N + T * (L + 1)];
 int rchild[2 * N + T * (L + 1)];
 int a[N + 1]; // (Input)
 int last;
 
 /* O(1) - Merges the children's values. */
-int merge(int nl, int nr) {
+long long merge(long long nl, long long nr) {
 	return nl + nr;
 }
 
@@ -41,7 +41,7 @@ int build(int l, int r) {
 }
 
 /* O(Log(N)) - Use root[t] = update(root[t - 1], 1, n, p, x) */
-int update(int cur, int l, int r, int p, int x) {
+int update(int cur, int l, int r, int p, long long x) {
 	int ncur, m = (l + r) / 2;
 
 	if (l > p or r < p) {
@@ -67,8 +67,9 @@ int update(int cur, int l, int r, int p, int x) {
 }
 
 /* O(Log(N)) - Use query(root[k], 1, n, l, r) to query after the k'th update */
-int query(int cur, int l, int r, int i, int j) {
-	int nl, nr, m = (l + r) / 2;
+long long query(int cur, int l, int r, int i, int j) {
+	int m = (l + r) / 2;
+	long long nl, nr;
 
 	if (l > j or r < i) {
 		return 0;

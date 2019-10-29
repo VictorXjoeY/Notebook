@@ -1,6 +1,13 @@
-constexpr int N = 100000;
 #define LEFT(x) (x << 1)
 #define RIGHT(x) ((x << 1) | 1)
+
+/* O(1) - Retrieves the index of the Most Significant Bit. */
+constexpr int msb_index(int mask) {
+	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
+}
+
+constexpr int N = 100000;
+constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
 
 vector<pair<int, long long>> g[N + 1]; // (Input)
 bool seen[N + 1];
@@ -10,7 +17,7 @@ int size[N + 1];
 int depth[N + 1];
 int d[N + 1]; // Discovery time, which represents the position in the Segment Tree.
 int d_inv[N + 1];
-long long seg[4 * N + 1];
+long long seg[1 << (L + 1)];
 int chain[N + 1]; // chain[u] stores the chain index of the vertex u. chain[u] = u if u is the representative of his chain.
 int timer;
 int n; // (Input)
