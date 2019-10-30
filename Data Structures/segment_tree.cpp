@@ -17,10 +17,9 @@ int a[N + 1]; // (Input)
 
 /* O(1) - Updates the current node with lazy and flushes down the lazyness. */
 void lazy_update(int cur, int l, int r) {
-	// Updating it.
-	seg[cur] += lazy[cur];
+	seg[cur] += (r - l + 1) * lazy[cur]; // Updating cur.
 
-	// If not a leaf node.
+	// If not leaf node.
 	if (l < r) {
 		// Marking children as lazy.
 		lazy[LEFT(cur)] += lazy[cur];
@@ -33,7 +32,7 @@ void lazy_update(int cur, int l, int r) {
 
 /* O(1) - Merges the children's values. */
 long long merge(long long nl, long long nr) {
-	return max(nl, nr);
+	return nl + nr;
 }
 
 /* O(N) - Builds a Segment Tree "seg" out of the array "a". */
