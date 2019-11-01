@@ -1,27 +1,25 @@
 class UnionFind{
 private:
-	vector<int> p, rank, size;
+	vector<int> p, size;
 	int n;
 public:
 	UnionFind() {}
 
 	UnionFind(int n) {
 		// Initializing.
-		size.assign(n, 1); // Size of sets is 1 initially.
-		rank.assign(n, 0); // Rank of sets is 0 initially.
+		size.assign(n, 1);
 		p.resize(n);
 		this->n = n;
 
-		// Setting the representative to be itself for each set.
+		// Setting the representative of each set to be itself.
 		for (int i = 0; i < n; i++) {
 			p[i] = i;
 		}
 	}
 
-	/* O(1). */
+	/* Amortized O(1). */
 	int find_set(int u) {
-		// Found representative.
-		if (u == p[u]) {
+		if (u == p[u]) { // Found representative.
 			return u;
 		}
 
@@ -29,7 +27,7 @@ public:
 		return p[u] = find_set(p[u]);
 	}
 
-	/* O(1). */
+	/* Amortized O(1). */
 	void union_set(int u, int v) {
 		// Finding representatives of u and v.
 		int x = find_set(u);
@@ -37,18 +35,14 @@ public:
 
 		// If u and v belong to different sets.
 		if (x != y) {
-			if (rank[x] > rank[y]) { // Attaching y's tree to the root x.
-				size[x] += size[y];
-				p[y] = x;
-			}
-			else if (rank[x] < rank[y]) { // Attaching x's tree to the root y.
-				size[y] += size[x];
+			// Attaching the smaller tree to the bigger tree.
+			if (size[x] < size[y]) {
 				p[x] = y;
+				size[y] += size[x];
 			}
-			else{ // Can attach either one. Attaching y's tree to the root x. Rank increases by one.
-				size[x] += size[y];
+			else {
 				p[y] = x;
-				rank[x]++;
+				size[x] += size[y];
 			}
 
 			// Decreasing number of sets.
