@@ -1,4 +1,4 @@
-class UnionFind{
+class UnionFind {
 private:
 	vector<int> p, size;
 	int n;
@@ -7,12 +7,12 @@ public:
 
 	UnionFind(int n) {
 		// Initializing.
-		size.assign(n, 1);
-		p.resize(n);
+		size.assign(n + 1, 1);
+		p.resize(n + 1);
 		this->n = n;
 
 		// Setting the representative of each set to be itself.
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i <= n; i++) {
 			p[i] = i;
 		}
 	}

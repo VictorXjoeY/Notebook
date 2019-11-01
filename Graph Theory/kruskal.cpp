@@ -1,6 +1,6 @@
 constexpr int M = 1000000;
 
-class UnionFind{
+class UnionFind {
 private:
 	vector<int> p, size;
 	int n;
@@ -9,12 +9,12 @@ public:
 
 	UnionFind(int n) {
 		// Initializing.
-		size.assign(n, 1);
-		p.resize(n);
+		size.assign(n + 1, 1);
+		p.resize(n + 1);
 		this->n = n;
 
 		// Setting the representative of each set to be itself.
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i <= n; i++) {
 			p[i] = i;
 		}
 	}
@@ -79,8 +79,8 @@ int kruskal() {
 	UnionFind uf;
 	int ans;
 
-	// Creating a Union Find data structure with sets from 0 to n.
-	uf = UnionFind(n + 1);
+	// Creating a Union Find data structure with sets from 1 to n.
+	uf = UnionFind(n);
 
 	// Sorting edges according to their weights.
 	sort(e + 1, e + 1 + m);
