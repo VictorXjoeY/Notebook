@@ -6,8 +6,14 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
+/* O(1) - Retrieves ceil(log2(n)). */
+constexpr int ceil_log2(int n) {
+	assert(n > 0);
+	return n == 1 ? 0 : msb_index(n - 1) + 1;
+}
+
 constexpr int N = 100000;
-constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
+constexpr int L = ceil_log2(N);
 
 // The segment tree uses exactly 2 * N - 1 nodes, but we need at least 2^(ceil(log(N)) + 1) - 1 when we index the tree using
 // 2 * cur and 2 * cur + 1. This value can be further simplified by a more relaxed upperbound of  4 * N - 5 nodes.

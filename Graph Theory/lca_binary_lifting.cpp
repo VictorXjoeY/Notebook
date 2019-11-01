@@ -3,8 +3,14 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
+/* O(1) - Retrieves ceil(log2(n)). */
+constexpr int floor_log2(int n) {
+	assert(n > 0);
+	return msb_index(n);
+}
+
 constexpr int N = 100000;
-constexpr int L = msb_index(N); // Greatest L such that 2^L <= N
+constexpr int L = floor_log2(N); // Greatest L such that 2^L <= N
 
 int ancestor[N + 1][L + 1];
 vector<int> g[N + 1]; // (Input)

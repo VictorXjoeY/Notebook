@@ -3,11 +3,17 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
+/* O(1) - Retrieves ceil(log2(n)). */
+constexpr int ceil_log2(int n) {
+	assert(n > 0);
+	return n == 1 ? 0 : msb_index(n - 1) + 1;
+}
+
 constexpr int MIN = 1;
 constexpr int MAX = 1000000000;
 constexpr int RANGE = MAX - MIN + 1;
 constexpr int T = 100000; // Number of range updates.
-constexpr int L = msb_index(RANGE - 1) + 1; // L = ceil(log(RANGE))
+constexpr int L = ceil_log2(RANGE); // L = ceil(log(RANGE))
 
 // Every node in this tree other than the leaves have 2 children. Only leaves are lazy.
 // The dynamic segment tree uses exactly (4 * ceil(log(RANGE)) - 1) * T nodes in the worst case, in which each update will add 4 * ceil(log(RANGE)) - 1 nodes.

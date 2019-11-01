@@ -41,3 +41,15 @@ long long msb(long long mask) {
 
 	return 1ll << msb_index(mask);
 }
+
+/* O(1) - Retrieves ceil(log2(n)). */
+int floor_log2(int n) {
+	assert(n > 0);
+	return msb_index(n);
+}
+
+/* O(1) - Retrieves ceil(log2(n)). */
+int ceil_log2(int n) {
+	assert(n > 0);
+	return n == 1 ? 0 : msb_index(n - 1) + 1;
+}

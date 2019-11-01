@@ -8,6 +8,12 @@ private:
 		return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 	}
 
+	/* O(1) - Retrieves ceil(log2(n)). */
+	int floor_log2(int n) {
+		assert(n > 0);
+		return msb_index(n);
+	}
+
 	/* O(1) - Idempotent operation. f(f(x)) = f(x) or f(f(x, y), y) = f(x, f(x, y)) = f(x, y). */
 	long long merge(long long x, long long y) {
 		return max(x, y);
@@ -19,7 +25,7 @@ public:
 	/* O(N * Log(N)). */
 	SparseTable(vector<long long> const& a) {
 		this->a = a;
-		int k = msb_index(a.size());
+		int k = floor_log2(a.size());
 
 		// Allocating memory.
 		table.resize(k + 1);
@@ -45,7 +51,7 @@ public:
 	/* O(1). */
 	long long query(int l, int r) {
 		// Finding greatest k such that 2^k <= r - l + 1
-		int k = msb_index(r - l + 1);
+		int k = floor_log2(r - l + 1);
 		return merge(table[k][l], table[k][r - ((1 << k) - 1)]);
 	}
 };
