@@ -3,7 +3,7 @@ constexpr int N = 100000;
 vector<pair<int, int>> bridge;
 bool ap[N + 1];
 
-vector<int> g[N + 1]; // (Input)
+vector<int> g[N + 1]; // (Input) - Undirected graph.
 bool seen[N + 1];
 int parent[N + 1];
 int disc[N + 1];
@@ -55,12 +55,12 @@ void tarjan() {
 	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(ap, false, sizeof(ap));
-	parent[1] = 0;
 	timer = 0;
 
 	// Running the DFS.
 	for (int u = 1; u <= n; u++) {
 		if (!seen[u]) {
+			parent[u] = 0;
 			dfs(u);
 		}
 	}
