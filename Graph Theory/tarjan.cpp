@@ -53,8 +53,8 @@ void dfs(int u) {
 /* O(V + E). */
 void tarjan() {
 	// Initializing.
-	memset(seen, false, sizeof(seen));
-	memset(ap, false, sizeof(ap));
+	memset(seen, false, (n + 1) * sizeof(bool));
+	memset(ap, false, (n + 1) * sizeof(bool));
 	timer = 0;
 
 	// Running the DFS.
