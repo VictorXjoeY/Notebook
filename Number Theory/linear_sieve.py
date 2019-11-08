@@ -40,3 +40,21 @@ def factor(n):
 		n //= mp[n]
 
 	return f
+
+# O(d(N) * Log(d(N))) such that d(N) is the number of divisors of N.
+def divisors(n):
+	f = factor(n)
+	d = [1]
+
+	# Building the divisors from the prime factors of n.
+	for i in range(len(f)): # For every prime factor p.
+		for j in range(len(d) - 1, -1, -1): # For every already existing divisor d.
+			cur = d[j]
+
+			for k in range(f[i][1]): # Appending d * p^k.
+				cur *= f[i][0]
+				d.append(cur)
+
+	d.sort()
+
+	return d
