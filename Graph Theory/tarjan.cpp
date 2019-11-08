@@ -1,3 +1,4 @@
+/* Tarjan is an amazing algorithm to find cycles, because if you remove all the bridges in the graph all the remaining edges belong to at least one cycle. */
 constexpr int N = 100000;
 
 vector<pair<int, int>> bridge;
