@@ -43,3 +43,25 @@ vector<pair<int, int>> factor(int n) {
 
 	return f;
 }
+
+/* O(d(N) * Log(d(N))) such that d(N) is the number of divisors of N. */
+vector<int> divisors(int n) {
+	vector<pair<int, int>> f = factor(n);
+	vector<int> d = {1ll};
+
+	// Building the divisors from the prime factors of n.
+	for (int i = 0; i < f.size(); i++) { // For every prime factor p.
+		for (int j = d.size() - 1; j >= 0; j--) { // For every already existing divisor d.
+			int cur = d[j];
+
+			for (int k = 1; k <= f[i].second; k++) { // Appending d * p^k.
+				cur *= f[i].first;
+				d.push_back(cur);
+			}
+		}
+	}
+
+	sort(d.begin(), d.end());
+
+	return d;
+}
