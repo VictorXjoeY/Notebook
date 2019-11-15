@@ -178,7 +178,7 @@ vector<pair<long long, long long>> factor(long long n) {
 	return f;
 }
 
-/* O(N^(1/4) * Log(N)). */
+/* O(N^(1/4) * Log(N) + d(N) * Log(d(N))) such that d(N) is the number of divisors of N. */
 vector<long long> divisors(long long n) {
 	vector<pair<long long, long long>> f = factor(n);
 	vector<long long> d = {1ll};

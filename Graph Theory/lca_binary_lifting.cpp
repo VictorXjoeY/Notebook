@@ -3,7 +3,7 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
-/* O(1) - Retrieves ceil(log2(n)). */
+/* O(1) - Retrieves floor(log2(n)). */
 constexpr int floor_log2(int n) {
 	assert(n > 0);
 	return msb_index(n);
