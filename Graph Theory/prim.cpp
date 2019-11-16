@@ -1,7 +1,6 @@
-constexpr int INF = 0x3f3f3f3f;
 constexpr int N = 100000;
 
-struct State{
+struct State {
 	int u, v, w;
 
 	bool operator < (const State &b) const {
@@ -16,8 +15,6 @@ vector<pair<int, int>> g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void prim(int u) {
-	State cur;
-
 	// Initializing.
 	memset(in_mst, false, sizeof(in_mst));
 	memset(cost, 0x3f, sizeof(cost));
@@ -28,11 +25,9 @@ void prim(int u) {
 
 	// While there are vertices to visit.
 	while (!pq.empty()) {
-		cur = pq.top();
-		pq.pop();
-
 		// Retrieving vertex u from current State.
-		u = cur.v;
+		u = pq.top().v;
+		pq.pop();
 
 		// If vertex u still doesn't belong to Minimum Spanning Tree.
 		if (!in_mst[u]) {

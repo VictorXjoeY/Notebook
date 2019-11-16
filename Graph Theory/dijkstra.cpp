@@ -1,7 +1,6 @@
-constexpr int INF = 0x3f3f3f3f;
 constexpr int N = 100000;
 
-struct State{
+struct State {
 	int u, d;
 
 	bool operator < (const State &b) const {
@@ -16,8 +15,6 @@ vector<pair<int, int>> g[N + 1]; // (Input)
 
 /* O(V + E * Log(V)). */
 void dijkstra(int u) {
-	State cur;
-
 	// Initializing.
 	memset(in_spt, false, sizeof(in_spt));
 	memset(dist, 0x3f, sizeof(dist));
@@ -28,11 +25,9 @@ void dijkstra(int u) {
 
 	// While there are vertices to visit.
 	while (!pq.empty()) {
-		cur = pq.top();
-		pq.pop();
-
 		// Retrieving vertex u from current State.
-		u = cur.u;
+		u = pq.top().u;
+		pq.pop();
 
 		// If vertex u still doesn't belong to Shortest Path Tree.
 		if (!in_spt[u]) {
