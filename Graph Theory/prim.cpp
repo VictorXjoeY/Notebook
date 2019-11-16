@@ -8,10 +8,10 @@ struct State {
 	}
 };
 
-int cost[N + 1];
-bool in_mst[N + 1];
-priority_queue<State> pq;
 vector<pair<int, int>> g[N + 1]; // (Input)
+priority_queue<State> pq;
+bool in_mst[N + 1];
+int cost[N + 1];
 
 /* O(V + E * Log(V)). */
 void prim(int u) {
@@ -19,7 +19,7 @@ void prim(int u) {
 	memset(in_mst, false, sizeof(in_mst));
 	memset(cost, 0x3f, sizeof(cost));
 
-	// Pushing initial vertex. Cost of adding the first vertex u to Minimum Spanning Tree is 0.
+	// Initializing and pushing source vertex. Cost of adding the first vertex u to Minimum Spanning Tree is 0.
 	cost[u] = 0;
 	pq.push({-1, u, 0});
 
@@ -39,7 +39,7 @@ void prim(int u) {
 				int v = g[u][i].first;
 				int w = g[u][i].second;
 
-				// If I've found a lower cost to add the vertex v to the Minimum Spanning Tree.
+				// If a lower cost was found to add the vertex v to the Minimum Spanning Tree.
 				if (!in_mst[v] and w < cost[v]) {
 					cost[v] = w;
 					pq.push({u, v, cost[v]});

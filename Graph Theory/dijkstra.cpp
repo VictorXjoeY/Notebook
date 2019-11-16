@@ -19,7 +19,7 @@ void dijkstra(int u) {
 	memset(in_spt, false, sizeof(in_spt));
 	memset(dist, 0x3f, sizeof(dist));
 
-	// Pushing initial vertex.
+	// Initializing and pushing source vertex. Cost of adding the first vertex u to Shortest Path Tree is 0.
 	dist[u] = 0;
 	pq.push({u, 0});
 
