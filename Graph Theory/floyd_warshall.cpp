@@ -4,8 +4,8 @@ vector<pair<int, int>> g[N + 1]; // (Input)
 int dist[N + 1][N + 1];
 int n; // (Input)
 
-/* O(V^3). */
-void floyd_warshall() {
+/* O(V^3) - Returns true if there's a negative cycle in the graph. */
+bool floyd_warshall() {
 	// Initializing.
 	memset(dist, 0x3f, sizeof(dist));
 
@@ -16,7 +16,6 @@ void floyd_warshall() {
 		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i].first;
 			int w = g[u][i].second;
-
 			dist[u][v] = w;
 		}
 	}
@@ -34,4 +33,14 @@ void floyd_warshall() {
 			}
 		}
 	}
+
+	// Checking for negative cycles.
+	for (int u = 1; u <= n; u++) {
+		if (dist[u][u] < 0) {
+			return true; // u belongs to a negative cycle.
+		}
+	}
+
+	// No negative cycles.
+	return false;
 }
