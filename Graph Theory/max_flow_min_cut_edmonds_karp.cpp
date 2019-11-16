@@ -140,3 +140,44 @@ int edmonds_karp(int s, int t) {
 
 	return ans;
 }
+
+/* O(V + E). */
+void dfs(int u) {
+	seen[u] = true;
+
+	// For each edge (u, v).
+	for (int i = 0; i < r[u].size(); i++) {
+		int v = r[u][i].first;
+		int c = r[u][i].second;
+
+		// If v was not seen and the residual capacity of (u, v) is positive.
+		if (!seen[v] and c > 0) {
+			dfs(v);
+		}
+	}
+}
+
+/* O(min(F, V * E) * E) such that F is the maximum min-cut cost. */
+vector<pair<int, int>> min_cut(int s, int t) {
+	vector<pair<int, int>> ans;
+
+	// Running Edmonds-Karp to find max flow.
+	edmonds_karp(s, t);
+
+	// Running a dfs from the source in the residual graph.
+	memset(seen, false, sizeof(seen));
+	dfs(s);
+
+	for (int u = 1; u <= fnn; u++) {
+		for (int i = 0; i < r[u].size(); i++) {
+			int v = r[u][i].first;
+
+			// Edge (u, v) belongs to the min-cut if u is reachable from the source but v is not.
+			if (seen[u] and !seen[v]) {
+				ans.push_back({u, v});
+			}
+		}
+	}
+
+	return ans;
+}
