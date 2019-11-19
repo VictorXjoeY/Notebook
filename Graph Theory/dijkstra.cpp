@@ -8,10 +8,10 @@ struct State {
 	}
 };
 
-int dist[N + 1];
-bool in_spt[N + 1];
-priority_queue<State> pq;
 vector<pair<int, int>> g[N + 1]; // (Input)
+priority_queue<State> pq;
+bool in_spt[N + 1];
+int dist[N + 1];
 
 /* O(V + E * Log(V)). */
 void dijkstra(int u) {

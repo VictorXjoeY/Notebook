@@ -1,7 +1,7 @@
 constexpr int N = 100000;
 constexpr int Q = 100000;
 
-class UnionFind{
+class UnionFind {
 private:
 	vector<int> p, rank, size;
 	int n;
@@ -110,6 +110,14 @@ void dfs(int u) {
 
 /* O(V + Q). */
 void lca(int root) {
+	// Clearing.
+	memset(seen, false, sizeof(seen));
+	uf = UnionFind(n + 1);
+	
+	for (int u = 1; u <= n; u++) {
+		gq[u].clear();
+	}
+
 	// O(Q) - Builds the queries adjacency list.
 	for (int i = 1; i <= q; i++) {
 		int u = queries[i].first;
@@ -119,7 +127,5 @@ void lca(int root) {
 	}
 
 	// Depth-first search to answer queries.
-	memset(seen, false, sizeof(seen));
-	uf = UnionFind(n + 1);
 	dfs(root);
 }

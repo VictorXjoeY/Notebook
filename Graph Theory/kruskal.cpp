@@ -63,7 +63,7 @@ public:
 	}
 };
 
-struct Edge{
+struct Edge {
 	int u, v, w;
 
 	bool operator < (const Edge &b) const {

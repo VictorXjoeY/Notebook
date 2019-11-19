@@ -182,7 +182,7 @@ void dfs_init(int u, int cur_depth) {
 
 /* O(V) - Builds the Heavy-Light structure. */
 void hld_init(int root) {
-	// Initialize.
+	// Initializing.
 	memset(seen, false, sizeof(seen));
 	memset(size, 0, sizeof(size));
 	parent[root] = 0;
@@ -217,5 +217,6 @@ void hld_init(int root) {
 	dfs_hld(root);
 
 	// Building Segment Tree.
+	memset(lazy, 0, sizeof(lazy)); // Clearing lazy.
 	build(1, 1, n);
 }

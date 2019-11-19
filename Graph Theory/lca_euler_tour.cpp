@@ -58,7 +58,7 @@ int euler[2 * N + 1];
 int depth[2 * N + 1];
 int first[N + 1];
 bool seen[N + 1];
-int cur;
+int timer;
 int n; // (Input)
 
 /* O(V) - Depth-First Search to compute Euler Tour and depths. */
@@ -66,10 +66,10 @@ void dfs(int u, int d) {
 	seen[u] = true;
 
 	// Pushing u into Euler Tour.
-	cur++;
-	first[u] = cur;
-	euler[cur] = u;
-	depth[cur] = d;
+	timer++;
+	first[u] = timer;
+	euler[timer] = u;
+	depth[timer] = d;
 
 	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i];
@@ -78,18 +78,18 @@ void dfs(int u, int d) {
 			dfs(v, d + 1);
 			
 			// Pushing u into Euler Tour.
-			cur++;
-			euler[cur] = u;
-			depth[cur] = d;
+			timer++;
+			euler[timer] = u;
+			depth[timer] = d;
 		}
 	}
 }
 
 /* O(V * Log(V)). */
 void lca_init(int root) {
-	// Initializing.
+	// Clearing.
 	memset(seen, false, sizeof(seen));
-	cur = 0;
+	timer = 0;
 
 	// Building.
 	dfs(root, 0);

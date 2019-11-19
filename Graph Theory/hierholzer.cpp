@@ -52,7 +52,6 @@ vector<int> undirected_eulerian_circuit() {
 	stack<int> s;
 
 	// Retrieving the degrees and a copy of the graph.
-	memset(degree, 0, sizeof(degree));
 	gaux.resize(n + 1);
 
 	for (int u = 1; u <= n; u++) {
@@ -137,7 +136,6 @@ vector<int> undirected_eulerian_path() {
 	stack<int> s;
 
 	// Retrieving the degrees and a copy of the graph.
-	memset(degree, 0, sizeof(degree));
 	gaux.resize(n + 1);
 
 	for (int u = 1; u <= n; u++) {

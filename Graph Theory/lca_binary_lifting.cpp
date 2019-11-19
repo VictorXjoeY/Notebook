@@ -35,7 +35,7 @@ void dfs(int u, int d) {
 
 /* O(V * Log(V)). */
 void lca_init(int root) {
-	// Initializing.
+	// Clearing.
 	memset(depth, -1, sizeof(depth));
 	memset(parent, -1, sizeof(parent));
 	memset(ancestor, -1, sizeof(ancestor));

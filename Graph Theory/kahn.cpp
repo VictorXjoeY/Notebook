@@ -8,6 +8,7 @@ int n; // (Input)
 
 /* O(V + E) - Returns true if a topological sorting exists. */
 bool kahn() {
+	// Clearing.
 	memset(in_degree, 0, sizeof(in_degree));
 
 	// Counting the in degree of every vertex.

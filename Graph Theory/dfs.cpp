@@ -1,7 +1,7 @@
 constexpr int N = 100000;
 
 vector<int> g[N + 1]; // (Input)
-bool seen[N + 1];
+bool seen[N + 1]; // (Clear)
 
 /* O(V + E). */
 void dfs(int u) {
