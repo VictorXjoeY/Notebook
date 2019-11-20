@@ -15,7 +15,7 @@ constexpr int ceil_log2(int n) {
 constexpr int N = 100000;
 constexpr int L = ceil_log2(N);
 
-struct Point{
+struct Point {
 	int x, y;
 };
 
@@ -175,6 +175,15 @@ void build_x(int cur, int l, int r) {
 /* O(N * Log(N)) */
 void init() {
 	int pos;
+
+	// Clearing.
+	vx.clear();
+	mx.clear();
+
+	for (int i = 1; i <= (1 << (ceil_log2(p.size()) + 1)) - 1; i++) {
+		seg_x[i].clear();
+		seg_y[i].clear();
+	}
 
 	// Retrieving x coordinates.
 	for (int i = 0; i < p.size(); i++) {
