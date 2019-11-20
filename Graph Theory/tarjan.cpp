@@ -1,10 +1,9 @@
 /* Tarjan is an amazing algorithm to find cycles, because if you remove all the bridges in the graph all the remaining edges belong to at least one cycle. */
 constexpr int N = 100000;
 
+vector<int> g[N + 1]; // (Input) - Undirected graph.
 vector<pair<int, int>> bridge;
 bool ap[N + 1];
-
-vector<int> g[N + 1]; // (Input) - Undirected graph.
 bool seen[N + 1];
 int parent[N + 1];
 int disc[N + 1];
@@ -53,9 +52,10 @@ void dfs(int u) {
 
 /* O(V + E). */
 void tarjan() {
-	// Initializing.
-	memset(seen, false, (n + 1) * sizeof(bool));
-	memset(ap, false, (n + 1) * sizeof(bool));
+	// Clearing.
+	memset(seen, false, sizeof(seen));
+	memset(ap, false, sizeof(ap));
+	bridge.clear();
 	timer = 0;
 
 	// Running the DFS.

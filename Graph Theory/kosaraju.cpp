@@ -1,9 +1,9 @@
 constexpr int N = 100000;
 
 vector<int> g[N + 1]; // (Input)
-vector<int> gt[N + 1]; // (Input)
+vector<int> gt[N + 1]; // Transposed graph.
 vector<int> gs[N + 1]; // This graph will be topologically sorted after running Kosaraju's Algorithm.
-vector<int> component[N + 1]; // component[c] stores which vertices belong to the component c.
+vector<int> comp[N + 1]; // comp[c] stores which vertices belong to the component c.
 bool seen[N + 1];
 int color[N + 1]; // color[u] stores which component u belongs to.
 stack<int> s;
@@ -33,7 +33,7 @@ void dfs1(int u) {
 void dfs2(int u) {
 	// Vertex u belongs to current component.
 	color[u] = nc;
-	component[nc].push_back(u);
+	comp[nc].push_back(u);
 
 	// For every vertex v adjacent to u.
 	for (int i = 0; i < gt[u].size(); i++) {
@@ -52,10 +52,24 @@ void dfs2(int u) {
 
 /* O(V + E). */
 void kosaraju() {
-	// Initializing.
+	// Clearing.
+	for (int u = 1; u <= n; u++) {
+		gt[u].clear();
+		gs[u].clear();
+		comp[u].clear();
+	}
+
 	memset(seen, false, sizeof(seen));
 	memset(color, 0, sizeof(color));
 	nc = 0;
+
+	// Building the transposed graph.
+	for (int u = 1; u <= n; u++) {
+		for (int i = 0; i < g[u].size(); i++) {
+			int v = g[u][i];
+			gt[v].push_back(u);
+		}
+	}
 
 	// Running first DFS to fill the Stack s.
 	for (int u = 1; u <= n; u++) {

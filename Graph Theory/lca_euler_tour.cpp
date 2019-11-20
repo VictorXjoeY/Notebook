@@ -10,6 +10,12 @@ private:
 		return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 	}
 
+	/* O(1) - Retrieves ceil(log2(n)). */
+	int floor_log2(int n) {
+		assert(n > 0);
+		return msb_index(n);
+	}
+
 	/* O(1) - Idempotent operation. f(f(x)) = f(x) or f(f(x, y), y) = f(x, f(x, y)) = f(x, y). */
 	int merge(int x, int y) {
 		return a[x] < a[y] ? x : y;
@@ -47,7 +53,7 @@ public:
 	/* O(1). */
 	int query(int l, int r) {
 		// Finding greatest k such that 2^k <= r - l + 1
-		int k = msb_index(r - l + 1);
+		int k = floor_log2(r - l + 1);
 		return merge(table[k][l], table[k][r - ((1 << k) - 1)]);
 	}
 };

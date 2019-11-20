@@ -10,8 +10,7 @@ int n; // (Input)
 /* O(V + E) - Returns true if a cycle is found from u. */
 bool dfs(int u) {
 	// Visiting current vertex u.
-	seen[u] = true;
-	in_stack[u] = true;
+	in_stack[u] = seen[u] = true;
 
 	for (int i = 0; i < g[u].size(); i++) {
 		int v = g[u][i];

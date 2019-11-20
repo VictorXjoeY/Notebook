@@ -21,7 +21,7 @@ bool seen[N + 1];
 int match[N + 1];
 int n; // (Input)
 
-/* O(V + E). Returns true if it finds an augmenting path starting from vertex u. */
+/* O(V + E) - Returns true if it finds an augmenting path starting from vertex u. */
 bool dfs(int u) {
 	seen[u] = true;
 
@@ -40,7 +40,7 @@ bool dfs(int u) {
 	return false;
 }
 
-/* O(V + E). Partitions the vertices in 2 sets by bicoloring. */
+/* O(V + E) - Partitions the vertices in 2 sets by bicoloring. */
 void bicolor(int u, bool color) {
 	seen[u] = true;
 	in_a[u] = color;
@@ -58,7 +58,7 @@ void bicolor(int u, bool color) {
 	}
 }
 
-/* O(V * E). The graph can be either directed (from Set A to Set B) or undirected.
+/* O(V * E) - The graph can be either directed (from Set A to Set B) or undirected.
    Vertices from Set A and from Set B must all have different indexes.
    This works on ANY Bipartite Graph. */
 int kuhn() {
