@@ -1,7 +1,7 @@
 constexpr int OFFSET = 'a';
 constexpr int ALPHABET_SIZE = 26;
 
-struct AhoCorasick{
+struct AhoCorasick {
 	int child[ALPHABET_SIZE], dp[ALPHABET_SIZE];
 	int terminal, suffix_link;
 

@@ -1,7 +1,7 @@
 constexpr int OFFSET = 'a';
 constexpr int ALPHABET_SIZE = 26;
 
-struct Trie{
+struct Trie {
 	int child[ALPHABET_SIZE];
 	int size, terminal;
 

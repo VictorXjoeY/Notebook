@@ -1,6 +1,6 @@
 constexpr int N = 100000;
 
-class SparseTable{
+class SparseTable {
 private:
 	vector<vector<int>> table;
 	vector<int> a;

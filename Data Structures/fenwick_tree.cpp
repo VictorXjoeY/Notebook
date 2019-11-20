@@ -1,6 +1,6 @@
 // n = number of elements
 // m = max element
-class FenwickTree{
+class FenwickTree {
 private:
 	vector<int> ft;
 	int m;

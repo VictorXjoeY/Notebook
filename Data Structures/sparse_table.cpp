@@ -1,4 +1,4 @@
-class SparseTable{
+class SparseTable {
 private:
 	vector<vector<long long>> table;
 	vector<long long> a;
