@@ -1,4 +1,4 @@
-constexpr int N = 300;
+constexpr int N = 500;
 
 int mat[N + 1][N + 1]; // (Input)
 int sum[N + 1][N + 1];
