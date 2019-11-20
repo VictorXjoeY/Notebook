@@ -2,7 +2,7 @@ constexpr int N = 100000;
 constexpr int M = 100000;
 constexpr int SQ = (int)sqrt(N);
 
-struct Query{
+struct Query {
 	int idx, l, r;
 
 	bool operator < (const Query &b) const {

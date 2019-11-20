@@ -19,7 +19,7 @@ int lis() {
 	// Longest Increasing Subsequence.
 	for (int i = 1; i <= n; i++) {
 		// Find position to place.
-		p = lower_bound(l, l + N + 1, a[i]) - l;
+		p = lower_bound(l, l + n + 1, a[i]) - l;
 
 		// Updating LIS with size p ending in l[p] with minimum ending possible.
 		l[p] = min(l[p], a[i]);
