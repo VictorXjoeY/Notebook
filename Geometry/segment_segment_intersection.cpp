@@ -1,4 +1,4 @@
-struct Point{
+struct Point {
 	long long x, y;
 
 	// Vector subtraction.

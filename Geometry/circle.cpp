@@ -2,11 +2,11 @@
 
 constexpr double PI = 3.14159265358979323846;
 
-struct Point{
+struct Point {
 	double x, y;
 };
 
-struct Circle{
+struct Circle {
 	long long x, y, r;
 };
 
