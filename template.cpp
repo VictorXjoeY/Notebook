@@ -14,6 +14,8 @@ using namespace std;
 
 // Maximum number of divisors for N <= 10^5 ---> 83160 with 128 divisors.
 // Maximum number of divisors for N <= 10^6 ---> 720720 with 240 divisors.
+// Maximum number of divisors for N <= 10^9 ---> 735134400 with 1344 divisors.
+// Maximum number of divisors for N <= 10^18 ---> 897612484786617600 with 103680 divisors.
 
 // How to generate random numbers and random permutations:
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
