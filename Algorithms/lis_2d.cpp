@@ -6,10 +6,16 @@ constexpr int msb_index(int mask) {
 	return 8 * sizeof(mask) - __builtin_clz(mask) - 1;
 }
 
-constexpr int N = 100000;
-constexpr int L = msb_index(N - 1) + 1; // L = ceil(log(N))
+/* O(1) - Retrieves ceil(log2(n)). */
+constexpr int ceil_log2(int n) {
+	assert(n > 0);
+	return n == 1 ? 0 : msb_index(n - 1) + 1;
+}
 
-struct Point{
+constexpr int N = 100000;
+constexpr int L = ceil_log2(N);
+
+struct Point {
 	int x, y;
 };
 
@@ -148,16 +154,11 @@ void build_y(vector<long long> &seg, const vector<int> &vy, int cur, int l, int 
 
 /* O(N) - Builds a segment tree over a 0-based array of points. Use build_x(1, 0, vx.size() - 1) to build. */
 void build_x(int cur, int l, int r) {
-	int i, m = (l + r) / 2;
+	int m = (l + r) / 2;
 
 	if (l == r) { // Creating leaf and building segment tree on y coordinate.
-		// Inserting every unique sorted y coordinate that has vx[l] as x coordinate.
-		for (i = 0; i < mx[l].size(); i++) {
-			seg_x[cur].push_back(mx[l][i]);
-		}
-
-		// Allocating memory for the segment tree stored in this leaf.
-		seg_y[cur].resize(1 << (msb_index(seg_x[cur].size() - 1) + 2));
+		seg_x[cur].assign(mx[l].begin(), mx[l].end()); // Inserting every unique sorted y coordinate that has vx[l] as x coordinate.
+		seg_y[cur].resize(1 << (ceil_log2(seg_x[cur].size()) + 1)); // Allocating memory for the segment tree stored in this leaf.
 		build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 		return;
 	}
@@ -168,13 +169,22 @@ void build_x(int cur, int l, int r) {
 
 	// Merging and building segment tree on y coordinates.
 	seg_x[cur] = merge_x(seg_x[LEFT(cur)], seg_x[RIGHT(cur)]);
-	seg_y[cur].resize(1 << (msb_index(seg_x[cur].size() - 1) + 2));
+	seg_y[cur].resize(1 << (ceil_log2(seg_x[cur].size()) + 1));
 	build_y(seg_y[cur], seg_x[cur], 1, 0, seg_x[cur].size() - 1);
 }
 
 /* O(N * Log(N)) */
 void init() {
 	int pos;
+
+	// Clearing.
+	vx.clear();
+	mx.clear();
+
+	for (int i = 1; i <= (1 << (ceil_log2(p.size()) + 1)) - 1; i++) {
+		seg_x[i].clear();
+		seg_y[i].clear();
+	}
 
 	// Retrieving x coordinates.
 	for (int i = 0; i < p.size(); i++) {
