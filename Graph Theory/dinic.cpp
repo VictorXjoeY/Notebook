@@ -1,3 +1,4 @@
+// If there are lots of parallel edges in the residual graph you can merge them to achieve a better runtime.
 constexpr int INF = 0x3f3f3f3f; // Has to be greater or equal to maximum flow.
 constexpr int N = 500;
 constexpr int FNN = N;
