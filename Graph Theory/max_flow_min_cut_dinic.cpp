@@ -94,54 +94,25 @@ int dinic(int s, int t) {
 
 	// Clearing.
 	for (int u = 1; u <= fnn; u++) {
+		flow[u].clear();
+		rev[u].clear();
 		r[u].clear();
 	}
 
-	// O(V + E) - Creating residual graph.
+	// O(V + E) - Creating residual graph, reverse edge pointers and flow graph.
 	for (int u = 1; u <= fnn; u++) {
 		for (int i = 0; i < g[u].size(); i++) {
 			int v = g[u][i].first;
 			int c = g[u][i].second;
 
 			if (u != v) { // Ignoring self-loops.
-				r[u].push_back({v, c});
-				r[v].push_back({u, 0});
+				rev[u].push_back(r[v].size()); // Reverse edge reference.
+				rev[v].push_back(r[u].size()); // Reverse edge reference.
+				r[u].push_back({v, c}); // Adding edge (u, v).
+				r[v].push_back({u, 0}); // Adding reverse edge (v, u).
+				flow[u].push_back(0); // Flow through edge (u, v).
+				flow[v].push_back(0); // Flow through edge (v, u).
 			}
-		}
-	}
-
-	// O(E * Log(E)) - Merging parallel edges in the residual graph.
-	for (int u = 1; u <= fnn; u++) {
-		// Sorting so that parallel edges stay together.
-		vector<pair<int, int>> adj = r[u];
-		sort(adj.begin(), adj.end());
-		r[u].clear();
-
-		// Merging parallel edges.
-		for (int i = 0; i < adj.size(); i++) {
-			int v = adj[i].first;
-			int c = adj[i].second;
-
-			if (!r[u].empty() and v == r[u].back().first) {
-				r[u].back().second += c;
-			}
-			else { // Pushing new edge.
-				r[u].push_back({v, c});
-			}
-		}
-	}
-
-	// O(E * Log(E)) - Initializing flow and creating reverse edges references.
-	for (int u = 1; u <= fnn; u++) {
-		flow[u].assign(r[u].size(), 0);
-		rev[u].resize(r[u].size());
-
-		// For each edge (u, v).
-		for (int i = 0; i < r[u].size(); i++) {
-			int v = r[u][i].first;
-
-			// Retrieving u's position in v's adjacency list.
-			rev[u][i] = lower_bound(r[v].begin(), r[v].end(), make_pair(u, 0)) - r[v].begin();
 		}
 	}
 
