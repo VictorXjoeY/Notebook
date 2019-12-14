@@ -1,4 +1,4 @@
-/* O(Log(max(a, b))). */
+/* O(Log(min(a, b))). */
 long long lcm(long long a, long long b) {
 	return (a / __gcd(a, b)) * b;
 }
@@ -12,7 +12,7 @@ struct Fraction{
 		this->den = 1;
 	}
 
-	/* O(Log(max(num, den))). */
+	/* O(Log(min(num, den))). */
 	Fraction(long long num, long long den) {
 		assert(den != 0);
 
@@ -28,24 +28,24 @@ struct Fraction{
 		this->den = abs(den) / g;
 	}
 
-	/* O(Log(max(num, den))). */
+	/* O(Log(min(num, den))). */
 	Fraction operator + (const Fraction &f) const {
 		long long l = lcm(this->den, f.den);
 		return Fraction(this->num * (l / this->den) + f.num * (l / f.den), l);
 	}
 
-	/* O(Log(max(num, den))). */
+	/* O(Log(min(num, den))). */
 	Fraction operator - (const Fraction &f) const {
 		long long l = lcm(this->den, f.den);
 		return Fraction(this->num * (l / this->den) - f.num * (l / f.den), l);
 	}
 
-	/* O(Log(max(num, den))). */
+	/* O(Log(min(num, den))). */
 	Fraction operator * (const Fraction &f) const {
 		return Fraction(this->num * f.num, this->den * f.den);
 	}
 
-	/* O(Log(max(num, den))). */
+	/* O(Log(min(num, den))). */
 	Fraction operator / (const Fraction &f) const {
 		return Fraction(this->num * f.den, this->den * f.num);
 	}

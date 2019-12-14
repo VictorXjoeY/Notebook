@@ -2,7 +2,7 @@ constexpr int N = 1000000;
 
 long long f[N + 1];
 
-/* O(Log(max(a, b))). */
+/* O(Log(min(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;

@@ -5,7 +5,7 @@ from math import gcd
 def ceil(num, den):
 	return (num + den - 1) // den
 
-# O(log(max(a, b))).
+# O(Log(min(a, b))).
 # a * x + b * y = gcd(a, b)
 def extended_gcd(a, b):
 	if a == 0:
@@ -15,7 +15,7 @@ def extended_gcd(a, b):
 
 	return (gcd, y - (b // a) * x, x)
 
-# O(log(max(a, b))).
+# O(Log(min(a, b))).
 # a * x + b * y = c
 # 	x = x1 + k * (b / gcd(a, b))
 # 	y = y1 - k * (a / gcd(a, b))
@@ -54,7 +54,7 @@ def diophantine(a, b, c):
 
 	return (gcd, x1, y1)
 
-# O(N * log(lcm(m1, m2, ..., mn))) - General Chinese Remainder Theorem.
+# O(N * Log(lcm(m1, m2, ..., mn))) - General Chinese Remainder Theorem.
 # 
 # Considering the following family of linear congruences:
 # 

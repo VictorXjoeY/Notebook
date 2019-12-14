@@ -14,7 +14,7 @@ def integer_sqrt(n):
 
 	return l
 
-# O(log(max(a, b))).
+# O(Log(min(a, b))).
 # a * x + b * y = gcd(a, b)
 def extended_gcd(a, b):
 	if a == 0:

@@ -43,7 +43,7 @@ long long fast_exp(long long a, long long b, long long m) {
 	return ans;
 }
 
-/* O(Log(max(a, b))). */
+/* O(Log(min(a, b))). */
 /* a * x + b * y = gcd(a, b) */
 long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
