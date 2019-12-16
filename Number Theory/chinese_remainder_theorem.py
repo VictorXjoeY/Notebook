@@ -1,7 +1,3 @@
-# O(1).
-def ceil(num, den):
-	return (num + den - 1) // den
-
 # O(Log(min(a, b))) - Extended Euclidean Algorithm.
 # Returns a solution to a * x + b * y = gcd(a, b).
 # Returns |x| <= |a / gcd(a, b)|, |y| <= |b / gcd(a, b)| and gcd(a, b).
@@ -44,11 +40,6 @@ def diophantine(a, b, c):
 	# Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
 	x1 *= c // gcd
 	y1 *= c // gcd
-
-	# Simplifying the solution so that x1 is minimum and non-negative. Use positive values for a and b for this to work as intended!
-	k = ceil(-x1 * gcd, b)
-	x1 += k * (b // gcd)
-	y1 -= k * (a // gcd)
 
 	return (gcd, x1, y1)
 
@@ -104,7 +95,7 @@ def chinese_remainder_theorem(a, m):
 		lcm = (m1 * m2) // gcd
 
 		# Updating answer.
-		a1 = (a1 + m1 * x1) % lcm
+		a1 = ((a1 + m1 * x1) % lcm + lcm) % lcm
 		m1 = lcm
 
 	return (a1, m1)

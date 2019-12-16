@@ -1,37 +1,32 @@
 mt19937_64 rng_64(chrono::steady_clock::now().time_since_epoch().count());
 
-long long ceil(long long, long long);
+/* O(Log(min(a, b))) - Returns a * b mod m without overflowing. 2 * (m - 1) must not overflow. */
+long long mod_mul(long long a, long long b, long long m) {
+	// O(1) - If there's __int128_t available, just multiply.
+	#ifdef __SIZEOF_INT128__
+		return ((__int128_t)a * (__int128_t)b) % m;
+	#endif
 
-/* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor(long long num, long long den) {
-	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
-		return abs(num) / abs(den);
+	// In case a >= m or b >= m.
+	a %= m;
+	b %= m;
+
+	// Forcing b to be the smallest.
+	if (a < b) {
+		swap(a, b);
 	}
 
-	return -ceil(abs(num), abs(den));
-}
+	long long ans = 0;
 
-/* O(1). */
-long long ceil(long long num, long long den) {
-	return floor(num + den - 1, den);
-}
-
-/* O(Log(B)). */
-long long fast_exp(long long a, long long b, long long m) {
-	long long ans = 1; // Base case.
-
-	// In case a >= m.
-	a %= m;
-
-	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
+	// Decomposing b in binary. Adding to the answer a * 2^0, a * 2^1, a * 2^2, a * 2^4, a * 2^8, ...
 	while (b > 0) {
 		// If current bit is set.
 		if (b & 1ll) {
-			ans = (ans * a) % m;
+			ans = (ans + a) % m;
 		}
 
 		b >>= 1ll; // Next bit.
-		a = (a * a) % m; // Next power of a.
+		a = (2ll * a) % m; // Next power of two multiplied by a.
 	}
 
 	return ans;
@@ -75,26 +70,23 @@ a * x - b * y = c ---> a * x + b * (-y) = c
 
 Use positive values for a and b for this function.
 Has infinite solutions if and only if gcd(a, b) divides c.
-If a and/or b are 0, treat those cases separately. */
+If a and/or b are 0, treat those cases separately.
+Returns |x1| <= |(a * c) / gcd^2(a, b)|, |y1| <= |(b * c) / gcd^2(a, b)| and gcd(a, b) if there are solutions. */
 long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1) {
-	long long gcd, k;
-
 	// Obtaining a * x1 + b * y1 = gcd(a, b)
-	gcd = extended_gcd(a, b, x1, y1);
+	long long gcd = extended_gcd(a, b, x1, y1);
 
 	// No solution
 	if (c % gcd != 0) {
 		return 0;
 	}
 
-	// Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
-	x1 *= c / gcd;
-	y1 *= c / gcd;
+	// Obtaining lcm(a, b).
+	long long lcm = (a / gcd) * b;
 
-	// Simplifying the solution so that x1 is minimum and non-negative. Use positive values for a and b for this to work as intended!
-	k = ceil(-x1 * gcd, b);
-	x1 += k * (b / gcd);
-	y1 -= k * (a / gcd);
+	// Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
+	x1 = mod_mul(x1, c / gcd, lcm);
+	y1 = mod_mul(y1, c / gcd, lcm);
 
 	return gcd;
 }
@@ -158,7 +150,7 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 		lcm = (m1 / gcd) * m2;
 
 		// Updating answer.
-		a1 = (a1 + m1 * x1) % lcm;
+		a1 = ((a1 + mod_mul(m1, x1, lcm)) % lcm + lcm) % lcm;
 		m1 = lcm;
 	}
 }

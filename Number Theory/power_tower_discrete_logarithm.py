@@ -1,8 +1,18 @@
 from math import gcd
 
-# O(1).
-def ceil(num, den):
-	return (num + den - 1) // den
+# O(Log(N)) - Returns the greatest integer k such that k^2 <= n.
+def integer_sqrt(n):
+	l, r = 0, n
+
+	while l < r:
+		m = (l + r + 1) // 2
+
+		if m * m <= n:
+			l = m
+		else:
+			r = m - 1
+
+	return l
 
 # O(Log(min(a, b))) - Extended Euclidean Algorithm.
 # Returns a solution to a * x + b * y = gcd(a, b).
@@ -46,11 +56,6 @@ def diophantine(a, b, c):
 	# Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
 	x1 *= c // gcd
 	y1 *= c // gcd
-
-	# Simplifying the solution so that x1 is minimum and non-negative. Use positive values for a and b for this to work as intended!
-	k = ceil(-x1 * gcd, b)
-	x1 += k * (b // gcd)
-	y1 -= k * (a // gcd)
 
 	return (gcd, x1, y1)
 
@@ -106,24 +111,10 @@ def chinese_remainder_theorem(a, m):
 		lcm = (m1 * m2) // gcd
 
 		# Updating answer.
-		a1 = (a1 + m1 * x1) % lcm
+		a1 = ((a1 + m1 * x1) % lcm + lcm) % lcm
 		m1 = lcm
 
 	return (a1, m1)
-
-# O(min(Log(N), Log(MAX))) - Returns the greatest integer k such that k^2 <= n.
-def integer_sqrt(n):
-	l, r = 0, n
-
-	while l < r:
-		m = (l + r + 1) // 2
-
-		if m * m <= n:
-			l = m
-		else:
-			r = m - 1
-
-	return l
 
 # O(Log(M)) - Returns the modular multiplicative inverse of a mod m, if it exists.
 # Returns x that satisfies a * x = 1 (mod m) if a and m are coprime. Returns 0 otherwise.
