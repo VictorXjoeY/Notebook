@@ -67,7 +67,7 @@ long long diophantine(long long a, long long b, long long c, long long &x1, long
 	x1 *= c / gcd;
 	y1 *= c / gcd;
 
-	// Simplifying the solution so that x1 is minimum and positive. Use positive values for a and b for this to work as intended!
+	// Simplifying the solution so that x1 is minimum and non-negative. Use positive values for a and b for this to work as intended!
 	k = ceil(-x1 * gcd, b);
 	x1 += k * (b / gcd);
 	y1 -= k * (a / gcd);
@@ -114,10 +114,10 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 		a[i] = ((a[i] % m[i]) + m[i]) % m[i];
 	}
 
-	a1 = a[0];
-	m1 = m[0];
+	a1 = 0;
+	m1 = 1;
 
-	for (int i = 1; i < a.size(); i++) {
+	for (int i = 0; i < a.size(); i++) {
 		a2 = a[i];
 		m2 = m[i];
 
