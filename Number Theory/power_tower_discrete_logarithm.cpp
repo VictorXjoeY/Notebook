@@ -38,8 +38,9 @@ long long fast_exp(long long a, long long b, long long m) {
 	return ans;
 }
 
-/* O(Log(min(a, b))). */
-/* a * x + b * y = gcd(a, b) */
+/* O(Log(min(a, b))) - Extended Euclidean Algorithm.
+   Returns a solution to a * x + b * y = gcd(a, b).
+   Returns |x| <= |a / gcd(a, b)|, |y| <= |b / gcd(a, b)| and gcd(a, b). */
 long long extended_gcd(long long a, long long b, long long &x, long long &y) {
 	long long x1, y1, gcd;
 
