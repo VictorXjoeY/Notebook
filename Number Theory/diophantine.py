@@ -45,7 +45,7 @@ def diophantine(a, b, c):
 	x1 *= c // gcd
 	y1 *= c // gcd
 
-	# Simplifying the solution so that x1 is minimum and positive. Use positive values for a and b for this to work as intended!
+	# Simplifying the solution so that x1 is minimum and non-negative. Use positive values for a and b for this to work as intended!
 	k = ceil(-x1 * gcd, b)
 	x1 += k * (b // gcd)
 	y1 -= k * (a // gcd)
