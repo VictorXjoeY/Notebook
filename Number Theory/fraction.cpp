@@ -3,7 +3,7 @@ long long lcm(long long a, long long b) {
 	return (a / __gcd(a, b)) * b;
 }
 
-struct Fraction{
+struct Fraction {
 	long long num, den; // Always stores the irreducible fraction num / den, such that den is positive.
 
 	/* O(1). */
