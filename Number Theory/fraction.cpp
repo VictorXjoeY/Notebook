@@ -54,4 +54,29 @@ struct Fraction {
 	bool operator < (const Fraction &f) const {
 		return this->num * f.den < f.num * this->den;
 	}
+
+	/* O(1). */
+	bool operator <= (const Fraction &f) const {
+		return !(*this > f);
+	}
+
+	/* O(1). */
+	bool operator > (const Fraction &f) const {
+		return f < *this;
+	}
+
+	/* O(1). */
+	bool operator >= (const Fraction &f) const {
+		return !(*this < f);
+	}
+
+	/* O(1). */
+	bool operator == (const Fraction &f) const {
+		return this->num == f.num and this->den == f.den;
+	}
+
+	/* O(1). */
+	bool operator != (const Fraction &f) const {
+		return !(*this == f);
+	}
 };
