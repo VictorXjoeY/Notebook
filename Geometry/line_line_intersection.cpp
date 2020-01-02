@@ -28,6 +28,11 @@ struct Fraction {
 		this->den = abs(den) / g;
 	}
 
+	/* O(1). */
+	double to_double() const {
+		return this->num / (double)this->den;
+	}
+
 	/* O(Log(min(num, den))). */
 	Fraction operator + (const Fraction &f) const {
 		long long l = lcm(this->den, f.den);
