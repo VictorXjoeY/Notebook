@@ -58,7 +58,7 @@ bool point_inside_triangle(const Point &q, const Point &a, const Point &b, const
 	return (((b - a) ^ (q - a)) >= 0 and ((c - b) ^ (q - b)) >= 0 and ((a - c) ^ (q - c)) >= 0) or (((b - a) ^ (q - a)) <= 0 and ((c - b) ^ (q - b)) <= 0 and ((a - c) ^ (q - c)) <= 0);
 }
 
-/* O(Log(N)) - Returns true if point Q is inside polygon P. */
+/* O(Log(N)) - Returns true if the point Q is inside the convex polygon P. */
 bool point_inside_convex_polygon(const Point &q, const vector<Point> &p) {
 	int l, r, m;
 
