@@ -7,9 +7,9 @@ struct Point {
 	}
 };
 
-/* O(N) - Computes the area of a convex or non-convex polygon, being it simple or self-intersecting.
+/* O(N) - Computes twice the signed area of a convex or non-convex polygon, being it simple or self-intersecting.
    Expects a polygon either in clockwise or in counter-clockwise order. */
-double shoelace(const vector<Point> &p) {
+long long shoelace(const vector<Point> &p) {
 	long long ans = 0;
 
 	for (int i = 0; i < p.size() - 1; i++) {
@@ -18,5 +18,10 @@ double shoelace(const vector<Point> &p) {
 
 	ans += p.back() ^ p[0];
 
-	return abs(ans) / 2.0;
+	return ans;
+}
+
+/* O(N) - Returns true if the points of the given simple polygon are in clockwise order. */ 
+bool is_clockwise(const vector<Point> &p) {
+	return shoelace(p) < 0;
 }
