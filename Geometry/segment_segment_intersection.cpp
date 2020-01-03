@@ -89,24 +89,9 @@ struct Fraction {
 struct Point {
 	Fraction x, y;
 
-	/* O(1) - Vector sum. */
-	Point operator + (const Point &b) const {
-		return {this->x + b.x, this->y + b.y};
-	}
-
 	/* O(1) - Vector subtraction. */
 	Point operator - (const Point &b) const {
 		return {this->x - b.x, this->y - b.y};
-	}
-
-	/* O(1) - Vector product by scalar. */
-	Point operator * (Fraction a) {
-		return {this->x * a, this->y * a};
-	}
-
-	/* O(1) - Vector division by scalar. */
-	Point operator / (Fraction a) {
-		return {this->x / a, this->y / a};
 	}
 
 	/* O(1) - Dot product. */
@@ -117,11 +102,6 @@ struct Point {
 	/* O(1) - Cross product. */
 	Fraction operator ^ (const Point &b) const {
 		return (this->x * b.y) - (this->y * b.x);
-	}
-
-	/* O(1) - Squared norm. */
-	Fraction operator ! () const {
-		return (this->x * this->x) + (this->y * this->y);
 	}
 
 	/* O(1) - Compare function. */
@@ -136,11 +116,6 @@ struct Point {
 	/* O(1) - Compare function. */
 	bool operator == (const Point &b) const {
 		return this->x == b.x and this->y == b.y;
-	}
-
-	/* O(1) - Compare function. */
-	bool operator != (const Point &b) const {
-		return !(*this == b);
 	}
 };
 
