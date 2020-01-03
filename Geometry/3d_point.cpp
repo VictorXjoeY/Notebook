@@ -1,12 +1,12 @@
 struct Point {
 	long long x, y, z;
 
-	// Vector sum.
+	/* O(1) - Vector sum. */
 	Point operator + (const Point &b) const {
 		return {this->x + b.x, this->y + b.y, this->z + b.z};
 	}
 
-	// Vector sum (cumulative).
+	/* O(1) - Vector sum (cumulative). */
 	Point &operator += (const Point &b) {
 		this->x += b.x;
 		this->y += b.y;
@@ -15,17 +15,17 @@ struct Point {
 		return *this;
 	}
 
-	// Vector subtraction.
-	Point operator - (const Point &b) const {
-		return {this->x - b.x, this->y - b.y, this->z - b.z};
-	}
-
-	// Negative vector.
+	/* O(1) - Negative vector. */
 	Point operator - () const {
 		return {-this->x, -this->y, -this->z};
 	}
 
-	// Vector subtraction (cumulative).
+	/* O(1) - Vector subtraction. */
+	Point operator - (const Point &b) const {
+		return {this->x - b.x, this->y - b.y, this->z - b.z};
+	}
+
+	/* O(1) - Vector subtraction (cumulative). */
 	Point &operator -= (const Point &b) {
 		this->x -= b.x;
 		this->y -= b.y;
@@ -34,12 +34,12 @@ struct Point {
 		return *this;
 	}
 
-	// Vector product by scalar.
+	/* O(1) - Vector product by scalar. */
 	Point operator * (long long a) {
 		return {this->x * a, this->y * a, this->z * a};
 	}
 
-	// Vector product by scalar (cumulative).
+	/* O(1) - Vector product by scalar (cumulative). */
 	Point &operator *= (long long a) {
 		this->x *= a;
 		this->y *= a;
@@ -48,12 +48,12 @@ struct Point {
 		return *this;
 	}
 
-	// Vector division by scalar.
+	/* O(1) - Vector division by scalar. */
 	Point operator / (long long a) {
 		return {this->x / a, this->y / a, this->z / a};
 	}
 
-	// Vector division by scalar (cumulative).
+	/* O(1) - Vector division by scalar (cumulative). */
 	Point &operator /= (long long a) {
 		this->x /= a;
 		this->y /= a;
@@ -62,17 +62,17 @@ struct Point {
 		return *this;
 	}
 
-	// Dot product.
+	/* O(1) - Dot product. */
 	long long operator * (const Point &b) const {
 		return this->x * b.x + this->y * b.y + this->z * b.z;
 	}
 
-	// Cross product.
+	/* O(1) - Cross product. */
 	Point operator ^ (const Point &b) const {
 		return {this->y * b.z - this->z * b.y, this->z * b.x - this->x * b.z, this->x * b.y - this->y * b.x};
 	}
 
-	// Cross product (cumulative).
+	/* O(1) - Cross product (cumulative). */
 	Point &operator ^= (const Point &b) {
 		long long new_x, new_y, new_z;
 
@@ -87,12 +87,12 @@ struct Point {
 		return *this;
 	}
 
-	// Squared norm.
+	/* O(1) - Squared norm. */
 	long long operator ! () const {
 		return this->x * this->x + this->y * this->y + this->z * this->z;
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator < (const Point &b) const {
 		if (this->x == b.x) {
 			if (this->y == b.y) {
@@ -105,30 +105,30 @@ struct Point {
 		return this->x < b.x;
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator > (const Point &b) const {
 		return b < *this;
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator == (const Point &b) const {
 		return !(*this < b) and !(*this > b);
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator != (const Point &b) const {
 		return !(*this == b);
 	}
 };
 
-// Overloading stream operator in order to print a point.
+/* O(1) - Overloading stream operator in order to print a point. */
 ostream& operator << (ostream& out, const Point &p) {
     out << "(" << p.x << ", " << p.y << ", " << p.z << ")";
  
     return out;
 }
  
-// Overloading stream operator in order to read a point.
+/* O(1) - Overloading stream operator in order to read a point. */
 istream& operator >> (istream& in, Point &p) {
     in >> p.x >> p.y >> p.z;
  

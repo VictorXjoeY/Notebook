@@ -89,7 +89,7 @@ struct Fraction {
 struct Point {
 	Fraction x, y;
 
-	// Cross product.
+	/* O(1) - Cross product. */
 	Fraction operator ^ (const Point &b) const {
 		return this->x * b.y - this->y * b.x;
 	}

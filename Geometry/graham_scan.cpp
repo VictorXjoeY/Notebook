@@ -1,16 +1,17 @@
 struct Point {
 	long long x, y;
 
-	// Vector subtraction.
+	/* O(1) - Vector subtraction. */
 	Point operator - (const Point &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
-	// Cross product.
+	/* O(1) - Cross product. */
 	long long operator ^ (const Point &b) const {
 		return this->x * b.y - this->y * b.x;
 	}
 
+	/* O(1) - Compare function. */
 	bool operator < (const Point &b) const {
 		if (this->x == b.x) {
 			return this->y < b.y;
@@ -19,6 +20,7 @@ struct Point {
 		return this->x < b.x;
 	}
 
+	/* O(1) - Compare function. */
 	bool operator == (const Point &b) const {
 		return this->x == b.x and this->y == b.y;
 	}

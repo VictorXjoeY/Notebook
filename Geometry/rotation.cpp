@@ -1,12 +1,12 @@
 struct Point {
 	double x, y;
 
-	// Vector sum.
+	/* O(1) - Vector sum. */
 	Point operator + (const Point &b) const {
 		return {this->x + b.x, this->y + b.y};
 	}
 
-	// Vector subtraction.
+	/* O(1) - Vector subtraction. */
 	Point operator - (const Point &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}

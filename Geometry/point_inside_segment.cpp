@@ -84,42 +84,42 @@ struct Fraction {
 struct Point {
 	Fraction x, y;
 
-	// Vector sum.
+	/* O(1) - Vector sum. */
 	Point operator + (const Point &b) const {
 		return {this->x + b.x, this->y + b.y};
 	}
 
-	// Vector subtraction.
+	/* O(1) - Vector subtraction. */
 	Point operator - (const Point &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
-	// Vector product by scalar.
+	/* O(1) - Vector product by scalar. */
 	Point operator * (Fraction a) {
 		return {this->x * a, this->y * a};
 	}
 
-	// Vector division by scalar.
+	/* O(1) - Vector division by scalar. */
 	Point operator / (Fraction a) {
 		return {this->x / a, this->y / a};
 	}
 
-	// Dot product.
+	/* O(1) - Dot product. */
 	Fraction operator * (const Point &b) const {
 		return (this->x * b.x) + (this->y * b.y);
 	}
 
-	// Cross product.
+	/* O(1) - Cross product. */
 	Fraction operator ^ (const Point &b) const {
 		return (this->x * b.y) - (this->y * b.x);
 	}
 
-	// Squared norm.
+	/* O(1) - Squared norm. */
 	Fraction operator ! () const {
 		return (this->x * this->x) + (this->y * this->y);
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator < (const Point &b) const {
 		if (this->x == b.x) {
 			return this->y < b.y;
@@ -128,12 +128,12 @@ struct Point {
 		return this->x < b.x;
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator == (const Point &b) const {
 		return this->x == b.x and this->y == b.y;
 	}
 
-	// Compare function.
+	/* O(1) - Compare function. */
 	bool operator != (const Point &b) const {
 		return !(*this == b);
 	}
