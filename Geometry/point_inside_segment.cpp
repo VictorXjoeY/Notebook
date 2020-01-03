@@ -13,19 +13,19 @@ struct Fraction {
 	}
 
 	/* O(Log(min(num, den))). */
-	Fraction(long long num, long long den) {
-		assert(den != 0);
+	Fraction(long long num_, long long den_) {
+		assert(den_ != 0);
 
-		long long g = abs(__gcd(num, den));
+		long long g = abs(__gcd(num_, den_));
 
-		if ((num >= 0 and den > 0) or (num < 0 and den < 0)) {
-			this->num = abs(num) / g;
+		if ((num_ >= 0 and den_ > 0) or (num_ < 0 and den_ < 0)) {
+			this->num = abs(num_) / g;
 		}
 		else{
-			this->num = -abs(num) / g;
+			this->num = -abs(num_) / g;
 		}
 		
-		this->den = abs(den) / g;
+		this->den = abs(den_) / g;
 	}
 
 	/* O(Log(min(num, den))). */
