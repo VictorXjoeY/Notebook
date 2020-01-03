@@ -100,11 +100,9 @@ struct Point {
 Fraction shoelace(const vector<Point> &p) {
 	Fraction ans = Fraction(0, 1);
 
-	for (int i = 0; i < p.size() - 1; i++) {
-		ans = ans + (p[i] ^ p[i + 1]);
+	for (int i = 0; i < p.size(); i++) {
+		ans = ans + (p[i] ^ p[(i + 1) % p.size()]);
 	}
-
-	ans = ans + (p.back() ^ p[0]);
 
 	// Absolute value.
 	if (ans.num < 0) {

@@ -30,11 +30,9 @@ struct Point {
 long long shoelace(const vector<Point> &p) {
 	long long ans = 0;
 
-	for (int i = 0; i < p.size() - 1; i++) {
-		ans += p[i] ^ p[i + 1];
+	for (int i = 0; i < p.size(); i++) {
+		ans += p[i] ^ p[(i + 1) % p.size()];
 	}
-
-	ans += p.back() ^ p[0];
 
 	return ans;
 }
