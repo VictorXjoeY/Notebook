@@ -178,7 +178,8 @@ int line_line_intersects(const Point &a, const Point &b, const Point &c, const P
 }
 
 /* O(1) - Returns the point of intersection between a line defined by AB and a line defined by CD.
-   You need to first guarantee that the lines have exactly 1 intersection point. */
+   You need to first guarantee that the lines have exactly 1 intersection point.
+   Caution with overflowing the Fractions because the numerator and the denominator of the intersection point will be of the order of x^4 and y^4. */
 Point line_line_intersection(const Point &a, const Point &b, const Point &c, const Point &d) {
 	assert(line_line_intersects(a, b, c, d) == 1); // Guarantees that it has exactly 1 intersection point.
 
