@@ -7,6 +7,9 @@ using namespace std;
 
 // Be careful when solving an inequation such as x >= a / b. To get ceil(a / b) use the code floor_ceil.cpp under "Number Theory" folder.
 
+// Caution when constructing objects using brace-init-lists as this will also call the constructor if there's one with matching parameters.
+// This means that Fraction f = {num, den} will behave the same way as Fraction f = Fraction(num, den).
+
 // Trie is the most beautiful Data Structure. It is a more generic version of the Dynamic (Implicit) Segment Tree, since it doesn't need to be binary.
 // The Trie can behave just like a Segment Tree if you insert the value a[i] at the node that represents position i (following the path given by the decomposition of i in binary).
 
