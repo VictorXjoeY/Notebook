@@ -110,13 +110,12 @@ string to_string(const Fraction &f) {
 	return to_string(f.num) + "/" + to_string(f.den);
 }
 
-template <class T>
 struct Point {
-	T x, y;
+	Fraction x, y;
 
 	/* O(1) - Cross product. */
-	T operator ^ (const Point &b) const {
-		return (this->x * b.y) - (this->y * b.x);
+	Fraction operator ^ (const Point &b) const {
+		return this->x * b.y - this->y * b.x;
 	}
 };
 
