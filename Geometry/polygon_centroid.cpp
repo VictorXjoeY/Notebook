@@ -118,13 +118,10 @@ Point centroid(const vector<Point> &p) {
 	Point c = {Fraction(0, 1), Fraction(0, 1)};
 	Fraction a = shoelace(p);
 
-	for (int i = 0; i < p.size() - 1; i++) {
-		c.x = c.x + (p[i].x + p[i + 1].x) * (p[i] ^ p[i + 1]);
-		c.y = c.y + (p[i].y + p[i + 1].y) * (p[i] ^ p[i + 1]);
+	for (int i = 0; i < p.size(); i++) {
+		c.x = c.x + (p[i].x + p[(i + 1) % p.size()].x) * (p[i] ^ p[(i + 1) % p.size()]);
+		c.y = c.y + (p[i].y + p[(i + 1) % p.size()].y) * (p[i] ^ p[(i + 1) % p.size()]);
 	}
-
-	c.x = c.x + (p.back().x + p[0].x) * (p.back() ^ p[0]);
-	c.y = c.y + (p.back().y + p[0].y) * (p.back() ^ p[0]);
 
 	a = shoelace(p);
 	c.x = c.x / (Fraction(6, 1) * a);
