@@ -12,25 +12,34 @@ struct Fraction {
 		this->den = 1;
 	}
 
+	/* O(1). */
+	Fraction(long long n) {
+		this->num = n;
+		this->den = 1;
+	}
+
 	/* O(Log(min(num, den))). */
-	Fraction(long long num, long long den) {
-		assert(den != 0);
+	Fraction(long long num_, long long den_) {
+		assert(den_ != 0);
 
-		long long g = abs(__gcd(num, den));
+		long long g = abs(__gcd(num_, den_));
 
-		if ((num >= 0 and den > 0) or (num < 0 and den < 0)) {
-			this->num = abs(num) / g;
+		if ((num_ >= 0 and den_ > 0) or (num_ < 0 and den_ < 0)) {
+			this->num = abs(num_) / g;
 		}
 		else{
-			this->num = -abs(num) / g;
+			this->num = -abs(num_) / g;
 		}
 		
-		this->den = abs(den) / g;
+		this->den = abs(den_) / g;
 	}
 
 	/* O(1). */
-	double to_double() const {
-		return this->num / (double)this->den;
+	Fraction operator - () const {
+		Fraction f;
+		f.num = -this->num;
+		f.den = this->den;
+		return f;
 	}
 
 	/* O(Log(min(num, den))). */
@@ -85,3 +94,13 @@ struct Fraction {
 		return !(*this == f);
 	}
 };
+
+/* O(1). */
+double to_double(const Fraction &f) {
+	return f.num / (double)f.den;
+}
+
+/* O(1) - String conversion. */
+string to_string(const Fraction &f) {
+	return to_string(f.num) + "/" + to_string(f.den);
+}
