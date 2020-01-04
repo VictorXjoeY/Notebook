@@ -1,9 +1,6 @@
 /* The time complexity of the division and construction can be exchanged by the time
 complexity of the == comparison operator by storing both p and q modulo m instead of
 just storing x = p * q^(-1) modulo m. */
-
-// Every individual fraction has to have a numerator and a denominator lesser than these mods.
-constexpr long long m[2] = {1000000007, 1000000009};
  
 /* O(Log(B)). */
 long long fast_exp(long long a, long long b, long long m) {
@@ -26,7 +23,8 @@ long long fast_exp(long long a, long long b, long long m) {
 	return ans;
 }
 
-struct Fraction{
+struct Fraction {
+	static constexpr long long m[2] = {1000000007, 1000000009}; // Every individual fraction has to have a numerator and a denominator lesser than these mods.
 	long long x[2]; // Stores x = p * q^(-1) (mod m) with x >= 0
  
  	/* O(1). */
@@ -40,8 +38,19 @@ struct Fraction{
 			this->x[k] = ((p * fast_exp(q, m[k] - 2, m[k])) % m[k] + m[k]) % m[k];
 		}
 	}
+
+	/* O(1). */
+	Fraction operator - () const {
+		Fraction f;
+
+		for (int k = 0; k < 2; k++) {
+			f.x[k] = (-this->x[k] + m[k]) % m[k];
+		}
+
+		return f;
+	}
  
- 	/* O(1) - Fraction addition. */
+ 	/* O(1). */
 	Fraction operator + (const Fraction &f) const {
 		Fraction ans;
  
@@ -52,7 +61,7 @@ struct Fraction{
 		return ans;
 	}
  
- 	/* O(1) - Fraction subtraction. */
+ 	/* O(1). */
 	Fraction operator - (const Fraction &f) const {
 		Fraction ans;
  
@@ -63,7 +72,7 @@ struct Fraction{
 		return ans;
 	}
  
- 	/* O(1) - Fraction multiplication. */
+ 	/* O(1). */
 	Fraction operator * (const Fraction &f) const {
 		Fraction ans;
  
@@ -74,7 +83,7 @@ struct Fraction{
 		return ans;
 	}
  
- 	/* O(Log(M)) - Fraction division. */
+ 	/* O(Log(M)). */
 	Fraction operator / (const Fraction &f) const {
 		Fraction ans;
  
@@ -96,8 +105,11 @@ struct Fraction{
 		return true;
 	}
 
- 	/* O(1) - Checks if two fraction are not equal based on their hash values. */
+ 	/* O(1) - Checks if two fraction are different based on their hash values. */
  	bool operator != (const Fraction &f) const {
  		return !((*this) == f);
  	}
 };
+
+// Just so it compiles in C++11.
+constexpr long long Fraction::m[];
