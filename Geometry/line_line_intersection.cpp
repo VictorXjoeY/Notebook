@@ -96,6 +96,11 @@ struct Fraction {
 };
 
 /* O(1). */
+Fraction abs(const Fraction &f) {
+	return f < Fraction(0) ? -f : f;
+}
+
+/* O(1). */
 double to_double(const Fraction &f) {
 	return f.num / (double)f.den;
 }

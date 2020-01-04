@@ -96,6 +96,11 @@ struct Fraction {
 };
 
 /* O(1). */
+Fraction abs(const Fraction &f) {
+	return f < Fraction(0) ? -f : f;
+}
+
+/* O(1). */
 double to_double(const Fraction &f) {
 	return f.num / (double)f.den;
 }
@@ -105,12 +110,13 @@ string to_string(const Fraction &f) {
 	return to_string(f.num) + "/" + to_string(f.den);
 }
 
+template <class T>
 struct Point {
-	Fraction x, y;
+	T x, y;
 
 	/* O(1) - Cross product. */
-	Fraction operator ^ (const Point &b) const {
-		return this->x * b.y - this->y * b.x;
+	T operator ^ (const Point &b) const {
+		return (this->x * b.y) - (this->y * b.x);
 	}
 };
 
