@@ -93,16 +93,16 @@ struct Fraction {
 	bool operator != (const Fraction &f) const {
 		return !(*this == f);
 	}
+
+	/* O(1). */
+	operator double() {
+		return this->num / static_cast<double>(this->den);
+	}
 };
 
 /* O(1). */
 Fraction abs(const Fraction &f) {
 	return f < Fraction(0) ? -f : f;
-}
-
-/* O(1). */
-double to_double(const Fraction &f) {
-	return f.num / (double)f.den;
 }
 
 /* O(1) - String conversion. */
