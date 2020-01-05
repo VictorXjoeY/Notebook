@@ -1,4 +1,4 @@
-template<class T>
+template <class T>
 struct Point {
 	T x, y;
 
@@ -19,20 +19,20 @@ struct Point {
 };
 
 /* O(1) - Returns true if the point Q is inside the line defined by AB. */
-template<class T>
+template <class T>
 bool point_inside_line(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
 	return ((b - a) ^ (q - a)) == static_cast<T>(0);
 }
 
 /* O(1) - Returns true if the point Q is inside the segment AB. */
-template<class T>
+template <class T>
 bool point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
 	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= static_cast<T>(0) and ((a - b) * (q - b)) >= static_cast<T>(0);
 }
 
 /* O(N) - Computes twice the signed area of a convex or non-convex polygon, being it simple or self-intersecting.
    Expects a polygon either in clockwise or in counter-clockwise order. */
-template<class T>
+template <class T>
 T shoelace(const vector<Point<T>> &p) {
 	T ans = 0;
 
@@ -44,14 +44,14 @@ T shoelace(const vector<Point<T>> &p) {
 }
 
 /* O(N) - Returns true if the points of the given simple polygon are in clockwise order. */ 
-template<class T>
+template <class T>
 bool is_clockwise(const vector<Point<T>> &p) {
 	return shoelace(p) < static_cast<T>(0);
 }
 
 /* O(N) - Returns true if the point Q is inside the simple polygon P or on one of its edges.
    Expects a polygon either in clockwise or in counter-clockwise order. */
-template<class T>
+template <class T>
 bool point_inside_polygon(const Point<T> &q, vector<Point<T>> p) {
 	// Making it counter-clockwise.
 	if (is_clockwise(p)) {
