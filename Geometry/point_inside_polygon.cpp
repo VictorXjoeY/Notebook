@@ -73,20 +73,13 @@ bool point_inside_polygon(const Point<T> &q, vector<Point<T>> p) {
 
 	// Tracing a ray to the right.
 	for (int i = 0; i < p.size() - 1; i++) {
-		int a = i;
-		int b = i + 1;
-
-		// Making p[a].y <= p[b].y
-		if (p[a].y > p[b].y) {
-			swap(a, b);
-		}
-
-		// If p[a] has y lesser than q.y, p[b] has y greater than q.y and (q, p[a], p[b]) is a left turn, then the ray intersects this edge.
-		if (p[a].y < q.y and q.y < p[b].y and ((p[a] - q) ^ (p[b] - q)) > static_cast<T>(0)) {
-			if (a < b) { // Edge going up.
+		if (p[i].y <= q.y) { // Candidate for upward edge.
+			if (q.y < p[i + 1].y and ((p[i] - q) ^ (p[i + 1] - q)) > static_cast<T>(0)) { // Valid upward edge and to the right of Q.
 				wn++;
 			}
-			else { // Edge going down.
+		}
+		else { // Candidate for downward edge.
+			if (q.y >= p[i + 1].y and ((p[i] - q) ^ (p[i + 1] - q)) < static_cast<T>(0)) { // Valid downward edge and to the right of Q.
 				wn--;
 			}
 		}
