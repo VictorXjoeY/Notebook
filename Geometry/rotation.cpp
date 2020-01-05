@@ -12,9 +12,9 @@ struct Point {
 	}
 };
 
-/* O(1) - Rotates vector v by theta radians. */
-Point rotate(const Point &v, double theta) {
-	return {v.x * cos(theta) - v.y * sin(theta), v.x * sin(theta) + v.y * cos(theta)};
+/* O(1) - Rotates vector p by theta radians. */
+Point rotate(const Point &p, double theta) {
+	return {p.x * cos(theta) - p.y * sin(theta), p.x * sin(theta) + p.y * cos(theta)};
 }
 
 /* O(1) - Rotates points p around pivot by theta radians. */
