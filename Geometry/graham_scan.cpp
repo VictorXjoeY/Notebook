@@ -1,18 +1,19 @@
+template <class T>
 struct Point {
-	long long x, y;
+	T x, y;
 
 	/* O(1) - Vector subtraction. */
-	Point operator - (const Point &b) const {
+	Point<T> operator - (const Point<T> &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
 	/* O(1) - Cross product. */
-	long long operator ^ (const Point &b) const {
-		return this->x * b.y - this->y * b.x;
+	T operator ^ (const Point<T> &b) const {
+		return (this->x * b.y) - (this->y * b.x);
 	}
 
 	/* O(1) - Compare function. */
-	bool operator < (const Point &b) const {
+	bool operator < (const Point<T> &b) const {
 		if (this->x == b.x) {
 			return this->y < b.y;
 		}
@@ -21,37 +22,36 @@ struct Point {
 	}
 
 	/* O(1) - Compare function. */
-	bool operator == (const Point &b) const {
+	bool operator == (const Point<T> &b) const {
 		return this->x == b.x and this->y == b.y;
 	}
 };
 
-Point pivot;
-
-/* O(1) - Compares points A and B using their angle relative to the Pivot. */
-bool comp(const Point &a, const Point &b) {
-	// Same angle. Closest point first.
-	if (((a - pivot) ^ (b - pivot)) == 0) {
-		return a < b;
-	}
-
-	// True if PA -> PB is a left turn.
-	return ((a - pivot) ^ (b - pivot)) > 0;
-}
-
 /* O(N * Log(N)) - Sorts the points in a convex polygon in counter-clockwise order. */
-void sort_convex_polygon(vector<Point> &p) {
+template <class T>
+void sort_convex_polygon(vector<Point<T>> &p) {
 	int i;
 
 	// Retrieving a pivot point.
-	pivot = *min_element(p.begin(), p.end());
+	Point<T> pivot = *min_element(p.begin(), p.end());
+
+	/* O(1) - Compares points A and B using their angle relative to the Pivot. */
+	function<bool(const Point<T>, const Point<T>)> comp = [&pivot] (const Point<T> &a, const Point<T> &b) {
+		// Same angle. Closest point first.
+		if (((a - pivot) ^ (b - pivot)) == static_cast<T>(0)) {
+			return a < b;
+		}
+
+		// True if PA -> PB is a left turn.
+		return ((a - pivot) ^ (b - pivot)) > static_cast<T>(0);
+	};
 
 	// Sorting according to angles relative to the pivot.
 	sort(p.begin(), p.end(), comp);
 
 	// Reversing last collinear part.
 	for (i = (int)p.size() - 2; i >= 1; i--) {
-		if (((p.back() - pivot) ^ (p[i] - pivot)) != 0) {
+		if (((p.back() - pivot) ^ (p[i] - pivot)) != static_cast<T>(0)) {
 			break;
 		}
 	}
@@ -60,9 +60,10 @@ void sort_convex_polygon(vector<Point> &p) {
 }
 
 /* O(N * Log(N)) - Returns the Convex Hull of a set of points. Expects at least one point. */
-vector<Point> graham_scan(vector<Point> p) {
-	vector<Point> ch; // "Stack"
-	Point a, b, c;
+template <class T>
+vector<Point<T>> graham_scan(vector<Point<T>> p) {
+	vector<Point<T>> ch; // "Stack".
+	Point<T> a, b, c;
 
 	// Sorting and removing repeated points.
 	sort_convex_polygon(p);
@@ -75,14 +76,14 @@ vector<Point> graham_scan(vector<Point> p) {
 	}
 
 	// Convex Hull of only collinear points.
-	if (((p[1] - p[0]) ^ (p.back() - p[0])) == 0) {
+	if (((p[1] - p[0]) ^ (p.back() - p[0])) == static_cast<T>(0)) {
 		ch.push_back(p[0]);
 		ch.push_back(p[1]);
 		return ch;
 	}
 
 	// Pushing an extra Pivot as a sentinel.
-	p.push_back(pivot);
+	p.push_back(p[0]);
 
 	// Pushing first two points.
 	ch.push_back(p[0]); // Pivot.
@@ -101,7 +102,7 @@ vector<Point> graham_scan(vector<Point> p) {
 			ch.pop_back();
 
 			// If it is a left turn, the three points belong to the current Convex Hull.
-			if (((b - a) ^ (c - a)) > 0) {
+			if (((b - a) ^ (c - a)) > static_cast<T>(0)) {
 				// Pushing back A and B.
 				ch.push_back(a);
 				ch.push_back(b);

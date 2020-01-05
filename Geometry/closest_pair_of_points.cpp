@@ -1,35 +1,38 @@
-constexpr long long INF = 0x3f3f3f3f3f3f3f3fll;
-
+template <class T>
 struct Point {
-	long long x, y;
+	T x, y;
 	int idx; 
 };
 
 /* O(1). */
-bool comp_x(const Point &a, const Point &b) {
+template <class T>
+bool comp_x(const Point<T> &a, const Point<T> &b) {
 	return a.x < b.x;
 }
 
 /* O(1). */
-bool comp_y(const Point &a, const Point &b) {
+template <class T>
+bool comp_y(const Point<T> &a, const Point<T> &b) {
 	return a.y < b.y;
 }
 
 /* O(1). */
-long long dist(const Point &a, const Point &b) {
+template <class T>
+T dist(const Point<T> &a, const Point<T> &b) {
 	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
 /* O(10 * N * Log(N)) - Recursively finds the closest pair of points and their distance. */
-tuple<int, int, long long> closest_pair_of_points(int l, int r, const vector<Point> &px, vector<Point> &py) {
+template <class T>
+tuple<int, int, T> closest_pair_of_points(int l, int r, const vector<Point<T>> &px, vector<Point<T>> &py) {
 	int al, bl, ar, br, a, b, m = (l + r) / 2;
-	vector<Point> pyl, pyr, strip;
-	long long dl, dr, d;
+	vector<Point<T>> pyl, pyr, strip;
+	T dl, dr, d;
 
 	// Base case.
 	if (l == r) {
 		py = {px[l]};
-		return {px[l].idx, px[l].idx, INF};
+		return {px[l].idx, px[l].idx, numeric_limits<long long>::max()}; // Returning (l, l, INF).
 	}
 
 	// Solving recursively.
@@ -38,7 +41,7 @@ tuple<int, int, long long> closest_pair_of_points(int l, int r, const vector<Poi
 
 	// Merging the points sorted by y.
 	py.resize(pyl.size() + pyr.size());
-	merge(pyl.begin(), pyl.end(), pyr.begin(), pyr.end(), py.begin(), comp_y);
+	merge(pyl.begin(), pyl.end(), pyr.begin(), pyr.end(), py.begin(), comp_y<T>);
 
 	// Initializing closest pair of points for the current range.
 	if (dl < dr) {
@@ -51,7 +54,7 @@ tuple<int, int, long long> closest_pair_of_points(int l, int r, const vector<Poi
 	// Retrieving the strip of relevant points.
 	for (int i = 0; i < py.size(); i++) {
 		// If py[i] has at most d distance from the cut.
-		if ((py[i].x - px[m].x) * (py[i].x - px[m].x) <= d) {
+		if (((py[i].x - px[m].x) * (py[i].x - px[m].x)) <= d) {
 			strip.push_back(py[i]);
 		}
 	}
@@ -72,11 +75,12 @@ tuple<int, int, long long> closest_pair_of_points(int l, int r, const vector<Poi
 }
 
 /* O(10 * N * Log(N)) - Returns (a, b, d) such that a and b are the indices of the closest points and d is their distance. */
-tuple<int, int, long long> closest_pair_of_points(const vector<Point> &p) {
-	vector<Point> px, py;
+template <class T>
+tuple<int, int, T> closest_pair_of_points(const vector<Point<T>> &p) {
+	vector<Point<T>> px, py;
 
 	px = p;
-	sort(px.begin(), px.end(), comp_x);
+	sort(px.begin(), px.end(), comp_x<T>);
 
 	return closest_pair_of_points(0, p.size() - 1, px, py);
 }

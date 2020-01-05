@@ -3,27 +3,27 @@ struct Point {
 	T x, y;
 
 	/* O(1) - Negative vector. */
-	Point operator - () const {
+	Point<T> operator - () const {
 		return {-this->x, -this->y};
 	}
 	
 	/* O(1) - Vector sum. */
-	Point operator + (const Point &b) const {
+	Point<T> operator + (const Point<T> &b) const {
 		return {this->x + b.x, this->y + b.y};
 	}
 
 	/* O(1) - Vector subtraction. */
-	Point operator - (const Point &b) const {
+	Point<T> operator - (const Point<T> &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
 	/* O(1) - Dot product. */
-	T operator * (const Point &b) const {
+	T operator * (const Point<T> &b) const {
 		return (this->x * b.x) + (this->y * b.y);
 	}
 
 	/* O(1) - Cross product. */
-	T operator ^ (const Point &b) const {
+	T operator ^ (const Point<T> &b) const {
 		return (this->x * b.y) - (this->y * b.x);
 	}
 
@@ -33,7 +33,7 @@ struct Point {
 	}
 
 	/* O(1) - Lesser than. */
-	bool operator < (const Point &b) const {
+	bool operator < (const Point<T> &b) const {
 		if (this->x == b.x) {
 			return this->y < b.y;
 		}
@@ -42,17 +42,17 @@ struct Point {
 	}
 
 	/* O(1) - Greater than. */
-	bool operator > (const Point &b) const {
+	bool operator > (const Point<T> &b) const {
 		return b < *this;
 	}
 
 	/* O(1) - Equal. */
-	bool operator == (const Point &b) const {
+	bool operator == (const Point<T> &b) const {
 		return !(*this < b) and !(*this > b);
 	}
 
 	/* O(1) - Different. */
-	bool operator != (const Point &b) const {
+	bool operator != (const Point<T> &b) const {
 		return !(*this == b);
 	}
 };

@@ -1,51 +1,62 @@
+template <class T>
 struct Point {
-	long long x, y;
+	T x, y;
 
 	/* O(1) - Vector subtraction. */
-	Point operator - (const Point &b) const {
+	Point<T> operator - (const Point<T> &b) const {
 		return {this->x - b.x, this->y - b.y};
 	}
 
 	/* O(1) - Dot product. */
-	long long operator * (const Point &b) const {
-		return this->x * b.x + this->y * b.y;
+	T operator * (const Point<T> &b) const {
+		return (this->x * b.x) + (this->y * b.y);
 	}
 
 	/* O(1) - Cross product. */
-	long long operator ^ (const Point &b) const {
-		return this->x * b.y - this->y * b.x;
+	T operator ^ (const Point<T> &b) const {
+		return (this->x * b.y) - (this->y * b.x);
 	}
 };
 
 /* O(N) - Computes twice the signed area of a convex or non-convex polygon, being it simple or self-intersecting.
    Expects a polygon either in clockwise or in counter-clockwise order. */
-long long shoelace(const vector<Point> &p) {
-	long long ans = 0;
+template <class T>
+T shoelace(const vector<Point<T>> &p) {
+	T ans = static_cast<T>(0);
 
 	for (int i = 0; i < p.size(); i++) {
-		ans += p[i] ^ p[(i + 1) % p.size()];
+		ans = ans + (p[i] ^ p[(i + 1) % p.size()]);
 	}
 
 	return ans;
 }
 
 /* O(N) - Returns true if the points of the given simple polygon are in clockwise order. */ 
-bool is_clockwise(const vector<Point> &p) {
-	return shoelace(p) < 0;
+template <class T>
+bool is_clockwise(const vector<Point<T>> &p) {
+	return shoelace(p) < static_cast<T>(0);
 }
 
 /* O(1) - Returns true if point Q is inside triangle ABC or on one of its edges. */ 
-bool point_inside_triangle(const Point &q, const Point &a, const Point &b, const Point &c) {
-	return (((b - a) ^ (q - a)) >= 0 and ((c - b) ^ (q - b)) >= 0 and ((a - c) ^ (q - c)) >= 0) or (((b - a) ^ (q - a)) <= 0 and ((c - b) ^ (q - b)) <= 0 and ((a - c) ^ (q - c)) <= 0);
+template <class T>
+bool point_inside_triangle(const Point<T> &q, const Point<T> &a, const Point<T> &b, const Point<T> &c) {
+	if (((b - a) ^ (c - a)) < static_cast<T>(0)) { // Clockwise.
+		return ((b - a) ^ (q - a)) <= static_cast<T>(0) and ((c - b) ^ (q - b)) <= static_cast<T>(0) and ((a - c) ^ (q - c)) <= static_cast<T>(0);
+	}
+
+	// Counter-clockwise.
+	return ((b - a) ^ (q - a)) >= static_cast<T>(0) and ((c - b) ^ (q - b)) >= static_cast<T>(0) and ((a - c) ^ (q - c)) >= static_cast<T>(0);
 }
 
 /* O(1) - Returns true if p[i] is a convex vertex. */
-bool is_convex(const vector<Point> &p, const vector<int> &l, const vector<int> &r, int i) {
-	return ((p[i] - p[l[i]]) ^ (p[r[i]] - p[l[i]])) > 0;
+template <class T>
+bool is_convex(const vector<Point<T>> &p, const vector<int> &l, const vector<int> &r, int i) {
+	return ((p[i] - p[l[i]]) ^ (p[r[i]] - p[l[i]])) > static_cast<T>(0);
 }
 
 /* O(1) - Returns true if p[b] is an ear. */
-bool is_ear(const vector<Point> &p, const vector<int> &l, const vector<int> &r, int i) {
+template <class T>
+bool is_ear(const vector<Point<T>> &p, const vector<int> &l, const vector<int> &r, int i) {
 	// Ear has to be convex.
 	if (!is_convex(p, l, r, i)) {
 		return false;
@@ -63,8 +74,9 @@ bool is_ear(const vector<Point> &p, const vector<int> &l, const vector<int> &r, 
 }
 
 /* O(N^2) - Returns a triangulation of the given simple polygon. */
-vector<vector<Point>> triangulation(vector<Point> p) {
-	vector<vector<Point>> ans;
+template <class T>
+vector<vector<Point<T>>> ear_clipping(vector<Point<T>> p) {
+	vector<vector<Point<T>>> ans;
 	vector<bool> clipped;
 	vector<int> l, r;
 	queue<int> q;
