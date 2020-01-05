@@ -1,7 +1,7 @@
-constexpr double INF = 1e18;
+constexpr long long INF = 0x3f3f3f3f3f3f3f3fll;
 
 struct Point {
-	double x, y;
+	long long x, y;
 	int idx; 
 };
 
@@ -16,15 +16,15 @@ bool comp_y(const Point &a, const Point &b) {
 }
 
 /* O(1). */
-double dist(const Point &a, const Point &b) {
-	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+long long dist(const Point &a, const Point &b) {
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
 /* O(10 * N * Log(N)) - Recursively finds the closest pair of points and their distance. */
-tuple<int, int, double> closest_pair_of_points(int l, int r, const vector<Point> &px, vector<Point> &py) {
+tuple<int, int, long long> closest_pair_of_points(int l, int r, const vector<Point> &px, vector<Point> &py) {
 	int al, bl, ar, br, a, b, m = (l + r) / 2;
 	vector<Point> pyl, pyr, strip;
-	double dl, dr, d;
+	long long dl, dr, d;
 
 	// Base case.
 	if (l == r) {
@@ -50,7 +50,8 @@ tuple<int, int, double> closest_pair_of_points(int l, int r, const vector<Point>
 
 	// Retrieving the strip of relevant points.
 	for (int i = 0; i < py.size(); i++) {
-		if (abs(py[i].x - px[m].x) <= d) {
+		// If py[i] has at most d distance from the cut.
+		if ((py[i].x - px[m].x) * (py[i].x - px[m].x) <= d) {
 			strip.push_back(py[i]);
 		}
 	}
@@ -71,7 +72,7 @@ tuple<int, int, double> closest_pair_of_points(int l, int r, const vector<Point>
 }
 
 /* O(10 * N * Log(N)) - Returns (a, b, d) such that a and b are the indices of the closest points and d is their distance. */
-tuple<int, int, double> closest_pair_of_points(const vector<Point> &p) {
+tuple<int, int, long long> closest_pair_of_points(const vector<Point> &p) {
 	vector<Point> px, py;
 
 	px = p;
