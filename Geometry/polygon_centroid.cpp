@@ -8,7 +8,7 @@ struct Point {
 	}
 };
 
-/* O(N) - Computes twice the area of a convex or non-convex polygon, being it simple or self-intersecting.
+/* O(N) - Computes twice the signed area of a convex or non-convex polygon, being it simple or self-intersecting.
    Expects a polygon either in clockwise or in counter-clockwise order. */
 template <class T>
 T shoelace(const vector<Point<T>> &p) {
@@ -18,11 +18,12 @@ T shoelace(const vector<Point<T>> &p) {
 		ans = ans + (p[i] ^ p[(i + 1) % p.size()]);
 	}
 
-	return abs(ans);
+	return ans;
 }
 
 /* O(N) - Computes the center of mass of a simple polygon.
-   Caution with overflowing Fractions because the numerator is of the order of x^3 and y^3. */
+   Caution with overflowing Fractions because the numerator is of the order of x^3 and y^3.
+   Expects a polygon either in clockwise or in counter-clockwise order. */
 template <class T>
 Point<T> centroid(const vector<Point<T>> &p) {
 	Point<T> c = {static_cast<T>(0), static_cast<T>(0)};
