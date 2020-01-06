@@ -68,40 +68,19 @@ void init(int n) {
 /* | A(n) |   | aa ab ac |   | A(n - 1) |                                      */
 /* | B(n) | = | ba bb bc | * | B(n - 1) |                                      */
 /* | C(n) |   | ca cb cc |   | C(n - 1) |                                      */
-long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, long long n, long long m) {
-	vector<vector<long long>> f;
-
+long long solve(vector<vector<long long>> mat, const vector<vector<long long>> &base, long long n, long long m) {
 	// Initializing Identity matrix.
 	init(mat.size());
 
 	// Matrix Exponentiation.
-	mat = matrix_exp(mat, n, m);
-	f = matrix_mul(mat, base, m);
+	vector<vector<long long>> a = matrix_exp(mat, n, m);
+	vector<vector<long long>> f = matrix_mul(a, base, m);
 
 	// Returning the last element (either F(n) or C(n)).
 	return f[mat.size() - 1][0];
 }
 
-
 /* O(Log(N)). */
-long long fibonacci(long long n) {
-	vector<vector<long long>> mat, base;
-
-	// Filling Fibonacci matrix.
-	mat.resize(2);
-	mat[0].resize(2);
-	mat[1].resize(2);
-	mat[0][0] = 1;
-	mat[0][1] = 1;
-	mat[1][0] = 1;
-	mat[1][1] = 0;
-
-	// Filling base case.
-	base.resize(2);
-	base[0].resize(1);
-	base[1].resize(1);
-	base[0][0] = 1;
-	base[1][0] = 0;
-
-	return solve(mat, base, n);
+long long fibonacci(long long n, long long m) {
+	return solve({{1, 1}, {1, 0}}, {{1}, {0}}, n, m);
 }

@@ -68,15 +68,13 @@ void init(int n) {
 /* | A(n) |   | aa ab ac |   | A(n - 1) |                                      */
 /* | B(n) | = | ba bb bc | * | B(n - 1) |                                      */
 /* | C(n) |   | ca cb cc |   | C(n - 1) |                                      */
-long long solve(vector<vector<long long>> mat, vector<vector<long long>> base, long long n, long long m) {
-	vector<vector<long long>> f;
-
+long long solve(vector<vector<long long>> mat, const vector<vector<long long>> &base, long long n, long long m) {
 	// Initializing Identity matrix.
 	init(mat.size());
 
 	// Matrix Exponentiation.
-	mat = matrix_exp(mat, n, m);
-	f = matrix_mul(mat, base, m);
+	vector<vector<long long>> a = matrix_exp(mat, n, m);
+	vector<vector<long long>> f = matrix_mul(a, base, m);
 
 	// Returning the last element (either F(n) or C(n)).
 	return f[mat.size() - 1][0];
