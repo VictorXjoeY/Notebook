@@ -2,10 +2,7 @@ vector<vector<long long>> identity;
 
 /* O(N^3). */
 vector<vector<long long>> matrix_mul(const vector<vector<long long>> &A, const vector<vector<long long>> &B, long long m) {
-	vector<vector<long long>> C;
-
-	// C will have the same number of rows as A.
-	C.resize(A.size());
+	vector<vector<long long>> C(A.size()); // C will have the same number of rows as A.
 
 	// For each row of C.
 	for (int i = 0; i < C.size(); i++) {
