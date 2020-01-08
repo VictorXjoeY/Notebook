@@ -22,7 +22,7 @@ T dist(const Point<T> &a, const Point<T> &b) {
 	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
-/* O(10 * N * Log(N)) - Recursively finds the closest pair of points and their distance. */
+/* O(10 * N * Log(N)) - Recursively finds the closest pair of points and their squared distance. */
 template <class T>
 tuple<int, int, T> closest_pair_of_points(int l, int r, const vector<Point<T>> &px, vector<Point<T>> &py) {
 	int al, bl, ar, br, a, b, m = (l + r) / 2;
