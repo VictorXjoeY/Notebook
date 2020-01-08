@@ -32,7 +32,7 @@ struct Point {
 	}
 };
 
-/* O(N * Log(N)) - Sorts the points in a convex polygon in counter-clockwise order. */
+/* O(N * Log(N)) - Sorts the points in an almost convex polygon in counter-clockwise order. */
 template <class T>
 void sort_convex_polygon(vector<Point<T>> &p) {
 	int i;

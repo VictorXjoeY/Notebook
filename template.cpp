@@ -10,6 +10,9 @@ using namespace std;
 // Caution when constructing objects using brace-init-lists as this will also call the constructor if there's one with matching parameters.
 // This means that Fraction f = {num, den} will behave the same way as Fraction f = Fraction(num, den).
 
+// A convex polygon is a polygon in which all its interior angles are less than 180 degrees.
+// An almost convex polygon is a polygon in which all its interior angles are less or equal than 180 degrees.
+
 // Trie is the most beautiful Data Structure. It is a more generic version of the Dynamic (Implicit) Segment Tree, since it doesn't need to be binary.
 // The Trie can behave just like a Segment Tree if you insert the value a[i] at the node that represents position i (following the path given by the decomposition of i in binary).
 
