@@ -150,16 +150,21 @@ bool point_inside_line(const Point<T> &q, const Point<T> &a, const Point<T> &b) 
 	return ((b - a) ^ (q - a)) == static_cast<T>(0);
 }
 
-/* O(1) - Returns true if the point Q is inside the segment AB. */
+/* O(1) - Returns -1 if Q is inside the segment AB, 0 if on a vertex and 1 if outside of the segment. */
 template <class T>
-bool point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+int point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	// On a vertex.
+	if (q == a or q == b) {
+		return 0;
+	}
+
 	// Degenerate case.
 	if (a == b) {
-		return q == a;
+		return 1;
 	}
 
 	// General case.
-	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= static_cast<T>(0) and ((a - b) * (q - b)) >= static_cast<T>(0);
+	return point_inside_line(q, a, b) and ((b - a) * (q - a)) > static_cast<T>(0) and ((a - b) * (q - b)) > static_cast<T>(0) ? -1 : 1;
 }
 
 /* O(1) - Returns 0 if the lines don't intersect. Returns 1 if the lines intersect at 1 point. Returns 2 if the lines are the same. */
@@ -239,7 +244,7 @@ vector<Point> segment_segment_intersection(const Point &a, const Point &b, const
 		Point ans = line_line_intersection(a, b, c, d);
 
 		// If the intersection of the two lines is inside the two segments.
-		if (point_inside_segment(ans, a, b) and point_inside_segment(ans, c, d)) {
+		if (point_inside_segment(ans, a, b) <= 0 and point_inside_segment(ans, c, d) <= 0) {
 			return {ans};
 		}
 
@@ -249,19 +254,19 @@ vector<Point> segment_segment_intersection(const Point &a, const Point &b, const
 	// Both segments are in the same line.
 	vector<Point> ans;
 	
-	if (point_inside_segment(a, c, d)) {
+	if (point_inside_segment(a, c, d) <= 0) {
 		ans.push_back(a);
 	}
 
-	if (point_inside_segment(b, c, d)) {
+	if (point_inside_segment(b, c, d) <= 0) {
 		ans.push_back(b);
 	}
 
-	if (point_inside_segment(c, a, b)) {
+	if (point_inside_segment(c, a, b) <= 0) {
 		ans.push_back(c);
 	}
 
-	if (point_inside_segment(d, a, b)) {
+	if (point_inside_segment(d, a, b) <= 0) {
 		ans.push_back(d);
 	}
 

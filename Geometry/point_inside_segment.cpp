@@ -30,14 +30,19 @@ bool point_inside_line(const Point<T> &q, const Point<T> &a, const Point<T> &b) 
 	return ((b - a) ^ (q - a)) == static_cast<T>(0);
 }
 
-/* O(1) - Returns true if the point Q is inside the segment AB. */
+/* O(1) - Returns -1 if Q is inside the segment AB, 0 if on a vertex and 1 if outside of the segment. */
 template <class T>
-bool point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+int point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	// On a vertex.
+	if (q == a or q == b) {
+		return 0;
+	}
+
 	// Degenerate case.
 	if (a == b) {
-		return q == a;
+		return 1;
 	}
 
 	// General case.
-	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= static_cast<T>(0) and ((a - b) * (q - b)) >= static_cast<T>(0);
+	return point_inside_line(q, a, b) and ((b - a) * (q - a)) > static_cast<T>(0) and ((a - b) * (q - b)) > static_cast<T>(0) ? -1 : 1;
 }

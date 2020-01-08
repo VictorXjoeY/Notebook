@@ -16,7 +16,53 @@ struct Point {
 	T operator ^ (const Point<T> &b) const {
 		return (this->x * b.y) - (this->y * b.x);
 	}
+
+	/* O(1) - Equal. */
+	bool operator == (const Point &b) const {
+		return this->x == b.x and this->y == b.y;
+	}
 };
+
+/* O(1) - Returns true if the point Q is inside the line defined by AB.
+   Expects a non-degenerate line AB. */
+template <class T>
+bool point_inside_line(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	return ((b - a) ^ (q - a)) == static_cast<T>(0);
+}
+
+/* O(1) - Returns -1 if Q is inside the segment AB, 0 if on a vertex and 1 if outside of the segment. */
+template <class T>
+int point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	// On a vertex.
+	if (q == a or q == b) {
+		return 0;
+	}
+
+	// Degenerate case.
+	if (a == b) {
+		return 1;
+	}
+
+	// General case.
+	return point_inside_line(q, a, b) and ((b - a) * (q - a)) > static_cast<T>(0) and ((a - b) * (q - b)) > static_cast<T>(0) ? -1 : 1;
+}
+
+/* O(1) - Returns -1 if point Q is inside of the triangle ABC, 0 if its on one of its edges or 1 if its outside of the triangle. */ 
+template <class T>
+int point_inside_triangle(const Point<T> &q, const Point<T> &a, const Point<T> &b, const Point<T> &c) {
+	// On an edge.
+	if (point_inside_segment(q, a, b) <= 0 or point_inside_segment(q, b, c) <= 0 or point_inside_segment(q, c, a) <= 0) {
+		return 0;
+	}
+
+	// Clockwise.
+	if (((b - a) ^ (c - a)) < static_cast<T>(0)) {
+		return (((b - a) ^ (q - a)) < static_cast<T>(0) and ((c - b) ^ (q - b)) < static_cast<T>(0) and ((a - c) ^ (q - c)) < static_cast<T>(0)) ? -1 : 1;
+	}
+
+	// Counter-clockwise.
+	return (((b - a) ^ (q - a)) > static_cast<T>(0) and ((c - b) ^ (q - b)) > static_cast<T>(0) and ((a - c) ^ (q - c)) > static_cast<T>(0)) ? -1 : 1;
+}
 
 /* O(N) - Computes twice the signed area of a convex or non-convex polygon, being it simple or self-intersecting.
    Expects a polygon either in clockwise or in counter-clockwise order. */
@@ -37,17 +83,6 @@ bool is_clockwise(const vector<Point<T>> &p) {
 	return shoelace(p) < static_cast<T>(0);
 }
 
-/* O(1) - Returns true if point Q is inside triangle ABC or on one of its edges. */ 
-template <class T>
-bool point_inside_triangle(const Point<T> &q, const Point<T> &a, const Point<T> &b, const Point<T> &c) {
-	if (((b - a) ^ (c - a)) < static_cast<T>(0)) { // Clockwise.
-		return ((b - a) ^ (q - a)) <= static_cast<T>(0) and ((c - b) ^ (q - b)) <= static_cast<T>(0) and ((a - c) ^ (q - c)) <= static_cast<T>(0);
-	}
-
-	// Counter-clockwise.
-	return ((b - a) ^ (q - a)) >= static_cast<T>(0) and ((c - b) ^ (q - b)) >= static_cast<T>(0) and ((a - c) ^ (q - c)) >= static_cast<T>(0);
-}
-
 /* O(1) - Returns true if p[i] is a convex vertex. */
 template <class T>
 bool is_convex(const vector<Point<T>> &p, const vector<int> &l, const vector<int> &r, int i) {
@@ -65,7 +100,7 @@ bool is_ear(const vector<Point<T>> &p, const vector<int> &l, const vector<int> &
 	// For each point currently in the polygon, except for l[i], i and r[i].
 	for (int j = r[r[i]]; j != l[i]; j = r[j]) {
 		// If there's a point inside the triangle (p[l[i]], p[i], p[r[i]]) then p[i] is not an ear.
-		if (point_inside_triangle(p[j], p[l[i]], p[i], p[r[i]])) {
+		if (point_inside_triangle(p[j], p[l[i]], p[i], p[r[i]]) <= 0) {
 			return false;
 		}
 	}
