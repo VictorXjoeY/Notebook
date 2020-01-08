@@ -139,11 +139,6 @@ bool point_inside_line(const Point &q, const Point &a, const Point &b) {
 	return ((b - a) ^ (q - a)) == Fraction(0, 1);
 }
 
-/* O(1) - Returns true if the point Q is inside the segment AB. */
-bool point_inside_segment(const Point &q, const Point &a, const Point &b) {
-	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= Fraction(0, 1) and ((a - b) * (q - b)) >= Fraction(0, 1);
-}
-
 /* O(1) - Returns 0 if the lines don't intersect. Returns 1 if the lines intersect at 1 point. Returns 2 if the lines are the same. */
 int line_line_intersects(const Point &a, const Point &b, const Point &c, const Point &d) {
 	if (a == b and c == d) { // Both are degenerate.

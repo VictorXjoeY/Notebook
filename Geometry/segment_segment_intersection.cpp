@@ -143,14 +143,23 @@ struct Point {
 	}
 };
 
-/* O(1) - Returns true if the point Q is inside the line defined by AB. */
-bool point_inside_line(const Point &q, const Point &a, const Point &b) {
-	return ((b - a) ^ (q - a)) == Fraction(0, 1);
+/* O(1) - Returns true if the point Q is inside the line defined by AB.
+   Expects a non-degenerate line AB. */
+template <class T>
+bool point_inside_line(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	return ((b - a) ^ (q - a)) == static_cast<T>(0);
 }
 
 /* O(1) - Returns true if the point Q is inside the segment AB. */
-bool point_inside_segment(const Point &q, const Point &a, const Point &b) {
-	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= Fraction(0, 1) and ((a - b) * (q - b)) >= Fraction(0, 1);
+template <class T>
+bool point_inside_segment(const Point<T> &q, const Point<T> &a, const Point<T> &b) {
+	// Degenerate case.
+	if (a == b) {
+		return q == a;
+	}
+
+	// General case.
+	return point_inside_line(q, a, b) and ((b - a) * (q - a)) >= static_cast<T>(0) and ((a - b) * (q - b)) >= static_cast<T>(0);
 }
 
 /* O(1) - Returns 0 if the lines don't intersect. Returns 1 if the lines intersect at 1 point. Returns 2 if the lines are the same. */
