@@ -95,7 +95,7 @@ struct Fraction {
 	}
 
 	/* O(1). */
-	operator double() {
+	operator double() const {
 		return this->num / static_cast<double>(this->den);
 	}
 };

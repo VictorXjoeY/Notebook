@@ -14,6 +14,12 @@ struct Point {
 	}
 };
 
+/* O(1) - Rotates vector p by 90 degrees. */
+template <class T>
+Point<T> rotate90(const Point<T> &p) {
+	return {-p.y, p.x};
+}
+
 /* O(1) - Rotates vector p by theta radians. */
 template <class T>
 Point<T> rotate(const Point<T> &p, double theta) {

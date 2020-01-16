@@ -9,7 +9,7 @@ struct Point3D {
 	Point3D<T> operator ^ (const Point3D<T> &b) const {
 		return {(this->y * b.z) - (this->z * b.y), (this->z * b.x) - (this->x * b.z), (this->x * b.y) - (this->y * b.x)};
 	}
-	
+
 	/* O(1). */
 	template <class U>
 	operator Point2D<U>() const {
@@ -20,6 +20,11 @@ struct Point3D {
 template <class T>
 struct Point2D {
 	T x, y;
+
+	/* O(1) - Vector sum. */
+	Point2D<T> operator + (const Point2D<T> &b) const {
+		return {this->x + b.x, this->y + b.y};
+	}
 
 	/* O(1) - Vector subtraction. */
 	Point2D<T> operator - (const Point2D<T> &b) const {
@@ -34,6 +39,11 @@ struct Point2D {
 	/* O(1) - Cross product. */
 	T operator ^ (const Point2D<T> &b) const {
 		return (this->x * b.y) - (this->y * b.x);
+	}
+
+	/* O(1) - Squared norm. */
+	T operator ! () const {
+		return (this->x * this->x) + (this->y * this->y);
 	}
 
 	/* O(1) - Lesser than. */
@@ -176,4 +186,69 @@ vector<Point2D<T>> segment_segment_intersection(const Point2D<U> &a, const Point
 	ans.resize(unique(ans.begin(), ans.end()) - ans.begin());
 
 	return ans;
+}
+
+/* O(1) - Rotates vector p by 90 degrees. */
+template <class T>
+Point2D<T> rotate90(const Point2D<T> &p) {
+	return {-p.y, p.x};
+}
+
+/* O(1) - Returns a point Q, the point in line AB closest to point P.
+   Expects a non-degenerate line. */
+template <class T, class U>
+Point2D<T> point_line_distance(const Point2D<U> &a, const Point2D<U> &b, const Point2D<U> &p) {
+	assert(a != b); // Can't have a degenerate line.
+	return line_line_intersection<T>(a, b, p, p + rotate90(b - a));
+}
+
+/* O(1) - Returns a point Q, the point in segment AB closest to point P. */
+template <class T, class U>
+Point2D<T> point_segment_distance(const Point2D<U> &a, const Point2D<U> &b, const Point2D<U> &p) {
+	// Degenerate case.
+	if (a == b) {
+		return static_cast<Point2D<T>>(a);
+	}
+
+	Point2D<T> q = point_line_distance<T>(a, b, p);
+
+	// The closest point is the middle point of this sorted vector.
+	vector<Point2D<T>> ans = {static_cast<Point2D<T>>(a), static_cast<Point2D<T>>(b), q};
+	sort(ans.begin(), ans.end());
+
+	return ans[1];
+}
+
+/* O(1) - Squared distance between two points. Forced to be double because of the high risk of overflow. */
+template <class T, class U>
+double dist(const Point2D<T> &a, const Point2D<U> &b) {
+	return !(static_cast<Point2D<double>>(b) - static_cast<Point2D<double>>(a));
+}
+
+/* O(1) - Returns a pair of points (P, Q) such that P belongs to segment AB and Q belongs to segment CD their distance is minimal. */
+template <class T, class U>
+pair<Point2D<T>, Point2D<T>> segment_segment_distance(const Point2D<U> &a, const Point2D<U> &b, const Point2D<U> &c, const Point2D<U> &d) {
+	vector<Point2D<T>> inter = segment_segment_intersection<T>(a, b, c, d);
+
+	if (!inter.empty()) {
+		return {inter[0], inter[0]};
+	}
+
+	// Calculating all the point-segment distances.
+	Point2D<T> ra = point_segment_distance<T>(c, d, a);
+	Point2D<T> rb = point_segment_distance<T>(c, d, b);
+	Point2D<T> rc = point_segment_distance<T>(a, b, c);
+	Point2D<T> rd = point_segment_distance<T>(a, b, d);
+	
+	vector<pair<Point2D<T>, Point2D<T>>> ans = {{static_cast<Point2D<T>>(a), ra}, {static_cast<Point2D<T>>(b), rb}, {static_cast<Point2D<T>>(c), rc}, {static_cast<Point2D<T>>(d), rd}};
+
+	/* O(1) - Compares pairs of points by their distance. */
+	function<bool(const pair<Point2D<T>, Point2D<T>>, const pair<Point2D<T>, Point2D<T>>)> comp = [] (const pair<Point2D<T>, Point2D<T>> &ca, const pair<Point2D<T>, Point2D<T>> &cb) {
+		return dist(ca.first, ca.second) < dist(cb.first, cb.second);
+	};
+
+	sort(ans.begin(), ans.end(), comp);
+
+	// Returning the pair of points which have the smallest distance between them.
+	return ans[0];
 }
