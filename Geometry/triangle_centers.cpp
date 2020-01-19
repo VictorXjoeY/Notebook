@@ -116,9 +116,10 @@ Point2D<T> rotate90(const Point2D<T> &p) {
 }
 
 /* O(N) - Computes the Barycenter/Centroid of a triangle. */
-template <class T>
-Point2D<T> centroid(const Point2D<T> &a, const Point2D<T> &b, const Point2D<T> &c) {
-	return (a + b + c) / static_cast<T>(3);
+template <class T, class U>
+Point2D<T> centroid(const Point2D<U> &a, const Point2D<U> &b, const Point2D<U> &c) {
+	assert(!point_inside_line(a, b, c)); // Can't have a degenerate triangle.
+	return static_cast<Point2D<T>>(a + b + c) / static_cast<T>(3);
 }
 
 /* O(N) - Computes the center of the circle inscribed in the triangle.
