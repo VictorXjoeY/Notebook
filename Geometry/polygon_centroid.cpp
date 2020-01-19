@@ -34,8 +34,6 @@ Point<T> centroid(const vector<Point<T>> &p) {
 	}
 
 	T a = shoelace(p);
-	c.x = c.x / (static_cast<T>(3) * a);
-	c.y = c.y / (static_cast<T>(3) * a);
-
-	return c;
+	
+	return c / (static_cast<T>(3) * a);
 }

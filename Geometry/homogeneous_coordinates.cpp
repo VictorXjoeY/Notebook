@@ -5,6 +5,26 @@ template <class T>
 struct Point3D {
 	T x, y, z;
 
+	/* O(1) - Scalar sum. */
+	Point3D<T> operator + (const T &c) const {
+		return {this->x + c, this->y + c, this->z + c};
+	}
+
+	/* O(1) - Scalar subtraction. */
+	Point3D<T> operator - (const T &c) const {
+		return {this->x - c, this->y - c, this->z - c};
+	}
+
+	/* O(1) - Scalar multiplication. */
+	Point3D<T> operator * (const T &c) const {
+		return {this->x * c, this->y * c, this->z * c};
+	}
+
+	/* O(1) - Scalar division. */
+	Point3D<T> operator / (const T &c) const {
+		return {this->x / c, this->y / c, this->z / c};
+	}
+
 	/* O(1) - Negative vector. */
 	Point3D<T> operator - () const {
 		return {-this->x, -this->y, -this->z};
@@ -85,6 +105,26 @@ string to_string(const Point3D<T> &p) {
 template <class T>
 struct Point2D {
 	T x, y;
+
+	/* O(1) - Scalar sum. */
+	Point2D<T> operator + (const T &c) const {
+		return {this->x + c, this->y + c};
+	}
+
+	/* O(1) - Scalar subtraction. */
+	Point2D<T> operator - (const T &c) const {
+		return {this->x - c, this->y - c};
+	}
+
+	/* O(1) - Scalar multiplication. */
+	Point2D<T> operator * (const T &c) const {
+		return {this->x * c, this->y * c};
+	}
+
+	/* O(1) - Scalar division. */
+	Point2D<T> operator / (const T &c) const {
+		return {this->x / c, this->y / c};
+	}
 
 	/* O(1) - Negative vector. */
 	Point2D<T> operator - () const {

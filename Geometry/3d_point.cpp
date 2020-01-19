@@ -2,6 +2,26 @@ template <class T>
 struct Point {
 	T x, y, z;
 
+	/* O(1) - Scalar sum. */
+	Point<T> operator + (const T &c) const {
+		return {this->x + c, this->y + c, this->z + c};
+	}
+
+	/* O(1) - Scalar subtraction. */
+	Point<T> operator - (const T &c) const {
+		return {this->x - c, this->y - c, this->z - c};
+	}
+
+	/* O(1) - Scalar multiplication. */
+	Point<T> operator * (const T &c) const {
+		return {this->x * c, this->y * c, this->z * c};
+	}
+
+	/* O(1) - Scalar division. */
+	Point<T> operator / (const T &c) const {
+		return {this->x / c, this->y / c, this->z / c};
+	}
+
 	/* O(1) - Negative vector. */
 	Point<T> operator - () const {
 		return {-this->x, -this->y, -this->z};
