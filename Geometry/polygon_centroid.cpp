@@ -2,6 +2,11 @@ template <class T>
 struct Point {
 	T x, y;
 
+	/* O(1) - Scalar division. */
+	Point<T> operator / (const T &c) const {
+		return {this->x / c, this->y / c};
+	}
+
 	/* O(1) - Cross product. */
 	T operator ^ (const Point<T> &b) const {
 		return (this->x * b.y) - (this->y * b.x);
@@ -33,9 +38,5 @@ Point<T> centroid(const vector<Point<T>> &p) {
 		c.y = c.y + (p[i].y + p[(i + 1) % p.size()].y) * (p[i] ^ p[(i + 1) % p.size()]);
 	}
 
-	T a = shoelace(p);
-	c.x = c.x / (static_cast<T>(3) * a);
-	c.y = c.y / (static_cast<T>(3) * a);
-
-	return c;
+	return c / (static_cast<T>(3) * shoelace(p));
 }
