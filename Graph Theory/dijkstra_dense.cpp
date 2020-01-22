@@ -18,7 +18,7 @@ int next_to_spt() {
 	return v;
 }
 
-/* O(V^2 + E). */
+/* O(E + V^2). */
 void dijkstra(int u) {
 	// Initializing.
 	memset(in_spt, false, sizeof(in_spt));

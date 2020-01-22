@@ -13,7 +13,7 @@ priority_queue<State> pq;
 bool in_spt[N + 1];
 int dist[N + 1];
 
-/* O(V + E * Log(V)). */
+/* O(E + E * Log(V)). */
 void dijkstra(int u) {
 	// Initializing.
 	memset(in_spt, false, sizeof(in_spt));

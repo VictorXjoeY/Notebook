@@ -18,7 +18,7 @@ int next_to_mst() {
 	return v;
 }
 
-/* O(V^2 + E). */
+/* O(E + V^2). */
 void prim(int u) {
 	// Initializing.
 	memset(in_mst, false, sizeof(in_mst));

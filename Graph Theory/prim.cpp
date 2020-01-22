@@ -13,7 +13,7 @@ priority_queue<State> pq;
 bool in_mst[N + 1];
 int cost[N + 1];
 
-/* O(V + E * Log(V)). */
+/* O(E + E * Log(V)). */
 void prim(int u) {
 	// Initializing.
 	memset(in_mst, false, sizeof(in_mst));
