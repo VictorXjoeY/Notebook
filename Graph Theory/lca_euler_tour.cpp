@@ -60,8 +60,8 @@ public:
 
 SparseTable st;
 vector<int> g[N + 1]; // (Input)
-int euler[2 * N + 1];
-int depth[2 * N + 1];
+int euler[2 * N];
+int depth[2 * N];
 int first[N + 1];
 bool seen[N + 1];
 int timer;
