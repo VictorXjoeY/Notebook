@@ -66,7 +66,6 @@ long long factorial_factorization(long long n, long long p) {
 	return ans;
 }
 
-
 /* O(Log(min(a, b))) - Returns a * b mod m without overflowing. 2 * (m - 1) must not overflow. */
 long long mod_mul(long long a, long long b, long long m) {
 	// O(1) - If there's __int128_t available, just multiply.
@@ -75,8 +74,8 @@ long long mod_mul(long long a, long long b, long long m) {
 	#endif
 
 	// In case a >= m or b >= m.
-	a %= m;
-	b %= m;
+	a = (a % m + m) % m;
+	b = (b % m + m) % m;
 
 	// Forcing b to be the smallest.
 	if (a < b) {

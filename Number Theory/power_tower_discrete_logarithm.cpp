@@ -51,8 +51,8 @@ long long mod_mul(long long a, long long b, long long m) {
 	#endif
 
 	// In case a >= m or b >= m.
-	a %= m;
-	b %= m;
+	a = (a % m + m) % m;
+	b = (b % m + m) % m;
 
 	// Forcing b to be the smallest.
 	if (a < b) {
