@@ -35,20 +35,16 @@ long long mod_mul(long long a, long long b, long long m) {
 /* O(Log(min(a, b))) - Extended Euclidean Algorithm.
    Returns a solution to a * x + b * y = gcd(a, b).
    Returns |x| <= |a / gcd(a, b)|, |y| <= |b / gcd(a, b)| and gcd(a, b). */
-long long extended_gcd(long long a, long long b, long long &x, long long &y) {
-	long long x1, y1, gcd;
+tuple<long long, long long, long long> extended_gcd(long long a, long long b) {
+	long long x, y, gcd;
 
 	if (a == 0) {
-		x = 0;
-		y = 1;
-		return b;
+		return {b, 0, 1};
 	}
- 
-	gcd = extended_gcd(b % a, a, x1, y1);
-	x = y1 - (b / a) * x1;
-	y = x1;
- 
-	return gcd;
+
+	tie(gcd, x, y) = extended_gcd(b % a, a);
+
+	return {gcd, y - (b / a) * x, x}; 
 }
 
 /* O(Log(min(a, b))).
@@ -72,23 +68,22 @@ Use positive values for a and b for this function.
 Has infinite solutions if and only if gcd(a, b) divides c.
 If a and/or b are 0, treat those cases separately.
 Returns |x1| <= |(a * c) / gcd^2(a, b)|, |y1| <= |(b * c) / gcd^2(a, b)| and gcd(a, b) if there are solutions. */
-long long diophantine(long long a, long long b, long long c, long long &x1, long long &y1) {
+tuple<long long, long long, long long> diophantine(long long a, long long b, long long c) {
+	long long gcd, x, y;
+
 	// Obtaining a * x1 + b * y1 = gcd(a, b)
-	long long gcd = extended_gcd(a, b, x1, y1);
+	tie(gcd, x, y) = extended_gcd(a, b);
 
 	// No solution
 	if (c % gcd != 0) {
-		return 0;
+		return {0, 0, 0};
 	}
 
 	// Obtaining lcm(a, b).
 	long long lcm = (a / gcd) * b;
 
 	// Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
-	x1 = mod_mul(x1, c / gcd, lcm);
-	y1 = mod_mul(y1, c / gcd, lcm);
-
-	return gcd;
+	return {gcd, mod_mul(x, (c / gcd), lcm), mod_mul(y, (c / gcd), lcm)};
 }
 
 /* O(N * Log(lcm(m1, m2, ..., mn))) - General Chinese Remainder Theorem.
@@ -122,8 +117,8 @@ t - (a1 + m1 * x1) = lcm(m1, m2) * k ---> t = a1 + m1 * x1 (mod lcm(m1, m2))
 t - a2 = m2 * (-y1 + k * m1 / gcd(m1, m2))
 t - a2 = -m2 * y1 + lcm(m1, m2) * k
 t - (a2 - m2 * y1) = lcm(m1, m2) * k ---> t = a2 - m2 * y1 (mod lcm(m1, m2)) */
-void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long long &a1, long long &m1) {
-	long long a2, m2, x1, y1, gcd, lcm;
+pair<long long, long long> chinese_remainder_theorem(vector<long long> a, vector<long long> m) {
+	long long a1, m1, a2, m2, x1, y1, gcd, lcm;
 
 	// Making 0 <= ai < mi.
 	for (int i = 0; i < a.size(); i++) {
@@ -138,12 +133,10 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 		m2 = m[i];
 
 		// Solving m1 * x + m2 * (-y) = a2 - a1
-		gcd = diophantine(m1, m2, a2 - a1, x1, y1);
+		tie(gcd, x1, y1) = diophantine(m1, m2, a2 - a1);
 
 		if (gcd == 0) { // No solution.
-			a1 = -1;
-			m1 = 0;
-			return;
+			return {-1, 0};
 		}
 
 		// Calculating lcm(m1, m2) without overflowing.
@@ -153,35 +146,26 @@ void chinese_remainder_theorem(vector<long long> a, vector<long long> m, long lo
 		a1 = ((a1 + mod_mul(m1, x1, lcm)) % lcm + lcm) % lcm;
 		m1 = lcm;
 	}
+
+	return {a1, m1};
 }
 
-/* O(Log(min(a, b))) - Returns a * b mod m without overflowing. 2 * (m - 1) must not overflow. */
-long long mod_mul(long long a, long long b, long long m) {
-	// O(1) - If there's __int128_t available, just multiply.
-	#ifdef __SIZEOF_INT128__
-		return ((__int128_t)a * (__int128_t)b) % m;
-	#endif
+/* O(Log(B)). */
+long long fast_exp(long long a, long long b, long long m) {
+	long long ans = 1; // Base case.
 
-	// In case a >= m or b >= m.
+	// In case a >= m.
 	a %= m;
-	b %= m;
 
-	// Forcing b to be the smallest.
-	if (a < b) {
-		swap(a, b);
-	}
-
-	long long ans = 0;
-
-	// Decomposing b in binary. Adding to the answer a * 2^0, a * 2^1, a * 2^2, a * 2^4, a * 2^8, ...
+	// Decomposing b in binary. Multiplying the answer by a^1, a^2, a^4, a^8, ...
 	while (b > 0) {
 		// If current bit is set.
 		if (b & 1ll) {
-			ans = (ans + a) % m;
+			ans = mod_mul(ans, a, m);
 		}
 
 		b >>= 1ll; // Next bit.
-		a = (2ll * a) % m; // Next power of two multiplied by a.
+		a = mod_mul(a, a, m); // Next power of a.
 	}
 
 	return ans;
@@ -346,7 +330,7 @@ long long power_tower(long long a, long long n) {
 	long long a1, m1;
 	vector<long long> r = {0ll, fast_exp(a, power_tower(a, euler_phi(n)), n)};
 	vector<long long> m = {cf, n};
-	chinese_remainder_theorem(r, m, a1, m1);
+	tie(a1, m1) = chinese_remainder_theorem(r, m);
 
 	return a1;
 }
