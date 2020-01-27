@@ -95,8 +95,7 @@ def chinese_remainder_theorem(a, m):
 	a1, m1 = 0, 1
 
 	for i in range(len(a)):
-		a2 = a[i]
-		m2 = m[i]
+		a2, m2 = a[i], m[i]
 
 		# Solving m1 * x + m2 * (-y) = a2 - a1
 		gcd, x1, y1 = diophantine(m1, m2, a2 - a1)
