@@ -31,14 +31,11 @@ def extended_gcd(a, b):
 # If a and/or b are 0, treat those cases separately.
 def diophantine(a, b, c):
 	# Obtaining a * x1 + b * y1 = gcd(a, b)
-	gcd, x1, y1 = extended_gcd(a, b)
+	gcd, x, y = extended_gcd(a, b)
 
 	# No solution
 	if c % gcd != 0:
 		return (0, 0, 0)
 
 	# Multiplying the above equation by k = c / gcd to obtain a * x1 + b * y1 = c
-	x1 *= c // gcd
-	y1 *= c // gcd
-
-	return (gcd, x1, y1)
+	return (gcd, x * (c // gcd), y * (c // gcd))
