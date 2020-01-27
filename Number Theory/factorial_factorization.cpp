@@ -9,6 +9,12 @@ long long factorial_factorization(long long n, long long p) {
 	// While n / k still adds to the answer.
 	while (k <= n) {
 		ans += n / k;
+
+		// Checking for overflow.
+		if ((k * p) / p != k) {
+			break;
+		}
+
 		k *= p;
 	}
 
