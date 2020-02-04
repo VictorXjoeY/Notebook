@@ -67,7 +67,7 @@ void update(int cur, int l, int r, long long i, long long j, int val) {
 }
 
 /* O(N * Log(N)) - Returns the area of the union of the rectangles. */
-long long rectangle_union(const vector<Rectangle> &r) {
+long long union_of_rectangles(const vector<Rectangle> &r) {
 	long long last, ans;
 	vector<Event> e;
 
