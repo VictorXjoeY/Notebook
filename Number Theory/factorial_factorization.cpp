@@ -11,7 +11,7 @@ long long factorial_factorization(long long n, long long p) {
 		ans += n / k;
 
 		// Checking for overflow.
-		if ((k * p) / p != k) {
+		if (k > numeric_limits<long long>::max() / p) {
 			break;
 		}
 

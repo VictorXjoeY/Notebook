@@ -18,6 +18,8 @@ using namespace std;
 
 // Use: s = regex_replace(s, regex(a), b); to replace every occurence of a for b in s.
 
+// To check if a * b is going to overflow you just need to check if a > numeric_limits<long long>::max() / b (assuming that a and b are positive).
+
 // Maximum number of divisors for N <= 10^5 ---> 83160 with 128 divisors.
 // Maximum number of divisors for N <= 10^6 ---> 720720 with 240 divisors.
 // Maximum number of divisors for N <= 10^9 ---> 735134400 with 1344 divisors.
