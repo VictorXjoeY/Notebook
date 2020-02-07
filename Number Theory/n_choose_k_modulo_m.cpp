@@ -62,7 +62,7 @@ long long factorial_factorization(long long n, long long p) {
 		ans += n / k;
 
 		// Checking for overflow.
-		if ((k * p) / p != k) {
+		if (k > 1000000000000000000LL/p) {
 			break;
 		}
 
