@@ -57,12 +57,12 @@ struct Point2D {
 	}
 
 	/* O(1) - Equal. */
-	bool operator == (const Point2D &b) const {
+	bool operator == (const Point2D<T> &b) const {
 		return this->x == b.x and this->y == b.y;
 	}
 
 	/* O(1) - Different. */
-	bool operator != (const Point2D &b) const {
+	bool operator != (const Point2D<T> &b) const {
 		return !(*this == b);
 	}
 
