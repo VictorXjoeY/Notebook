@@ -47,7 +47,7 @@ vector<pair<int, int>> factor(int n) {
 /* O(d(N) * Log(d(N))) such that d(N) is the number of divisors of N. */
 vector<int> divisors(int n) {
 	vector<pair<int, int>> f = factor(n);
-	vector<int> d = {1ll};
+	vector<int> d = {1};
 
 	// Building the divisors from the prime factors of n.
 	for (int i = 0; i < f.size(); i++) { // For every prime factor p.
