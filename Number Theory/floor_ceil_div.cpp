@@ -1,15 +1,15 @@
-long long ceil(long long, long long);
+long long ceil_div(long long, long long);
 
 /* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor(long long num, long long den) {
+long long floor_div(long long num, long long den) {
 	if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
 		return abs(num) / abs(den);
 	}
 
-	return -ceil(abs(num), abs(den));
+	return -ceil_div(abs(num), abs(den));
 }
 
 /* O(1). */
-long long ceil(long long num, long long den) {
-	return floor(num + den - 1, den);
+long long ceil_div(long long num, long long den) {
+	return floor_div(num + den - 1, den);
 }
