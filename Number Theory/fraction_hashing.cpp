@@ -1,6 +1,7 @@
 /* The time complexity of the division and construction can be exchanged by the time
 complexity of the == comparison operator by storing both p and q modulo m instead of
 just storing x = p * q^(-1) modulo m. */
+constexpr long long mod[2] = {1000000007, 1000000009}; // Every individual fraction has to have a numerator and a denominator lesser than these mods.
  
 /* O(Log(B)). */
 long long fast_exp(long long a, long long b, long long m) {
@@ -24,18 +25,12 @@ long long fast_exp(long long a, long long b, long long m) {
 }
 
 struct Fraction {
-	static constexpr long long m[2] = {1000000007, 1000000009}; // Every individual fraction has to have a numerator and a denominator lesser than these mods.
 	long long x[2]; // Stores x = p * q^(-1) (mod m) with x >= 0
- 
- 	/* O(1). */
-	Fraction() {
-		memset(this->x, 0, sizeof(this->x));
-	}
- 
- 	/* O(Log(M)). */
-	Fraction(long long p, long long q) {
+
+	/* O(Log(M)). */
+	Fraction(long long p = 0, long long q = 1) {
 		for (int k = 0; k < 2; k++) {
-			this->x[k] = ((p * fast_exp(q, m[k] - 2, m[k])) % m[k] + m[k]) % m[k];
+			x[k] = ((p * fast_exp(q, mod[k] - 2, mod[k])) % mod[k] + mod[k]) % mod[k];
 		}
 	}
 
@@ -44,72 +39,69 @@ struct Fraction {
 		Fraction f;
 
 		for (int k = 0; k < 2; k++) {
-			f.x[k] = (-this->x[k] + m[k]) % m[k];
+			f.x[k] = (-x[k] + mod[k]) % mod[k];
 		}
 
 		return f;
 	}
- 
- 	/* O(1). */
-	Fraction operator + (const Fraction &f) const {
-		Fraction ans;
- 
-		for (int k = 0; k < 2; k++) {
-			ans.x[k] = (this->x[k] + f.x[k]) % m[k];
-		}
- 
-		return ans;
-	}
- 
- 	/* O(1). */
-	Fraction operator - (const Fraction &f) const {
-		Fraction ans;
- 
-		for (int k = 0; k < 2; k++) {
-			ans.x[k] = ((this->x[k] - f.x[k]) % m[k] + m[k]) % m[k];
-		}
- 
-		return ans;
-	}
- 
- 	/* O(1). */
-	Fraction operator * (const Fraction &f) const {
-		Fraction ans;
- 
-		for (int k = 0; k < 2; k++) {
-			ans.x[k] = (this->x[k] * f.x[k]) % m[k];
-		}
- 
-		return ans;
-	}
- 
- 	/* O(Log(M)). */
-	Fraction operator / (const Fraction &f) const {
-		Fraction ans;
- 
-		for (int k = 0; k < 2; k++) {
-			ans.x[k] = (this->x[k] * fast_exp(f.x[k], m[k] - 2, m[k])) % m[k];
-		}
- 
-		return ans;
-	}
- 
- 	/* O(1) - Checks if two fraction are equal based on their hash values. */
-	bool operator == (const Fraction &f) const {
-		for (int k = 0; k < 2; k++) {
-			if (this->x[k] != f.x[k]) {
-				return false;
-			}
-		}
- 
-		return true;
-	}
-
- 	/* O(1) - Checks if two fraction are different based on their hash values. */
- 	bool operator != (const Fraction &f) const {
- 		return !((*this) == f);
- 	}
 };
 
-// Just so it compiles in C++11.
-constexpr long long Fraction::m[];
+/* O(1). */
+Fraction operator + (const Fraction &lhs, const Fraction &rhs) {
+	Fraction f;
+
+	for (int k = 0; k < 2; k++) {
+		f.x[k] = (lhs.x[k] + rhs.x[k]) % mod[k];
+	}
+
+	return f;
+}
+ 
+/* O(1). */
+Fraction operator - (const Fraction &lhs, const Fraction &rhs) {
+	Fraction f;
+
+	for (int k = 0; k < 2; k++) {
+		f.x[k] = ((lhs.x[k] - rhs.x[k]) % mod[k] + mod[k]) % mod[k];
+	}
+
+	return f;
+}
+ 
+/* O(1). */
+Fraction operator * (const Fraction &lhs, const Fraction &rhs) {
+	Fraction f;
+
+	for (int k = 0; k < 2; k++) {
+		f.x[k] = (lhs.x[k] * rhs.x[k]) % mod[k];
+	}
+
+	return f;
+}
+ 
+/* O(Log(M)). */
+Fraction operator / (const Fraction &lhs, const Fraction &rhs) {
+	Fraction f;
+
+	for (int k = 0; k < 2; k++) {
+		f.x[k] = (lhs.x[k] * fast_exp(rhs.x[k], mod[k] - 2, mod[k])) % mod[k];
+	}
+
+	return f;
+}
+ 
+/* O(1) - Checks if two fraction are equal based on their hash values. */
+bool operator == (const Fraction &lhs, const Fraction &rhs) {
+	for (int k = 0; k < 2; k++) {
+		if (lhs.x[k] != rhs.x[k]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/* O(1) - Checks if two fraction are different based on their hash values. */
+bool operator != (const Fraction &lhs, const Fraction &rhs) {
+	return !(lhs == rhs);
+}
