@@ -14,7 +14,8 @@ using namespace std;
 // An almost convex polygon is a polygon in which all its interior angles are less or equal than 180 degrees.
 
 // Trie is the most beautiful Data Structure. It is a more generic version of the Dynamic (Implicit) Segment Tree, since it doesn't need to be binary.
-// The Trie can behave just like a Segment Tree if you insert the value a[i] at the node that represents position i (following the path given by the decomposition of i in binary).
+// The Trie can behave just like a Segment Tree if you insert the value a[i] at the
+// node that represents position i (following the path given by the decomposition of i in binary).
 
 // Frequency queries that come after all the updates can be done by inserting everything in a vector and doing upper_bound(x) - lower_bound(x)
 // for O(Log(N)) but with a smaller constant than using a map. This method is specially useful if you are working with the frequency of elements
@@ -52,10 +53,10 @@ typedef long long ll;
 typedef unsigned long long ull;
 
 int main() {
-	// ios::sync_with_stdio(false);
+    // ios::sync_with_stdio(false);
 
-	// freopen("input.txt", "r", stdin);
-	// freopen("output.txt", "w", stdout);
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
 
-	return 0;
+    return 0;
 }
