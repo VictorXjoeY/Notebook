@@ -1,19 +1,3 @@
-long long ceil_div(long long, long long);
-
-/* O(1) - Integer division num / den that behaves like Python so that you can properly deal with inequations like x >= a / b. */
-long long floor_div(long long num, long long den) {
-    if ((num >= 0 and den >= 0) or (num < 0 and den < 0)) {
-        return abs(num) / abs(den);
-    }
-
-    return -ceil_div(abs(num), abs(den));
-}
-
-/* O(1). */
-long long ceil_div(long long num, long long den) {
-    return floor_div(num + den - 1, den);
-}
-
 bool check(int m) {
     // Define this function.
     return m > 0;
@@ -22,7 +6,7 @@ bool check(int m) {
 /* O(Log(R - L)). */
 int last_false(int l, int r) {
     while (l < r) {
-        int m = ceil_div(l + r, 2);
+        int m = l + (r - l + 1) / 2;
 
         if (check(m)) {
             r = m - 1;
@@ -37,7 +21,7 @@ int last_false(int l, int r) {
 /* O(Log(R - L)). */
 int first_true(int l, int r) {
     while (l < r) {
-        int m = floor_div(l + r, 2);
+        int m = l + (r - l) / 2;
 
         if (check(m)) {
             r = m;
@@ -52,7 +36,7 @@ int first_true(int l, int r) {
 /* O(Log(R - L)). */
 int last_true(int l, int r) {
     while (l < r) {
-        int m = ceil_div(l + r, 2);
+        int m = l + (r - l + 1) / 2;
 
         if (check(m)) {
             l = m;
@@ -67,7 +51,7 @@ int last_true(int l, int r) {
 /* O(Log(R - L)). */
 int first_false(int l, int r) {
     while (l < r) {
-        int m = floor_div(l + r, 2);
+        int m = l + (r - l) / 2;
 
         if (check(m)) {
             l = m + 1;
